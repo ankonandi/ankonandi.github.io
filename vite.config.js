@@ -5,4 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/ankonandi.github.io/',
-})
+  server: {
+    mimeTypes: {
+      'text/jsx': 'application/javascript', 
+    },
+  },
+});
