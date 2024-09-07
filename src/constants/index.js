@@ -15,10 +15,8 @@ import {
     git,
     figma,
     docker,
-    meta,
-    starbucks,
-    tesla,
-    shopify,
+    mcfw,
+    DN,
     carrent,
     jobit,
     tripguide,
@@ -42,20 +40,16 @@ import {
   
   const services = [
     {
-      title: "Web Developer",
+      title: "Associate Product Manager",
       icon: web,
     },
     {
-      title: "React Native Developer",
+      title: "Product Analyst",
       icon: mobile,
     },
     {
-      title: "Backend Developer",
+      title: "Business Analyst",
       icon: backend,
-    },
-    {
-      title: "Content Creator",
-      icon: creator,
     },
   ];
   
@@ -118,7 +112,7 @@ import {
     {
       title: "Software Development Intern",
       company_name: "Diebold Nixdorf",
-      icon: starbucks,
+      icon: DN,
       iconBg: "#383E56",
       date: "January 2024 - July 2024",
       points: [
@@ -130,7 +124,7 @@ import {
     {
       title: "SDC Intern",
       company_name: "Mahindra First Choice Wheels Ltd",
-      icon: tesla,
+      icon: mcfw,
       iconBg: "#E6DEDD",
       date: "May 2023 - July 2023",
       points: [

@@ -18,7 +18,6 @@ export {
   Feedbacks,
   Contact,
   EarthCanvas, 
-  BallCanvas, 
-  ComputersCanvas, 
+  BallCanvas,
   StarsCanvas
 }
