@@ -76,15 +76,35 @@ const Feedbacks = () => {
           <a href="https://linktr.ee/nexwander">
             <h3 className={styles.sectionSubHeadText}>Nexwander</h3>
             <p className={styles.sectionSubText}>
-              Conceptualized and launched a travel platform connecting travelers
-              for group trips, ensuring safety and seamless service integration.
-              Led cross-functional teams to design features for rural tourism
-              and adventure travel, boosting user engagement. Focused on
-              creating solutions for both travelers and local service providers,
+              Conceptualized a travel platform connecting travelers for group
+              trips, ensuring safety and seamless service integration. Led
+              cross-functional teams to design features for rural tourism and
+              adventure travel, boosting user engagement. Focused on creating
+              solutions for both travelers and local service providers,
               enhancing the overall travel experience.
             </p>
             <p>
               🔗 <span style={{ fontWeight: "bold" }}>Explore Nexwander</span>
+            </p>
+          </a>
+          <br></br>
+          <a href="https://drive.google.com/file/d/1_oirXNiQMpJN37imJaaI0EhLeTnKIwhB/view?usp=sharing">
+            <h3 className={styles.sectionSubHeadText}>
+              Mental Health in Students
+            </h3>
+            <p className={styles.sectionSubText}>
+              Working on a mental health project focused on understanding the
+              challenges faced by students in managing academic pressures and
+              mental well-being. Using user research methods such as surveys and
+              interviews, I gathered insights into students' mental health
+              concerns, coping mechanisms, and the impact of academic stress.
+              The findings informed the development of strategies to improve
+              mental health support and create more balanced academic
+              environments.
+            </p>
+            <p>
+              🔗{" "}
+              <span style={{ fontWeight: "bold" }}>See the Full Insights</span>
             </p>
           </a>
         </motion.div>
