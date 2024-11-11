@@ -1,4 +1,3 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
@@ -24,13 +23,13 @@
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #ff0000, /* Red color */
-    #ff6666
+    #ff0000,
+    /* Red color */ #ff6666
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #ff0000, /* Red color */
-    #ff6666
+    #ff0000,
+    /* Red color */ #ff6666
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -39,15 +38,19 @@
   background: linear-gradient(-90deg, #ff0000, #ff5555); /* Red gradient */
   background: -webkit-linear-gradient(
     -90deg,
-    #ff0000, /* Red color */
-    rgba(255, 0, 0, 0.5) /* Semi-transparent red */
+    #ff0000,
+    /* Red color */ rgba(255, 0, 0, 0.5) /* Semi-transparent red */
   );
 }
 
 .green-pink-gradient {
   background: #ff0000; /* Red color */
   background: linear-gradient(90.13deg, #ff0000, #ff6161); /* Red gradient */
-  background: -webkit-linear-gradient(-90.13deg, #ff0000, #ff6161); /* Red gradient */
+  background: -webkit-linear-gradient(
+    -90.13deg,
+    #ff0000,
+    #ff6161
+  ); /* Red gradient */
 }
 
 .orange-text-gradient {
@@ -57,11 +60,7 @@
     #ff0000,
     #ff5a5a
   ); /* Red gradient */
-  background: linear-gradient(
-    to top,
-    #ff0000,
-    #ff5a5a
-  ); /* Red gradient */
+  background: linear-gradient(to top, #ff0000, #ff5a5a); /* Red gradient */
 }
 
 .green-text-gradient {
@@ -71,11 +70,7 @@
     #ff0000,
     #ff6161
   ); /* Red gradient */
-  background: linear-gradient(
-    to top,
-    #ff0000,
-    #ff6161
-  ); /* Red gradient */
+  background: linear-gradient(to top, #ff0000, #ff6161); /* Red gradient */
 }
 
 .blue-text-gradient {
@@ -85,11 +80,7 @@
     #ff0000,
     #ff6666
   ); /* Red gradient */
-  background: linear-gradient(
-    to top,
-    #ff0000,
-    #ff6666
-  ); /* Red gradient */
+  background: linear-gradient(to top, #ff0000, #ff6666); /* Red gradient */
 }
 
 .pink-text-gradient {
@@ -99,13 +90,8 @@
     #ff0000,
     #ff6666
   ); /* Red gradient */
-  background: linear-gradient(
-    to top,
-    #ff0000,
-    #ff6666
-  ); /* Red gradient */
+  background: linear-gradient(to top, #ff0000, #ff6666); /* Red gradient */
 }
-
 
 /* canvas- styles */
 .canvas-loader {
