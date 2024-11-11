@@ -14,6 +14,8 @@ import git from "./tech/git.png";
 import html from "./tech/html.png";
 import javascript from "./tech/javascript.png";
 import mongodb from "./tech/mongodb.png";
+import confluence from "./tech/confluence.png";
+import jira from "./tech/jira.png";
 import nodejs from "./tech/nodejs.png";
 import reactjs from "./tech/reactjs.png";
 import redux from "./tech/redux.png";
@@ -44,6 +46,8 @@ export {
   html,
   javascript,
   mongodb,
+  confluence,
+  jira,
   nodejs,
   reactjs,
   redux,
