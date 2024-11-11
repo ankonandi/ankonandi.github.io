@@ -72,7 +72,7 @@ const Feedbacks = () => {
               🔗 <span style={{ fontWeight: "bold" }}>Visit AADIAAN</span>
             </p>
           </a>
-
+          <br></br>
           <a href="https://linktr.ee/nexwander">
             <h3 className={styles.sectionSubHeadText}>Nexwander</h3>
             <p className={styles.sectionSubText}>
