@@ -56,9 +56,16 @@ const Feedbacks = () => {
               🔗 <span style={{ fontWeight: "bold" }}>Explore my work</span>
             </p>
           </a>
+          <br></br>
 
           <a href="https://aadiaan.com/">
-            <h3 className={styles.sectionSubHeadText}>AADIAAN</h3>
+            <h3
+              className={styles.sectionSubHeadText}
+              style={{ fontSize: "1.5em" }}
+            >
+              AADIAAN
+            </h3>{" "}
+            {/* Increased font size for project name */}
             <p className={styles.sectionSubText}>
               We developed a mentorship platform designed to provide affordable
               academic support to students from low- and middle-income groups.
@@ -69,12 +76,23 @@ const Feedbacks = () => {
               accessibility.
             </p>
             <p>
-              🔗 <span style={{ fontWeight: "bold" }}>Visit AADIAAN</span>
+              🔗{" "}
+              <span>
+                <i>Visit AADIAAN</i>
+              </span>
             </p>
           </a>
+
           <br></br>
+
           <a href="https://linktr.ee/nexwander">
-            <h3 className={styles.sectionSubHeadText}>Nexwander</h3>
+            <h3
+              className={styles.sectionSubHeadText}
+              style={{ fontSize: "1.5em" }}
+            >
+              Nexwander
+            </h3>{" "}
+            {/* Increased font size for project name */}
             <p className={styles.sectionSubText}>
               Conceptualized a travel platform connecting travelers for group
               trips, ensuring safety and seamless service integration. Led
@@ -84,14 +102,23 @@ const Feedbacks = () => {
               enhancing the overall travel experience.
             </p>
             <p>
-              🔗 <span style={{ fontWeight: "bold" }}>Explore Nexwander</span>
+              🔗{" "}
+              <span>
+                <i>Explore Nexwander</i>
+              </span>
             </p>
           </a>
+
           <br></br>
+
           <a href="https://drive.google.com/file/d/1_oirXNiQMpJN37imJaaI0EhLeTnKIwhB/view?usp=sharing">
-            <h3 className={styles.sectionSubHeadText}>
+            <h3
+              className={styles.sectionSubHeadText}
+              style={{ fontSize: "1.5em" }}
+            >
               Mental Health in Students
-            </h3>
+            </h3>{" "}
+            {/* Increased font size for project name */}
             <p className={styles.sectionSubText}>
               Working on a mental health project focused on understanding the
               challenges faced by students in managing academic pressures and
@@ -104,7 +131,9 @@ const Feedbacks = () => {
             </p>
             <p>
               🔗{" "}
-              <span style={{ fontWeight: "bold" }}>See the Full Insights</span>
+              <span>
+                <i>See the Full Insights</i>
+              </span>
             </p>
           </a>
         </motion.div>
