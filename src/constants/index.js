@@ -1,3 +1,4 @@
+import { title } from "framer-motion/client";
 import {
   mobile,
   backend,
@@ -33,6 +34,10 @@ export const navLinks = [
   {
     id: "work",
     title: "Work",
+  },
+  {
+    id: "projects",
+    title: "Projects",
   },
   {
     id: "contact",
