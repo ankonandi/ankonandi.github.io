@@ -51,11 +51,11 @@ const services = [
     icon: web,
   },
   {
-    title: "Product Analyst",
+    title: "UX Analyst",
     icon: mobile,
   },
   {
-    title: "UX Analyst",
+    title: "Product Analyst",
     icon: backend,
   },
 ];
