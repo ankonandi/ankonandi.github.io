@@ -67,7 +67,7 @@ const Feedbacks = () => {
               AADIAAN
             </h3>
             <p className={styles.sectionSubText}>
-              We developed a mentorship platform designed to provide affordable
+              Built a mentorship platform designed to provide affordable
               academic support to students from low- and middle-income groups.
               Worked closely with developers and design teams to build an
               intuitive user interface that promoted continuous learning.
@@ -93,7 +93,7 @@ const Feedbacks = () => {
               Medicare Connect: Telemedicine Platform for Elderly Users
             </h3>
             <p className={styles.sectionSubText}>
-              Developing a telemedicine solution tailored for older adults,
+              Designing a telemedicine solution tailored for older adults,
               grounded in extensive user research. Features include emergency
               medicine ordering, customizable medication reminders, discounted
               subscription plans, caregiver portal access, and a hybrid care
