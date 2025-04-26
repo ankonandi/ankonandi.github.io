@@ -56,16 +56,16 @@ const Feedbacks = () => {
               🔗 <span style={{ fontWeight: "bold" }}>Explore my work</span>
             </p>
           </a>
-          <br></br>
+          <br />
 
+          {/* AADIAAN */}
           <a href="https://aadiaan.com/">
             <h3
               className={styles.sectionSubHeadText}
               style={{ fontSize: "1.5em" }}
             >
               AADIAAN
-            </h3>{" "}
-            {/* Increased font size for project name */}
+            </h3>
             <p className={styles.sectionSubText}>
               We developed a mentorship platform designed to provide affordable
               academic support to students from low- and middle-income groups.
@@ -82,17 +82,41 @@ const Feedbacks = () => {
               </span>
             </p>
           </a>
+          <br />
 
-          <br></br>
+          {/* Telemedicine Platform */}
+          <a href="https://www.figma.com/proto/DLaW07GH9AV8yoYYXbDS5W/MediCare-Prototype?node-id=4017-376&p=f&t=EAe0R0ZJMrAX8gbS-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=4017%3A376">
+            <h3
+              className={styles.sectionSubHeadText}
+              style={{ fontSize: "1.5em" }}
+            >
+              Medicare Connect: Telemedicine Platform for Elderly Users
+            </h3>
+            <p className={styles.sectionSubText}>
+              Developing a telemedicine solution tailored for older adults,
+              grounded in extensive user research. Features include emergency
+              medicine ordering, customizable medication reminders, discounted
+              subscription plans, caregiver portal access, and a hybrid care
+              model combining virtual and in-person visits. Usability testing is
+              planned to further refine and validate these features.
+            </p>
+            <p>
+              🔗{" "}
+              <span>
+                <i>View Prototype</i>
+              </span>
+            </p>
+          </a>
+          <br />
 
+          {/* Nexwander */}
           <a href="https://linktr.ee/nexwander">
             <h3
               className={styles.sectionSubHeadText}
               style={{ fontSize: "1.5em" }}
             >
               Nexwander
-            </h3>{" "}
-            {/* Increased font size for project name */}
+            </h3>
             <p className={styles.sectionSubText}>
               Conceptualized a travel platform connecting travelers for group
               trips, ensuring safety and seamless service integration. Led
@@ -108,26 +132,24 @@ const Feedbacks = () => {
               </span>
             </p>
           </a>
+          <br />
 
-          <br></br>
-
-          <a href="https://drive.google.com/file/d/1_oirXNiQMpJN37imJaaI0EhLeTnKIwhB/view?usp=sharing">
+          {/* Equifocus.ai */}
+          <a href="https://equifocus.ai">
             <h3
               className={styles.sectionSubHeadText}
               style={{ fontSize: "1.5em" }}
             >
-              Mental Health in Students
-            </h3>{" "}
-            {/* Increased font size for project name */}
+              Equifocus.ai
+            </h3>
             <p className={styles.sectionSubText}>
-              Working on a mental health project focused on understanding the
-              challenges faced by students in managing academic pressures and
-              mental well-being. Using user research methods such as surveys and
-              interviews, I gathered insights into students' mental health
-              concerns, coping mechanisms, and the impact of academic stress.
-              The findings informed the development of strategies to improve
-              mental health support and create more balanced academic
-              environments.
+              Made Equifocus.ai focused on understanding the challenges students
+              face in managing academic pressures and mental well-being. Used
+              user research methods such as surveys and interviews to gather
+              insights into students' mental health concerns and coping
+              mechanisms. The findings informed strategies to improve mental
+              health support and foster balanced academic environments, driving
+              actionable improvements in student well-being.
             </p>
             <p>
               🔗{" "}
@@ -136,8 +158,64 @@ const Feedbacks = () => {
               </span>
             </p>
           </a>
+
+          <br />
+
+          {/* Exoskeleton for Assisted Arm Movement */}
+          <a href="https://drive.google.com/drive/folders/1wXroF0gyi9FtA10pGshKuibCRiYHDQ-Q?usp=sharing">
+            <h3
+              className={styles.sectionSubHeadText}
+              style={{ fontSize: "1.5em" }}
+            >
+              Exoskeleton for Assisted Arm Movement
+            </h3>
+            <p className={styles.sectionSubText}>
+              Developed an Exoskeleton for physiotherapy, enabling users to
+              perform controlled arm movements for rehabilitation. Initially
+              using EMG sensors to detect muscle signals, the system was pivoted
+              to use a MPU9250 sensor for wrist-based control, allowing for more
+              precise and user-friendly functionality. The system is powered by
+              150kg/cm high-torque servos, ensuring effective arm movement
+              assistance. Additionally, a dedicated mobile app was built,
+              offering intuitive control and real-time monitoring of the
+              exoskeleton's performance. The app allows users to adjust
+              settings, track progress, and ensure a personalized rehabilitation
+              experience. The project underwent multiple testing iterations,
+              ensuring reliability and optimal performance.
+            </p>
+            <p>
+              🔗{" "}
+              <span>
+                <i>Explore the Project</i>
+              </span>
+            </p>
+          </a>
+          <br />
+
+          {/* IIITH Marketplace */}
+          <h3
+            className={styles.sectionSubHeadText}
+            style={{ fontSize: "1.5em" }}
+          >
+            IIITH Marketplace
+          </h3>
+          <p className={styles.sectionSubText}>
+            Built a marketplace platform for IIIT Hyderabad students, improving
+            over cluttered WhatsApp groups where students previously bought and
+            sold second-hand items without proper categories or search options.
+            Introduced a unique feature allowing students to request deliveries
+            of food, parcels, or any other items from the canteen or within
+            campus to their hostels. Added a payment method using the seller's
+            QR code, allowing payments to be made directly to the seller when an
+            item is listed. This approach eliminated the hassle of gateway
+            charges, as the amounts being dealt with are typically lower.
+            Conducted user research to uncover key pain points, ensuring the
+            platform was intuitive, fast, and solved the major hassles faced by
+            the student community.
+          </p>
         </motion.div>
       </div>
+
       <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7`}>
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
