@@ -43,11 +43,11 @@ section.block { padding: clamp(48px, 7vw, 96px) 0 0; }
 .tl-m.edu .tl-dot { border-radius: 3px; transform: rotate(45deg); background: var(--paper); box-shadow: 0 0 0 2px var(--muted); border-color: var(--muted); }
 .tl-m.now .tl-dot { background: var(--pen); box-shadow: 0 0 0 2px var(--pen), 0 0 0 9px rgba(217,58,64,.2); }
 .tl-card { position: absolute; left: 50%; transform: translateX(-50%); width: min(300px, calc(200% - 18px)); display: grid; gap: 2px; text-align: center; justify-items: center; }
-.tl-m.up .tl-card { bottom: calc(50% + 30px); }
-.tl-m.down .tl-card { top: calc(50% + 30px); }
-.tl-card::after { content: ""; position: absolute; left: 50%; width: 1px; background: var(--line); }
-.tl-m.up .tl-card::after { top: 100%; height: 22px; }
-.tl-m.down .tl-card::after { bottom: 100%; height: 22px; }
+.tl-m.up .tl-card { bottom: calc(50% + 42px); }
+.tl-m.down .tl-card { top: calc(50% + 42px); }
+.tl-m::before { content: ""; position: absolute; left: 50%; width: 2px; margin-left: -1px; height: 34px; background: var(--muted); border-radius: 1px; }
+.tl-m.up::before { bottom: 50%; }
+.tl-m.down::before { top: 50%; }
 .tl-date { font-size: 13.5px; color: var(--muted); }
 .tl-card b { font-size: 18px; font-weight: 800; line-height: 1.2; }
 .tl-m.now .tl-card b { color: var(--pen); }
@@ -61,7 +61,7 @@ section.block { padding: clamp(48px, 7vw, 96px) 0 0; }
   .tl-dot { left: -38px; top: 4px; margin: 0; width: 16px; height: 16px; }
   .tl-m.now .tl-dot { box-shadow: 0 0 0 2px var(--pen), 0 0 0 5px rgba(217,58,64,.2); }
   .tl-m .tl-card, .tl-m.up .tl-card, .tl-m.down .tl-card { position: static; transform: none; width: auto; text-align: left; justify-items: start; }
-  .tl-card::after { display: none; }
+  .tl-m::before { display: none; }
 }
 
 /* contact */
