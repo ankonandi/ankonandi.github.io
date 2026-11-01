@@ -51,7 +51,7 @@
 /* the TeachOS time bar: a compact glass capsule, centered */
 
 /* toast */
-.px-toast { bottom: 110px; border: 1px solid var(--hair-dark); border-radius: 999px; background: rgba(15,27,61,.8); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font: 600 13.5px var(--display); padding: 9px 16px; }
+.px-toast { bottom: 166px; border: 1px solid var(--hair-dark); border-radius: 999px; background: rgba(15,27,61,.8); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font: 600 13.5px var(--display); padding: 9px 16px; }
 
 /* windows */
 .px-pal { background: rgba(15,27,61,.5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
@@ -111,7 +111,7 @@
   .hero .lede { font-size: 16px; line-height: 1.5; margin-bottom: 10px; }
   .hero .lede + .lede { font-size: 15px; }
   .hero .cta { margin-top: 20px; }
-  .px-toast { bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 130px); }
+  .px-toast { bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 164px); }
   .rail .tabbar { background: rgba(246,247,251,.88); -webkit-backdrop-filter: blur(20px) saturate(1.5); backdrop-filter: blur(20px) saturate(1.5); border-top: 1px solid var(--hair); }
   .rail .tabbar a { border-top-width: 2px; font-weight: 600; }
 }
