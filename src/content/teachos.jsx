@@ -4,7 +4,7 @@ export const loop = [
   ['Prepare', 'readiness gate, AI Assessment, demos'],
   ['Teach', 'reliable recording and attendance'],
   ['Get feedback', 'Snapshot report with playbooks'],
-  ['Practise', 'practice with AI'],
+  ['Practice', 'practice with AI'],
   ['Get coached', 'Manager Connect 1:1s'],
   ['Raise issues', 'Zoho ticket with session context'],
 ]
@@ -68,7 +68,7 @@ export const problems = [
     problem: '17 managers coach 500+ instructors, with informal 1:1s and no shared history.',
     did: [
       'Designed and built Manager Connect myself in Replit, end to end. It is a separate product that I still own, code, database and maintenance, and it appears inside TeachOS as an embedded page.',
-      'Shaped Team Performance and manager scorecards around it.',
+      "Shaped Team Performance and manager scorecards around it. Managers are judged on how they coach, and their outcomes are tied to their instructors' outcomes, because their reportees are instructors.",
     ],
     result: (
       <>
@@ -99,7 +99,7 @@ export const problems = [
     did: ['Ran the root-cause analysis on the data myself and set product, operational and escalation actions.'],
     result: (
       <>
-        The gap was behavioural, not network: most were recordings that never started, and just <M>25 instructors</M> accounted for <M>45%</M> of missed lecture recordings. The fix moved from infrastructure to product and compliance.
+        The gap was behavioral, not network: most were recordings that never started, and just <M>25 instructors</M> accounted for <M>45%</M> of missed lecture recordings. The fix moved from infrastructure to product and compliance.
       </>
     ),
   },
@@ -116,13 +116,19 @@ export const mcFlow = [
 
 export const mcRules = [
   "Slots can't be created in the past, and only open slots can be edited.",
-  'A booked session is cancelled from its own page, never from the slot list.',
+  'A booked session is canceled from its own page, never from the slot list.',
   "A session happening today can't be rescheduled in the app.",
   'Reminders go out shortly before a session and only once.',
   'Action items become read-only once saved.',
 ]
 
+export const mgrPoints = [
+  ['Judged on how they coach', 'Every 1:1 gets a meeting link and is recorded, so the coaching itself is visible and managers are measured on it, not only instructors.'],
+  ['Reports and scorecards', "Reports are generated from the sessions, and manager scorecards are built from them."],
+  ["Their results are their reportees' results", "A manager's reportees are instructors, so a manager's outcomes are directly tied to how their instructors do."],
+]
+
 export const mcViews = [
-  "Managers: a weekly dashboard with total, completed, scheduled, not booked and missed, a completion rate, pending approvals and today's sessions, plus a colour-coded team view and each instructor's history.",
+  "Managers: a weekly dashboard with total, completed, scheduled, not booked and missed, a completion rate, pending approvals and today's sessions, plus a color-coded team view and each instructor's history.",
   "Instructors: a status card for the week, their counts, full session history and the action items from every completed 1:1.",
 ]

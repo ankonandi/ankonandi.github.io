@@ -3,7 +3,7 @@ import Steps from '../components/Steps.jsx'
 import WhyTeachOS from '../components/WhyTeachOS.jsx'
 import Problems from '../components/Problems.jsx'
 import WorkList from '../components/WorkList.jsx'
-import { loop, mcFlow, mcRules, mcViews } from '../content/teachos.jsx'
+import { loop, mcFlow, mcRules, mcViews, mgrPoints } from '../content/teachos.jsx'
 import { docs } from '../content/docs.jsx'
 
 export default function TeachOS() {
@@ -15,7 +15,7 @@ export default function TeachOS() {
         <Problems />
       </Section>
 
-      <Section id="manager-connect" title="Manager Connect up close" sub="A separate product I built and own. It runs the weekly 1:1 between a Capability Manager and each instructor, from booking to action items, and opens from inside TeachOS with no separate login.">
+      <Section id="manager-connect" title="Manager Connect up close" sub="A separate product I built and own. It runs the weekly 1:1 between a Capability Manager and each instructor, from booking to action items, and opens from inside TeachOS with no separate login. It has two personas, instructors and managers, and managers are measured too.">
         <Steps label="The weekly 1:1 flow" steps={mcFlow} />
         <div className="two">
           <div>
@@ -27,6 +27,12 @@ export default function TeachOS() {
             <ul>{mcViews.map((v) => <li key={v}>{v}</li>)}</ul>
           </div>
         </div>
+        <h3 className="subhead">Managers are a persona too</h3>
+        <ul className="principles">
+          {mgrPoints.map(([b, s]) => (
+            <li key={b}><b>{b}</b><span>{s}</span></li>
+          ))}
+        </ul>
       </Section>
 
       <Section id="docs" title="Product documents" sub="Guides that real users followed to book and run their weekly 1:1s.">
