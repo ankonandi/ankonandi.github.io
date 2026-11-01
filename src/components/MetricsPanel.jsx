@@ -26,14 +26,26 @@ export default function MetricsPanel() {
     return () => io.disconnect()
   }, [reduce, seen])
 
-  // Walks start, then Oct to Nov 2025, then today, once, slowly enough to read. Stops as soon as the visitor picks a period.
+  // Walks start, then Oct to Nov 2025, then today, slowly enough to read, then keeps cycling. Stops as soon as the visitor picks a period.
   useEffect(() => {
     if (reduce || touched || !seen) return undefined
     setAuto(true)
     const a = setTimeout(() => setPhase(1), 1500)
     const b = setTimeout(() => setPhase(last), 3300)
     const c = setTimeout(() => setAuto(false), 4400)
-    return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c) }
+    // After the first walk-through, move to the next period now and then, so it is clear the buttons do something.
+    // Stops for good once the visitor taps a period. Skips a turn when the panel is off screen or the tab is hidden.
+    let loop
+    const d = setTimeout(() => {
+      loop = setInterval(() => {
+        const el = root.current
+        if (!el || document.visibilityState !== 'visible') return
+        const r = el.getBoundingClientRect()
+        if (r.bottom < 0 || r.top > window.innerHeight) return
+        setPhase((p) => (p + 1) % (last + 1))
+      }, 8000)
+    }, 8000)
+    return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c); clearTimeout(d); clearInterval(loop) }
   }, [reduce, touched, seen, last])
 
   const target = useMemo(
