@@ -1,28 +1,33 @@
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import Layout from './layout/Layout.jsx'
+import Home from './pages/Home.jsx'
+import TeachOS from './pages/TeachOS.jsx'
+import NotFound from './pages/NotFound.jsx'
 
-import { BrowserRouter } from "react-router-dom";
-
-import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas } from "./components";
-
-const App = () => {
-  return (
-    <BrowserRouter>
-      <div className='relative z-0 bg-primary'>
-        <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
-          <Navbar />
-          <Hero />
-        </div>
-        <About />
-        <Experience />
-        <Tech />
-        <Works />
-        <Feedbacks />
-        <div className='relative z-0'>
-          <Contact />
-          <StarsCanvas />
-        </div>
-      </div>
-    </BrowserRouter>
-  );
+function ScrollToHash() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView()
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname, hash])
+  return null
 }
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <ScrollToHash />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="teachos" element={<TeachOS />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </>
+  )
+}
