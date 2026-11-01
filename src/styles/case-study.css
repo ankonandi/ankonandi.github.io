@@ -63,6 +63,9 @@ details[open] .chev::after { transform: translate(-50%, -50%) scaleY(0); }
   .two > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); margin-top: 16px; padding-top: 24px; }
 }
 @media (max-width: 600px) {
+  .est { padding: 16px; }
+  .est th, .est td { font-size: 14px; padding-right: 8px; }
+  .est .total { font-size: 16px; }
   .loop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .loop li { border-right: 0 !important; border-top: 1px solid var(--line); }
   .loop li:nth-child(-n+2) { border-top: 0; }

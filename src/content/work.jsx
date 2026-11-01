@@ -15,7 +15,7 @@ export const work = [
   {
     title: 'Manager Connect',
     sub: 'A separate product. I own it end to end',
-    body: 'I designed, built and still run this product myself in Replit: the code, the database and the maintenance. Managers and instructors see it inside TeachOS because engineering embedded it as a page, but it is its own product. It handles 1:1 scheduling, recording, transcripts, an AI session report, and action items that sync back to the instructor. Its per-session token login became the pattern for the SPI scorecard integration.',
+    body: 'I designed, built and still run this product myself in Replit: the code, the database and the maintenance. Managers and instructors see it inside TeachOS because engineering embedded it as a page, but it is its own product. It handles 1:1 scheduling, recording, transcripts, an AI session report, and action items that sync back to the instructor.',
     out: (
       <>
         <span className="mark">3,000+</span> 1:1s with 17 managers<br />
