@@ -18,6 +18,8 @@ section.block { padding: clamp(48px, 7vw, 96px) 0 0; }
 .work-row p { margin: 0; font-family: var(--prose); font-size: 17.5px; color: var(--ink-soft); max-width: 38em; }
 .work-row .out { font-size: 15px; font-weight: 600; text-align: right; max-width: 15em; justify-self: end; }
 .work-row .out a { display: inline-block; margin-top: 6px; }
+.work-row .out a.btn { display: inline-flex; margin-top: 10px; min-height: 42px; padding: 0 18px; font-size: 15px; text-decoration: none; }
+.work-row .out a.btn + a.btn { margin-top: 8px; }
 .req { font-size: 15px; font-weight: 600; margin-top: 8px; display: inline-block; }
 
 /* how I work */

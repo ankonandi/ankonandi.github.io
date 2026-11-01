@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { profile } from './profile.js'
 
 export const work = [
   {
@@ -8,7 +9,7 @@ export const work = [
     out: (
       <>
         <span className="mark">26K+</span> evaluations a month<br />
-        <Link to="/teachos">Read the case study</Link>
+        <Link className="btn small" to="/teachos">Read the case study</Link>
       </>
     ),
   },
@@ -19,7 +20,7 @@ export const work = [
     out: (
       <>
         <span className="mark">3,000+</span> 1:1s with 17 managers<br />
-        <Link to="/teachos#manager-connect">See how it works</Link>
+        <Link className="btn small" to="/teachos#manager-connect">See how it works</Link>
       </>
     ),
   },
@@ -29,8 +30,8 @@ export const work = [
     body: "An AI toolkit for India's micro-creators who sell physical products online. It writes product listings and platform-specific captions, puts every sales channel behind one tracked product link, and generates campaigns. It began with five research ideas scored out of 30, then customer validation, personas, a PRD and MVP testing.",
     out: (
       <>
-        <a href="https://ai-adcraft3.lovable.app/" target="_blank" rel="noopener noreferrer">Live MVP</a><br />
-        <a href="https://github.com/ankonandi/AdCraft_AI" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a className="btn small" href="https://ai-adcraft3.lovable.app/" target="_blank" rel="noopener noreferrer">Try the live MVP</a><br />
+        <a className="btn small ghost" href="https://github.com/ankonandi/AdCraft_AI" target="_blank" rel="noopener noreferrer">View the code</a>
       </>
     ),
   },
@@ -38,6 +39,11 @@ export const work = [
     title: 'Prototyping lab',
     sub: 'Lovable, Replit, Claude',
     body: 'About 20 Lovable prototypes, about 15 Replit prototypes with 10 to 15 of them deployed, and, more recently, about 10 interactive HTML prototypes. Proofs of concept include Training and Teaching Mode, AI Assessment and Manager Connect.',
-    out: <>Proven before engineering invested</>,
+    out: (
+      <>
+        Proven before engineering invested<br />
+        <a className="btn small" href={`mailto:${profile.email}?subject=${encodeURIComponent('Prototype walkthrough')}`}>Ask for a walkthrough</a>
+      </>
+    ),
   },
 ]
