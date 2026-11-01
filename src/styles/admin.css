@@ -285,3 +285,5 @@
 .lb-list li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--a-line); flex-wrap: wrap; }
 .lb-list li b { min-width: 2.2em; font-size: 17px; }
 .lb-list li span { flex: 1 1 160px; color: var(--a-mute); overflow-wrap: anywhere; font-size: 14px; }
+.tbl tr.dim-row td { color: var(--a-mute); }
+.tbl tr.dim-row td b { color: var(--a-ink); }

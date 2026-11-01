@@ -4,12 +4,14 @@ import {
   DAY, PRESETS, presetRange, autoGroup, toInput, fromInput, fmtDate, fmtDateTime, fmtRange, rel, dur, startOfDay,
 } from './range.js'
 import { toSession, kpis, analyze, buckets, heatmap, acted, engaged } from './stats.js'
+import CampaignsView from './Campaigns.jsx'
 import { TimeChart, Heatmap, Funnel, Bars, Stacked, Sparkline, Delta, int, pct } from './charts.jsx'
 
 const LIMIT = 10000
 const VIEWS = [
   ['overview', 'Overview'],
   ['acquisition', 'Acquisition'],
+  ['campaigns', 'Campaigns'],
   ['audience', 'Audience'],
   ['behavior', 'Behavior'],
   ['conversion', 'Conversion'],
@@ -107,6 +109,16 @@ export default function Dashboard() {
   const [busy, setBusy] = useState(false)
   const [updated, setUpdated] = useState(null)
   const [nonce, setNonce] = useState(0)
+  const [links, setLinks] = useState({})
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const { db, fs } = await firebase()
+        const snap = await fs.getDoc(fs.doc(db, 'config', 'links'))
+        if (snap.exists()) setLinks(snap.data().items || {})
+      } catch { /* the table then shows only tagged visits */ }
+    })()
+  }, [nonce, range])
 
   const setRange = (r) => { setTrail([]); setRangeRaw(r) }
   const drill = (d) => {
@@ -223,6 +235,8 @@ export default function Dashboard() {
               <Panel title="First page seen"><Bars rows={a.entry.slice(0, 8)} total={a.n} /></Panel>
             </div>
           )}
+
+          {view === 'campaigns' && <CampaignsView sessions={cur} items={links} />}
 
           {view === 'audience' && (
             <div className="cols">
