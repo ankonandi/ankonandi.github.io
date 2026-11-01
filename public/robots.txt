@@ -1,2 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /r/
+Disallow: /t/
+
+Sitemap: https://ankonandi.github.io/sitemap.xml

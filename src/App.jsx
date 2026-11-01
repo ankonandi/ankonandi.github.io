@@ -23,11 +23,29 @@ function ScrollToHash() {
   return null
 }
 
+// Keeps the tab title and canonical address right when someone moves between pages without a reload.
+const pageMeta = {
+  '/': ['Ankon Nandi | Associate Product Manager, AI | IIIT Hyderabad', 'https://ankonandi.github.io/'],
+  '/teachos': ['TeachOS case study | Ankon Nandi, Associate Product Manager', 'https://ankonandi.github.io/teachos'],
+}
+
+function PageMeta() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    const m = pageMeta[pathname.replace(/\/+$/, '') || '/']
+    if (!m) return
+    document.title = m[0]
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', m[1])
+  }, [pathname])
+  return null
+}
+
 export default function App() {
   useAnalytics()
   return (
     <>
       <ScrollToHash />
+      <PageMeta />
       <Routes>
         <Route path="r/*" element={<ShortLink />} />
         <Route path="t/*" element={<ShortLink to="/teachos" />} />
