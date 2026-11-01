@@ -258,6 +258,34 @@ function ResumeAdmin() {
   )
 }
 
+function PasswordAdmin({ kit }) {
+  const [pw, setPw] = useState('')
+  const [pw2, setPw2] = useState('')
+  const [status, setStatus] = useState('')
+  const save = async (e) => {
+    e.preventDefault()
+    if (pw.length < 10) { setStatus('Use at least 10 characters.'); return }
+    if (pw !== pw2) { setStatus('The two passwords do not match.'); return }
+    try {
+      await kit.a.updatePassword(kit.auth.currentUser, pw)
+      setPw(''); setPw2('')
+      setStatus('Saved. You can now sign in with this email and password, or still use Google.')
+    } catch (err) {
+      setStatus(err.code === 'auth/requires-recent-login' ? 'For safety, sign out, sign in again with Google, and then set the password right away.' : `Could not save: ${err.message}`)
+    }
+  }
+  return (
+    <form onSubmit={save} className="adm-form">
+      <p className="adm-muted">Set a password for {kit.auth.currentUser && kit.auth.currentUser.email}. Afterwards you can sign in with email and password instead of Google. Anyone you add under Access sets their own password the same way, after their first Google sign-in.</p>
+      <input className="adm-input" type="email" autoComplete="username" value={kit.auth.currentUser ? kit.auth.currentUser.email : ''} readOnly aria-label="Email" />
+      <input className="adm-input" type="password" autoComplete="new-password" placeholder="New password" aria-label="New password" value={pw} onChange={(e) => setPw(e.target.value)} />
+      <input className="adm-input" type="password" autoComplete="new-password" placeholder="Repeat the password" aria-label="Repeat the password" value={pw2} onChange={(e) => setPw2(e.target.value)} />
+      <div className="adm-actions"><button type="submit" className="btn">Save password</button></div>
+      {status && <p className="adm-status" role="status">{status}</p>}
+    </form>
+  )
+}
+
 function AccessAdmin({ me }) {
   const [list, setList] = useState(null)
   const [email, setEmail] = useState('')
@@ -347,6 +375,24 @@ export default function Admin() {
     })()
     return () => { stop = true }
   }, [user])
+  const [mail, setMail] = useState('')
+  const [pass, setPass] = useState('')
+  const signInPassword = async (e) => {
+    e.preventDefault()
+    setMsg('')
+    try { await kit.a.signInWithEmailAndPassword(kit.auth, mail.trim(), pass) } catch (err) {
+      setMsg(['auth/invalid-credential', 'auth/wrong-password', 'auth/user-not-found', 'auth/invalid-email'].includes(err.code)
+        ? 'Wrong email or password. If you have not set a password yet, sign in with Google and set one in the Password tab.'
+        : err.code === 'auth/too-many-requests' ? 'Too many attempts. Wait a few minutes and try again.'
+        : err.code === 'auth/operation-not-allowed' ? 'Password sign-in is not switched on in Firebase.'
+        : (err.message || 'Sign-in failed'))
+    }
+  }
+  const forgot = async () => {
+    if (!mail.trim()) { setMsg('Type your email first, then choose Forgot password.'); return }
+    try { await kit.a.sendPasswordResetEmail(kit.auth, mail.trim()) } catch { /* same message either way, so this does not reveal which emails exist */ }
+    setMsg('If that email has an account, a reset link is on its way.')
+  }
   const allowed = user && user.emailVerified && access === 'yes'
 
   return (
@@ -358,17 +404,27 @@ export default function Admin() {
       {user === undefined && <p className="adm-muted">Loading…</p>}
       {user === null && (
         <div className="adm-gate">
-          <p>Sign in with your Google account to continue.</p>
+          <p>Sign in to continue.</p>
           <button type="button" className="btn" onClick={signIn} disabled={!kit}>Sign in with Google</button>
+          <p className="adm-or">or with email and password</p>
+          <form onSubmit={signInPassword} className="adm-form">
+            <input className="adm-input" type="email" autoComplete="username" placeholder="Email" aria-label="Email" value={mail} onChange={(e) => setMail(e.target.value)} />
+            <input className="adm-input" type="password" autoComplete="current-password" placeholder="Password" aria-label="Password" value={pass} onChange={(e) => setPass(e.target.value)} />
+            <div className="adm-actions">
+              <button type="submit" className="btn ghost" disabled={!kit}>Sign in</button>
+              <button type="button" className="adm-link" onClick={forgot}>Forgot password</button>
+            </div>
+          </form>
           {msg && <p className="adm-error">{msg}</p>}
         </div>
       )}
       {user && access === 'checking' && <p className="adm-muted">Checking access…</p>}
-      {user && access === 'no' && <p className="adm-error">{user.email} does not have access. Sign out and use an account the owner has added.</p>}
+      {user && !user.emailVerified && <p className="adm-error">{user.email} is not verified yet. Use Forgot password to verify it, or sign in with Google.</p>}
+      {user && user.emailVerified && access === 'no' && <p className="adm-error">{user.email} does not have access. Sign out and use an account the owner has added.</p>}
       {allowed && (
         <>
           <nav className="adm-tabs" aria-label="Admin sections">
-            {[['analytics', 'Analytics'], ['metrics', 'Hero metrics'], ['resume', 'Resume'], ['access', 'Access']].map(([id, label]) => (
+            {[['analytics', 'Analytics'], ['metrics', 'Hero metrics'], ['resume', 'Resume'], ['access', 'Access'], ['password', 'Password']].map(([id, label]) => (
               <button key={id} type="button" aria-pressed={tab === id} onClick={() => setTab(id)}>{label}</button>
             ))}
           </nav>
@@ -376,6 +432,7 @@ export default function Admin() {
           {tab === 'metrics' && <MetricsEditor />}
           {tab === 'resume' && <ResumeAdmin />}
           {tab === 'access' && <AccessAdmin me={user.email} />}
+          {tab === 'password' && <PasswordAdmin kit={kit} />}
         </>
       )}
     </div>

@@ -55,3 +55,8 @@
 .adm-people .btn { padding: 8px 14px; min-height: 44px; }
 .adm-input { font: inherit; padding: 10px 12px; min-height: 44px; min-width: 260px; border: 2px solid var(--line); border-radius: 6px; background: #fff; color: var(--ink); }
 .adm-input:focus { outline: 3px solid rgba(217,58,64,.35); border-color: var(--navy); }
+
+.adm-form { display: grid; gap: 10px; justify-items: start; max-width: 420px; width: 100%; }
+.adm-form .adm-input { width: 100%; box-sizing: border-box; }
+.adm-or { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; }
+.adm-link { font: inherit; font-weight: 700; background: none; border: 0; color: var(--navy); text-decoration: underline; cursor: pointer; min-height: 44px; padding: 0 6px; }
