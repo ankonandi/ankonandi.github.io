@@ -3,7 +3,8 @@ import { metricRows, phases } from '../content/metrics.js'
 import { useTween, usePrefersReducedMotion } from '../hooks/useTween.js'
 
 function format(row, v) {
-  if (row.fmt === 'pct') return `${(Math.round(v * 10) / 10).toFixed(1).replace(/\.0$/, '')}%`
+  if (row.fmt === 'pct') return `${Math.round(v)}%`
+  if (row.step) return `${(Math.round(v / row.step) * row.step).toLocaleString('en-IN')}+`
   return Math.round(v).toLocaleString('en-IN')
 }
 

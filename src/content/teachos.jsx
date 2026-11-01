@@ -42,7 +42,7 @@ export const problems = [
     ],
     result: (
       <>
-        Report open rate went from <M>60.6% to about 84%</M> after the Snapshot launched.<br />
+        Report open rate went from <M>61% to 85%</M> after the Snapshot launched.<br />
         Reports opened per month rose from 9,707 to 21,224, and the open rate held at about 84% at more than twice the volume.
       </>
     ),
