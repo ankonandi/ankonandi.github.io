@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 export const work = [
   {
     title: 'TeachOS',
-    sub: 'NxtWave. Product lead',
-    body: 'The instructor operating system for NIAT: prepare, teach, get AI feedback, practise, get coached, raise issues. I own strategy, the roadmap, delivery and the metrics.',
+    sub: 'NxtWave. Associate Product Manager, owner of the product',
+    body: 'The instructor operating system for NIAT: prepare, teach, get AI feedback, practice, get coached, raise issues. I own strategy, the roadmap, delivery and the metrics.',
     out: (
       <>
         <span className="mark">26K+</span> evaluations a month<br />
@@ -15,7 +15,7 @@ export const work = [
   {
     title: 'Manager Connect',
     sub: 'A separate product. I own it end to end',
-    body: 'I designed, built and still run this product myself in Replit: the code, the database and the maintenance. Managers and instructors see it inside TeachOS because engineering embedded it as a page, but it is its own product. It handles 1:1 scheduling, recording, transcripts, an AI session report, and action items that sync back to the instructor.',
+    body: 'I designed, built and still run this product myself in Replit: the code, the database and the maintenance. Managers and instructors see it inside TeachOS because engineering embedded it as a page, but it is its own product. It handles 1:1 scheduling, recording, transcripts, an AI session report, and action items that sync back to the instructor. Managers are users too: their coaching is recorded, reported and scored.',
     out: (
       <>
         <span className="mark">3,000+</span> 1:1s with 17 managers<br />
