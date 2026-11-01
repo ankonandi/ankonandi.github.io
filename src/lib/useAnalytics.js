@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { track } from './track.js'
+import { track, showTrackCheck } from './track.js'
 
 const SECTIONS = ['work', 'how', 'background', 'contact', 'teachos', 'manager-connect', 'docs', 'cut']
 
@@ -22,6 +22,7 @@ export function useAnalytics() {
 
   useEffect(() => {
     if (pathname.startsWith('/admin')) return
+    if (/[?&]trackcheck=1/.test(location.search)) showTrackCheck()
     track('pageview')
   }, [pathname])
 

@@ -32,6 +32,36 @@ const S = {
   flushing: false,
   lastInteract: Date.now(),
   raf: 0,
+  err: '',
+}
+
+// Why tracking is off, in words. Used by the ?trackcheck=1 panel.
+function offReason() {
+  try {
+    if (['localhost', '127.0.0.1'].includes(location.hostname)) return 'this is localhost'
+    if (navigator.doNotTrack === '1') return 'the browser sends Do Not Track'
+    if (localStorage.getItem('noTrack') === '1') return 'this browser has opened /admin, so it is excluded'
+  } catch { return 'browser storage is blocked' }
+  return ''
+}
+
+// Add ?trackcheck=1 to any page address to see whether this browser is counted and if a save worked.
+export function showTrackCheck() {
+  if (document.getElementById('trackcheck')) return
+  const el = document.createElement('div')
+  el.id = 'trackcheck'
+  el.setAttribute('role', 'status')
+  el.style.cssText = 'position:fixed;left:12px;right:12px;bottom:76px;z-index:99999;background:#0F1B3D;color:#fff;font:14px/1.45 system-ui,sans-serif;padding:12px 14px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.35)'
+  document.body.appendChild(el)
+  const draw = () => {
+    const why = offReason()
+    const lines = [
+      why ? `Tracking is OFF: ${why}.` : 'Tracking is ON for this browser.',
+      !why && (S.created ? 'This visit has been saved.' : S.err ? `Saving failed: ${S.err}` : 'Waiting to save (takes about 4 seconds after you scroll or click).'),
+    ].filter(Boolean)
+    el.textContent = lines.join(' ')
+  }
+  draw(); setInterval(draw, 1000)
 }
 
 function disabled() {
@@ -182,6 +212,7 @@ async function flush() {
     if (ld && ld !== S.sentLd) patch.ld = ld
     if (cls !== S.sentCls) patch.cls = cls
     await fs.setDoc(fs.doc(db, 'sessions', S.ids.sid), patch, { merge: true })
+    S.err = ''
     S.lastFlush = Date.now()
     S.actSent = act
     if (lcp) S.sentLcp = lcp
@@ -191,7 +222,8 @@ async function flush() {
       S.created = true
       try { sessionStorage.setItem('sidMade', '1') } catch { /* ignore */ }
     }
-  } catch {
+  } catch (e) {
+    S.err = (e && (e.code || e.message)) || 'unknown error'
     // Put the pending changes back so the next flush retries them.
     for (const [k, v] of Object.entries(clicks)) S.clickD[k] = (S.clickD[k] || 0) + v
     for (const [k, v] of Object.entries(sdDirty)) S.sdDirty[k] = Math.max(S.sdDirty[k] || 0, v)
