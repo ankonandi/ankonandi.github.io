@@ -19,9 +19,9 @@ const VIEWS = [
 
 function Panel({ title, note, children, wide }) {
   return (
-    <section className={`panel${wide ? ' wide' : ''}`}>
+    <section className={`a-panel${wide ? ' wide' : ''}`}>
       <h3>{title}</h3>
-      {note && <p className="panel-note">{note}</p>}
+      {note && <p className="a-panel-note">{note}</p>}
       {children}
     </section>
   )
@@ -57,7 +57,7 @@ function RangeBar({ range, setRange, onRefresh, busy, updated, back, onBack }) {
   return (
     <div className="rangebar">
       <div className="rb-row">
-        <div className="seg" role="group" aria-label="Quick ranges">
+        <div className="a-seg" role="group" aria-label="Quick ranges">
           {PRESETS.map(([id, label]) => (
             <button key={id} type="button" aria-pressed={range.id === id} onClick={() => setRange(presetRange(id))}>{label}</button>
           ))}
@@ -71,7 +71,7 @@ function RangeBar({ range, setRange, onRefresh, busy, updated, back, onBack }) {
         <label>From<input type="datetime-local" value={from} onChange={(e) => setFrom(e.target.value)} /></label>
         <label>To<input type="datetime-local" value={to} onChange={(e) => setTo(e.target.value)} /></label>
         <button type="submit" className="btn small" aria-pressed={range.id === 'custom'}>Apply range</button>
-        <div className="seg" role="group" aria-label="Group chart by">
+        <div className="a-seg" role="group" aria-label="Group chart by">
           {[['hour', 'By hour'], ['day', 'By day']].map(([g, label]) => (
             <button key={g} type="button" aria-pressed={range.group === g} onClick={() => setRange({ ...range, group: g })}>{label}</button>
           ))}
@@ -255,7 +255,7 @@ export default function Dashboard() {
               </dl>
               <Panel title="Errors">
                 <p className="big-line"><b>{int(a.perf.errors)}</b> of {int(a.n)} visits hit a script error ({pct(a.perf.errors, a.n)}).</p>
-                <p className="panel-note">{int(a.perf.measured)} visits reported speed measurements. Safari does not report the largest paint, so those visits are left out of the median.</p>
+                <p className="a-panel-note">{int(a.perf.measured)} visits reported speed measurements. Safari does not report the largest paint, so those visits are left out of the median.</p>
               </Panel>
             </>
           )}

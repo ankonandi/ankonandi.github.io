@@ -107,7 +107,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="shell">
+    <div className="a-shell">
       <aside className="side">
         <div className="brand"><span aria-hidden="true">AN</span><div><b>Portfolio admin</b><small>ankonandi.github.io</small></div></div>
         <nav aria-label="Admin sections">
