@@ -79,7 +79,7 @@ export const problems = [
   },
   {
     title: 'Attendance ate teaching time',
-    key: '~10 min to ~2 min',
+    key: '~10 min to under 2 min',
     problem: 'Multi-round photo attendance took a large slice of every class, and instructor issues had no tracked channel.',
     did: [
       'Led QR attendance from pilot to rollout on four campuses, working with campus operations on devices, network and policy.',
@@ -87,7 +87,7 @@ export const problems = [
     ],
     result: (
       <>
-        Attendance went from about 10 minutes on paper, to about 5 with photos, to about <M>2 with QR</M>, and it is more authentic and harder to fake.<br />
+        Attendance went from about 10 minutes on paper, to about 5 with photos, to <M>under 2 minutes with QR</M>, and it is more authentic and harder to fake.<br />
         Issues raised with full context grew from 19 to 2,144 a month.
       </>
     ),

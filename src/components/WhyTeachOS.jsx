@@ -5,7 +5,7 @@ export default function WhyTeachOS() {
     <div className="why">
       <div>
         <h3>Why TeachOS exists</h3>
-        <p>In 2025 NxtWave grew to 18 universities. The quality of teaching had to stay at the same level on every campus, and that takes an audit layer. Auditing by people is expensive, because an auditor has to be in the room for the whole class, and can only be in one room at a time.</p>
+        <p>Last year NxtWave had 18 universities. This year it has grown to 51. The quality of teaching had to stay at the same level on every campus, and that takes an audit layer. Auditing by people is expensive, because an auditor has to be in the room for the whole class, and can only be in one room at a time.</p>
         <p>So we built a tool that audits classes for us, and it solved three problems at once:</p>
         <ul className="outs">
           <li>Instructors get feedback on every session and improve.</li>
