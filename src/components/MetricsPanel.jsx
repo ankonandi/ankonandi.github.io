@@ -51,6 +51,7 @@ export default function MetricsPanel() {
           {phases.map((p, i) => (
             <button key={p.id} type="button" aria-pressed={phase === i} onClick={() => pick(i)}>{p.label}</button>
           ))}
+          {!touched && (seen || reduce) ? <span className="seg-tag" aria-hidden="true">Tap to compare</span> : null}
         </div>
       </div>
       <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}</p>
