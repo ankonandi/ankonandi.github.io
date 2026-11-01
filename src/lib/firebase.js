@@ -7,8 +7,9 @@ const config = {
   appId: '1:642134923132:web:d024c3d3f4670a695176f9',
 }
 
-// Only these Google accounts can open /admin. The same list is enforced in firestore.rules.
-export const ADMINS = ['ankon.iiit.exps@gmail.com', 'ankonandi5002@gmail.com']
+// The owner can always open /admin and is the only one who can add or remove other admins.
+// Other admins live in the Firestore collection "admins". Both are enforced in firestore.rules.
+export const OWNER = 'ankon.iiit.exps@gmail.com'
 
 let cached
 export function firebase() {
