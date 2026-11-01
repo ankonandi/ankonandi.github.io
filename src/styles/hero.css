@@ -1,0 +1,27 @@
+.hero { background: var(--navy); color: var(--chalk); padding: clamp(40px, 7vw, 88px) 0 clamp(40px, 6vw, 72px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.hero h1 { font-size: clamp(40px, 5.4vw, 76px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 24px; font-variation-settings: "opsz" 96; }
+.hero .lede { font-family: var(--prose); font-size: clamp(18px, 1.6vw, 21px); line-height: 1.6; color: var(--chalk); max-width: 34em; margin: 0 0 14px; }
+.hero .lede + .lede { color: var(--chalk-dim); font-size: 17px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero .cta { margin-top: 28px; }
+
+/* baseline / now panel */
+.panel { background: var(--navy-2); border: 1px solid rgba(246,247,251,.16); border-radius: 10px; padding: clamp(18px, 2.4vw, 28px); }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 8px; }
+.panel-head h2 { margin: 0; font-size: 18px; font-weight: 600; color: var(--chalk); }
+.seg { display: inline-flex; background: rgba(0,0,0,.28); border-radius: 8px; padding: 3px; }
+.seg button { font: inherit; font-weight: 600; font-size: 14.5px; border: 0; background: transparent; color: var(--chalk-dim); padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--chalk); color: var(--ink); }
+.metric-list { list-style: none; margin: 0; padding: 0; }
+.metric { padding: 14px 0 12px; border-bottom: 1px dashed rgba(246,247,251,.22); }
+.metric:last-child { border-bottom: 0; padding-bottom: 2px; }
+.m-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.m-label { font-size: 15.5px; color: var(--chalk); }
+.m-label small { display: block; color: var(--chalk-dim); font-size: 13px; }
+.m-val { font-size: clamp(26px, 2.6vw, 34px); font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.m-bar { height: 6px; background: rgba(0,0,0,.3); border-radius: 3px; margin-top: 9px; overflow: hidden; }
+.m-bar i { display: block; height: 100%; background: var(--pen-bright); border-radius: 3px; }
+.panel-note { margin: 14px 0 0; color: var(--chalk-dim); font-size: 13px; line-height: 1.45; }
+
+@media (max-width: 1100px) { .hero-grid { grid-template-columns: 1fr; } }
