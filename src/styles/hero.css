@@ -43,7 +43,7 @@
 /* small "Tap to compare" tag above the period buttons, gone after the first click */
 .panel-head { padding-top: 14px; }
 .seg { position: relative; }
-.seg-tag { position: absolute; left: 22px; top: -25px; padding: 2px 9px 3px; border-radius: 999px; background: var(--pen-bright); color: var(--ink); font-size: 11.5px; font-weight: 700; line-height: 1.3; white-space: nowrap; pointer-events: none; animation: tag-bob 1.8s ease-in-out 3; }
+.seg-tag { position: absolute; left: 60px; top: -25px; transform: translateX(-50%); padding: 2px 9px 3px; border-radius: 999px; background: var(--pen-bright); color: var(--ink); font-size: 11.5px; font-weight: 700; line-height: 1.3; white-space: nowrap; pointer-events: none; transition: left .6s cubic-bezier(.4,0,.2,1); animation: tag-bob 1.8s ease-in-out infinite; }
 .seg-tag::after { content: ""; position: absolute; left: 50%; margin-left: -4px; bottom: -4px; width: 8px; height: 8px; background: var(--pen-bright); transform: rotate(45deg); border-radius: 1px; }
-@keyframes tag-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes tag-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
 @media (prefers-reduced-motion: reduce) { .seg-tag { animation: none; } }

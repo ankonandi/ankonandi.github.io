@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { phases } from '../content/metrics.js'
 import { useMetricRows } from '../lib/useMetricRows.js'
 import { track } from '../lib/track.js'
@@ -15,6 +15,27 @@ export default function MetricsPanel() {
   const [seen, setSeen] = useState(false)
   const [auto, setAuto] = useState(false)
   const root = useRef(null)
+  const btns = useRef([])
+  const [hint, setHint] = useState(0)
+  const [tagX, setTagX] = useState(null)
+
+  // The tag points at a tab other than the one that is open, and hops to another tab every few seconds.
+  useEffect(() => {
+    if (reduce || touched || !seen) return undefined
+    const t = setInterval(() => {
+      if (document.visibilityState !== 'visible') return
+      setHint((h) => h + 1)
+    }, 6000)
+    return () => clearInterval(t)
+  }, [reduce, touched, seen])
+  const others = phases.map((_, i) => i).filter((i) => i !== phase)
+  const target = others[hint % others.length]
+  useLayoutEffect(() => {
+    const place = () => { const b = btns.current[target]; if (b) setTagX(b.offsetLeft + b.offsetWidth / 2) }
+    place()
+    window.addEventListener('resize', place)
+    return () => window.removeEventListener('resize', place)
+  }, [target, touched, seen])
 
   // Wait until the panel is on screen, so the walk through the periods is actually seen.
   useEffect(() => {
@@ -26,33 +47,21 @@ export default function MetricsPanel() {
     return () => io.disconnect()
   }, [reduce, seen])
 
-  // Walks start, then Oct to Nov 2025, then today, slowly enough to read, then keeps cycling. Stops as soon as the visitor picks a period.
+  // Walks start, then Oct to Nov 2025, then today, slowly enough to read, once. Stops as soon as the visitor picks a period.
   useEffect(() => {
     if (reduce || touched || !seen) return undefined
     setAuto(true)
     const a = setTimeout(() => setPhase(1), 1500)
     const b = setTimeout(() => setPhase(last), 3300)
     const c = setTimeout(() => setAuto(false), 4400)
-    // After the first walk-through, move to the next period now and then, so it is clear the buttons do something.
-    // Stops for good once the visitor taps a period. Skips a turn when the panel is off screen or the tab is hidden.
-    let loop
-    const d = setTimeout(() => {
-      loop = setInterval(() => {
-        const el = root.current
-        if (!el || document.visibilityState !== 'visible') return
-        const r = el.getBoundingClientRect()
-        if (r.bottom < 0 || r.top > window.innerHeight) return
-        setPhase((p) => (p + 1) % (last + 1))
-      }, 8000)
-    }, 8000)
-    return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c); clearTimeout(d); clearInterval(loop) }
+    return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c) }
   }, [reduce, touched, seen, last])
 
-  const target = useMemo(
+  const numTarget = useMemo(
     () => metricRows.map((r) => (typeof r.vals[phase] === 'number' ? r.vals[phase] : null)),
     [phase, metricRows],
   )
-  const nums = useTween(target, reduce, 900)
+  const nums = useTween(numTarget, reduce, 900)
   const pick = (i) => { setTouched(true); setAuto(false); setPhase(i); track('phase', phases[i].id) }
 
   return (
@@ -61,9 +70,9 @@ export default function MetricsPanel() {
         <h2 id="panel-h">TeachOS, before and after</h2>
         <div className={auto ? 'seg auto' : 'seg'} role="group" aria-label="Compare phases">
           {phases.map((p, i) => (
-            <button key={p.id} type="button" aria-pressed={phase === i} onClick={() => pick(i)}>{p.label}</button>
+            <button key={p.id} ref={(el) => { btns.current[i] = el }} type="button" aria-pressed={phase === i} onClick={() => pick(i)}>{p.label}</button>
           ))}
-          {!touched && (seen || reduce) ? <span className="seg-tag" aria-hidden="true">Tap to compare</span> : null}
+          {!touched && (seen || reduce) ? <span className="seg-tag" aria-hidden="true" style={tagX == null ? undefined : { left: tagX }}>Tap to compare</span> : null}
         </div>
       </div>
       <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}</p>
