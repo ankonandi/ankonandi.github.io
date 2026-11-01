@@ -49,3 +49,9 @@
   .adm-kpis > div { border-right: 0; border-bottom: 1px solid var(--line); margin-right: 0; }
   .adm-kpis > div:last-child { border-bottom: 0; }
 }
+
+.adm-people { list-style: none; margin: 10px 0 0; padding: 0; max-width: 560px; }
+.adm-people li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.adm-people .btn { padding: 8px 14px; min-height: 44px; }
+.adm-input { font: inherit; padding: 10px 12px; min-height: 44px; min-width: 260px; border: 2px solid var(--line); border-radius: 6px; background: #fff; color: var(--ink); }
+.adm-input:focus { outline: 3px solid rgba(217,58,64,.35); border-color: var(--navy); }

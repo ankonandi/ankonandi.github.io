@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { firebase, authKit, ADMINS } from '../lib/firebase.js'
+import { firebase, authKit, OWNER } from '../lib/firebase.js'
 import { openResume } from '../lib/resume.js'
 import { metricRows, phases } from '../content/metrics.js'
 import { profile } from '../content/profile.js'
@@ -258,11 +258,65 @@ function ResumeAdmin() {
   )
 }
 
+function AccessAdmin({ me }) {
+  const [list, setList] = useState(null)
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('')
+  const load = async () => {
+    try {
+      const { db, fs } = await firebase()
+      const snap = await fs.getDocs(fs.collection(db, 'admins'))
+      setList(snap.docs.map((d) => d.id).sort())
+    } catch (e) { setStatus(`Could not load: ${e.message}`) }
+  }
+  useEffect(() => { load() }, [])
+  const isOwner = me === OWNER
+  const add = async () => {
+    const v = email.trim().toLowerCase()
+    if (!/^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/.test(v)) { setStatus('Enter a full email address.'); return }
+    try {
+      const { db, fs } = await firebase()
+      await fs.setDoc(fs.doc(db, 'admins', v), { email: v, addedBy: me, added: fs.serverTimestamp() })
+      setEmail(''); setStatus(`${v} can now sign in to /admin.`); load()
+    } catch (e) { setStatus(`Could not add: ${e.message}`) }
+  }
+  const remove = async (v) => {
+    try {
+      const { db, fs } = await firebase()
+      await fs.deleteDoc(fs.doc(db, 'admins', v))
+      setStatus(`${v} no longer has access.`); load()
+    } catch (e) { setStatus(`Could not remove: ${e.message}`) }
+  }
+  return (
+    <>
+      <p className="adm-muted">Only these Google accounts can open /admin: the owner below, and anyone added here. Everyone else is blocked, both on this page and in the database itself.</p>
+      <p className="adm-current">Owner: {OWNER}</p>
+      <ul className="adm-people">
+        {list === null && <li className="adm-muted">Loading…</li>}
+        {list && list.length === 0 && <li className="adm-muted">No other admins yet.</li>}
+        {list && list.map((v) => (
+          <li key={v}><span>{v}</span>{isOwner && <button type="button" className="btn ghost" onClick={() => remove(v)}>Remove</button>}</li>
+        ))}
+      </ul>
+      {isOwner ? (
+        <div className="adm-actions">
+          <input className="adm-input" type="email" placeholder="name@gmail.com" aria-label="Email to add" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <button type="button" className="btn" onClick={add}>Give access</button>
+        </div>
+      ) : (
+        <p className="adm-muted">Only the owner can add or remove people.</p>
+      )}
+      {status && <p className="adm-status" role="status">{status}</p>}
+    </>
+  )
+}
+
 export default function Admin() {
   const [user, setUser] = useState(undefined)
   const [tab, setTab] = useState('analytics')
   const [kit, setKit] = useState(null)
   const [msg, setMsg] = useState('')
+  const [access, setAccess] = useState('checking')
 
   useEffect(() => {
     document.title = 'Admin'
@@ -280,7 +334,20 @@ export default function Admin() {
     setMsg('')
     try { await kit.a.signInWithPopup(kit.auth, new kit.a.GoogleAuthProvider()) } catch (e) { setMsg(e.code === 'auth/unauthorized-domain' ? 'This site address is not authorized in Firebase yet.' : (e.message || 'Sign-in failed')) }
   }
-  const allowed = user && user.emailVerified && ADMINS.includes(user.email)
+  // Ask the database whether this account is an admin. Only admins are allowed to read the admins list.
+  useEffect(() => {
+    if (!user) { setAccess('checking'); return undefined }
+    let stop = false
+    ;(async () => {
+      try {
+        const { db, fs } = await firebase()
+        await fs.getDocs(fs.query(fs.collection(db, 'admins'), fs.limit(1)))
+        if (!stop) setAccess('yes')
+      } catch { if (!stop) setAccess('no') }
+    })()
+    return () => { stop = true }
+  }, [user])
+  const allowed = user && user.emailVerified && access === 'yes'
 
   return (
     <div className="adm">
@@ -296,17 +363,19 @@ export default function Admin() {
           {msg && <p className="adm-error">{msg}</p>}
         </div>
       )}
-      {user && !allowed && <p className="adm-error">{user.email} does not have access. Sign out and use your own account.</p>}
+      {user && access === 'checking' && <p className="adm-muted">Checking access…</p>}
+      {user && access === 'no' && <p className="adm-error">{user.email} does not have access. Sign out and use an account the owner has added.</p>}
       {allowed && (
         <>
           <nav className="adm-tabs" aria-label="Admin sections">
-            {[['analytics', 'Analytics'], ['metrics', 'Hero metrics'], ['resume', 'Resume']].map(([id, label]) => (
+            {[['analytics', 'Analytics'], ['metrics', 'Hero metrics'], ['resume', 'Resume'], ['access', 'Access']].map(([id, label]) => (
               <button key={id} type="button" aria-pressed={tab === id} onClick={() => setTab(id)}>{label}</button>
             ))}
           </nav>
           {tab === 'analytics' && <Analytics />}
           {tab === 'metrics' && <MetricsEditor />}
           {tab === 'resume' && <ResumeAdmin />}
+          {tab === 'access' && <AccessAdmin me={user.email} />}
         </>
       )}
     </div>
