@@ -18,7 +18,7 @@ export default function Contact() {
         </div>
       </section>
       <div className="wrap">
-        <footer className="foot">Ankon Nandi, based in Hyderabad, India. Product figures come from NxtWave's internal analytics as of 1 Nov 2026. This site counts visits anonymously, with no cookies and no IP addresses.</footer>
+        <footer className="foot">Ankon Nandi, Hyderabad, India. Figures are from internal product analytics as of 1 Nov 2026. Visits are counted anonymously. No cookies, no IP address.</footer>
       </div>
     </>
   )
