@@ -43,6 +43,7 @@ main { min-width: 0; }
 
 /* The tab bar only exists on phones. */
 .rail .tabbar { display: none; }
+.rail .short { display: none; }
 
 /* Phone: behaves like an app. Slim top bar with the two actions, five tabs fixed at the bottom. */
 @media (max-width: 720px) {
@@ -57,7 +58,10 @@ main { min-width: 0; }
   .rail .name { font-size: 19px; }
   .rail > nav[aria-label="Sections"] { display: none; }
   .rail .rail-foot { margin-left: auto; flex-direction: row; gap: 8px; }
-  .rail .rail-foot .btn { padding: 0 14px; min-height: 44px; display: inline-flex; align-items: center; font-size: 14.5px; }
+  .rail .rail-foot .btn { padding: 0 14px; min-height: 44px; display: inline-flex; align-items: center; font-size: 14.5px; white-space: nowrap; }
+  .rail .name { white-space: nowrap; }
+  .rail .long { display: none; }
+  .rail .short { display: inline; }
   .rail .rail-foot .ghost { display: inline-flex; }
 
   .rail .tabbar {

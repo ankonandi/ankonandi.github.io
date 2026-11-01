@@ -50,8 +50,8 @@ export default function Rail() {
         ))}
       </nav>
       <div className="rail-foot">
-        <ResumeLink className="btn">Download resume</ResumeLink>
-        <a className="btn ghost" href={`tel:${profile.phoneTel}`}>Call me</a>
+        <ResumeLink className="btn"><span className="long">Download resume</span><span className="short">Resume</span></ResumeLink>
+        <a className="btn ghost" href={`tel:${profile.phoneTel}`}><span className="long">Call me</span><span className="short">Call</span></a>
       </div>
       <nav className="tabbar" aria-label="Main">
         {tabs.map(([to, id, label, match]) => (

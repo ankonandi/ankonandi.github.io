@@ -2,13 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { phases } from '../content/metrics.js'
 import { useMetricRows } from '../lib/useMetricRows.js'
 import { track } from '../lib/track.js'
+import { formatMetric as format } from '../lib/formatMetric.js'
 import { useTween, usePrefersReducedMotion } from '../hooks/useTween.js'
-
-function format(row, v) {
-  if (row.fmt === 'pct') return `${Math.round(v)}%`
-  if (row.step) return `${(Math.round(v / row.step) * row.step).toLocaleString('en-IN')}+`
-  return Math.round(v).toLocaleString('en-IN')
-}
 
 export default function MetricsPanel() {
   const reduce = usePrefersReducedMotion()

@@ -28,3 +28,10 @@
 .panel-note { margin: 14px 0 0; color: var(--chalk-dim); font-size: 13px; line-height: 1.45; }
 
 @media (max-width: 1100px) { .hero-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .hero h1 { font-size: clamp(32px, 9vw, 40px); margin-bottom: 16px; }
+  .hero .lede { font-size: 17px; line-height: 1.55; }
+  .hero .lede + .lede { font-size: 15.5px; }
+  .m-val.text { font-size: 14px; max-width: 8.5em; line-height: 1.25; }
+  .panel-note { font-size: 12.5px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+}

@@ -18,7 +18,7 @@ export default function Contact() {
         </div>
       </section>
       <div className="wrap">
-        <footer className="foot">Ankon Nandi, Hyderabad, India. Figures are from internal product analytics as of 1 Nov 2026. Visits are counted anonymously, with no cookies.</footer>
+        <footer className="foot">Ankon Nandi, Hyderabad, India. Figures are from internal product analytics as of 1 Nov 2026. Visits are counted anonymously. No cookies, no IP address.</footer>
       </div>
     </>
   )

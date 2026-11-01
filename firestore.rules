@@ -22,6 +22,46 @@ service cloud.firestore {
       allow write: if owner();
     }
 
+    // One document per visit, updated as the person scrolls and reads. The tracker sends the whole
+    // shape below and nothing else, and every update must keep the visit's start time and visitor id.
+    function visitOk(d) {
+      return d.keys().hasOnly(['vid', 'start', 'last', 'entry', 'ref', 'dev', 'br', 'os', 'lang', 'tz', 'w', 'h', 'nw',
+                               'paths', 'sections', 'clicks', 'phases', 'sd', 'act', 'pv', 'lcp', 'ld', 'cls', 'err'])
+        && d.vid is string && d.vid.size() <= 40
+        && d.entry is string && d.entry.size() <= 80
+        && d.last == request.time
+        && (!('ref' in d) || (d.ref is string && d.ref.size() <= 80))
+        && (!('dev' in d) || (d.dev is string && d.dev.size() <= 12))
+        && (!('br' in d) || (d.br is string && d.br.size() <= 24))
+        && (!('os' in d) || (d.os is string && d.os.size() <= 24))
+        && (!('lang' in d) || (d.lang is string && d.lang.size() <= 16))
+        && (!('tz' in d) || (d.tz is string && d.tz.size() <= 40))
+        && (!('w' in d) || d.w is number)
+        && (!('h' in d) || d.h is number)
+        && (!('nw' in d) || d.nw is bool)
+        && (!('paths' in d) || (d.paths is list && d.paths.size() <= 12))
+        && (!('sections' in d) || (d.sections is list && d.sections.size() <= 20))
+        && (!('phases' in d) || (d.phases is list && d.phases.size() <= 8))
+        && (!('clicks' in d) || (d.clicks is map && d.clicks.size() <= 20))
+        && (!('sd' in d) || (d.sd is map && d.sd.size() <= 6))
+        && (!('act' in d) || (d.act is number && d.act <= 36000))
+        && (!('pv' in d) || (d.pv is number && d.pv <= 500))
+        && (!('lcp' in d) || d.lcp is number)
+        && (!('ld' in d) || d.ld is number)
+        && (!('cls' in d) || d.cls is number)
+        && (!('err' in d) || (d.err is number && d.err <= 200));
+    }
+
+    match /sessions/{sid} {
+      allow create: if sid.size() <= 40 && visitOk(request.resource.data)
+        && request.resource.data.keys().hasAll(['vid', 'start', 'last', 'entry'])
+        && request.resource.data.start == request.time;
+      allow update: if visitOk(request.resource.data)
+        && request.resource.data.vid == resource.data.vid
+        && request.resource.data.start == resource.data.start;
+      allow read, delete: if isAdmin();
+    }
+
     // Anonymous visit events. Anyone can add one with this exact shape, only the admins can read them.
     match /events/{id} {
       allow create: if request.resource.data.keys().hasAll(['sid', 'type', 'path', 'ts'])

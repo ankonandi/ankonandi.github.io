@@ -32,7 +32,10 @@ section.block { padding: clamp(48px, 7vw, 96px) 0 0; }
 .bg { width: 100%; border-collapse: collapse; border-top: 2px solid var(--ink); }
 .bg th, .bg td { text-align: left; padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); vertical-align: top; font-weight: 400; }
 .bg th { font-weight: 800; font-size: 18px; width: 34%; }
-.bg td:last-child { color: var(--muted); white-space: nowrap; padding-right: 0; text-align: right; }
+.bg td { padding-right: 0; }
+.bg-roles { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.bg-roles li { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0 16px; }
+.bg-date { color: var(--muted); white-space: nowrap; }
 
 /* contact */
 .contact { background: var(--navy); color: var(--chalk); margin-top: clamp(56px, 8vw, 110px); padding: clamp(40px, 6vw, 80px) 0; }
@@ -53,7 +56,8 @@ section.block { padding: clamp(48px, 7vw, 96px) 0 0; }
 @media (max-width: 600px) {
   body { font-size: 16px; }
   .bg th { width: auto; display: block; border-bottom: 0; padding-bottom: 2px; }
-  .bg td { display: block; padding: 0 0 14px; text-align: left; white-space: normal; border-bottom: 1px solid var(--line); }
-  .bg td:last-child { padding-bottom: 14px; }
+  .bg td { display: block; padding: 0 0 14px; border-bottom: 1px solid var(--line); }
+  .bg-roles li { display: block; }
+  .bg-date { display: block; font-size: 14.5px; }
   .bg tr { display: block; }
 }

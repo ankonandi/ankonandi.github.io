@@ -32,8 +32,11 @@ export default function Home() {
               {background.map(([org, roles, dates]) => (
                 <tr key={org}>
                   <th scope="row">{org}</th>
-                  <td>{roles.map((r, i) => <span key={r}>{i > 0 && <br />}{r}</span>)}</td>
-                  <td>{dates.map((d, i) => <span key={d}>{i > 0 && <br />}{d}</span>)}</td>
+                  <td colSpan={2}>
+                    <ul className="bg-roles">
+                      {roles.map((r, i) => <li key={r}><span>{r}</span><span className="bg-date">{dates[i]}</span></li>)}
+                    </ul>
+                  </td>
                 </tr>
               ))}
             </tbody>
