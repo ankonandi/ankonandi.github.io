@@ -4,7 +4,7 @@ export const loop = [
   ['Prepare', 'readiness gate, AI Assessment, demos'],
   ['Teach', 'reliable recording and attendance'],
   ['Get feedback', 'Snapshot report with playbooks'],
-  ['Practice', 'practice with AI'],
+  ['Practice', 'AI practice sessions'],
   ['Get coached', 'Manager Connect 1:1s'],
   ['Raise issues', 'Zoho ticket with session context'],
 ]
