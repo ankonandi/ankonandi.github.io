@@ -3,9 +3,9 @@
 export const profile = {
   name: 'Ankon Nandi',
   role: 'Associate Product Manager, AI',
-  email: 'YOUR_EMAIL_HERE',
-  phoneDisplay: '+91 XXXXX XXXXX',
-  phoneTel: '+91XXXXXXXXXX',
+  email: 'ankonandi5002@gmail.com',
+  phoneDisplay: '+91 77024 61730',
+  phoneTel: '+917702461730',
   linkedin: 'https://www.linkedin.com/in/ankon-nandi',
   github: 'https://github.com/ankonandi',
   resumeUrl: '/Ankon_Nandi_Resume.pdf',
