@@ -37,7 +37,7 @@ export const work = [
   {
     title: 'Prototyping lab',
     sub: 'Lovable, Replit, Claude',
-    body: 'About 20 Lovable prototypes, about 15 Replit prototypes with 10 to 15 of them deployed, and, more recently, about 10 interactive HTML prototypes. Proofs of concept include Training and Teaching Mode and Manager Connect.',
+    body: 'About 20 Lovable prototypes, about 15 Replit prototypes with 10 to 15 of them deployed, and, more recently, about 10 interactive HTML prototypes. Proofs of concept include Training and Teaching Mode, AI Assessment and Manager Connect.',
     out: <>Proven before engineering invested</>,
   },
 ]
