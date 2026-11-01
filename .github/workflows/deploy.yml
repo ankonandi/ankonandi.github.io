@@ -2,15 +2,14 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
-  # To deploy on every push to main once the site is ready to go live,
-  # uncomment the next two lines and set Pages source to GitHub Actions.
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  deployments: read
 
 concurrency:
   group: pages
@@ -38,5 +37,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # GitHub sometimes leaves the previous Pages deployment "in progress" and refuses the next one.
+      # Cancelling the recent ones first makes a push always deploy. Errors are ignored on purpose.
+      - name: Cancel any stuck Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for sha in $(gh api "repos/${{ github.repository }}/deployments?environment=github-pages&per_page=5" --jq '.[].sha'); do
+            gh api -X POST "repos/${{ github.repository }}/pages/deployments/$sha/cancel" >/dev/null 2>&1 || true
+          done
       - id: deployment
         uses: actions/deploy-pages@v4
