@@ -1,0 +1,72 @@
+/* the loop: a real sequence, so numbered */
+.loop { list-style: none; counter-reset: step; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0 0 40px; padding: 0; border: 2px solid var(--ink); border-radius: 8px; overflow: hidden; }
+.loop li { counter-increment: step; padding: 14px 14px 16px; font-weight: 600; font-size: 15.5px; border-right: 1px solid var(--line); background: var(--paper); }
+.loop li:last-child { border-right: 0; }
+.loop li::before { content: counter(step); display: block; font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+.loop li small { display: block; font-weight: 400; color: var(--muted); font-size: 13.5px; line-height: 1.35; margin-top: 3px; }
+
+/* problem accordion */
+.problems details { border-top: 1px solid var(--line); }
+.problems details:last-of-type { border-bottom: 1px solid var(--line); }
+.problems summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto 28px; gap: 20px; align-items: center; padding: 22px 0; }
+.problems summary::-webkit-details-marker { display: none; }
+.problems summary h3 { margin: 0; font-size: clamp(20px, 2.2vw, 27px); letter-spacing: -0.02em; font-weight: 800; line-height: 1.15; }
+.problems summary .key { font-size: 15px; color: var(--muted); font-weight: 600; text-align: right; }
+.chev { width: 28px; height: 28px; border: 2px solid var(--ink); border-radius: 50%; position: relative; }
+.chev::before, .chev::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transform: translate(-50%, -50%); }
+.chev::before { width: 10px; height: 2px; }
+.chev::after { width: 2px; height: 10px; transition: transform .2s; }
+details[open] .chev::after { transform: translate(-50%, -50%) scaleY(0); }
+.problems summary:hover h3 { text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--pen); text-underline-offset: 5px; }
+.p-body { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px 48px; padding: 0 0 30px; }
+.p-body h4 { margin: 0 0 6px; font-size: 15px; font-weight: 800; }
+.p-body h4.gap { margin-top: 16px; }
+.p-body p, .p-body ul { margin: 0; font-family: var(--prose); font-size: 18px; line-height: 1.62; max-width: 34em; }
+.p-body ul { padding-left: 1.1em; }
+.p-body li { margin-bottom: 6px; }
+.p-body .result { border-left: 3px solid var(--pen); padding-left: 18px; }
+.p-body .result p { font-family: var(--display); font-size: 17px; }
+
+/* why TeachOS exists */
+.why { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px 56px; margin: 0 0 44px; padding: 28px 0 0; border-top: 2px solid var(--ink); }
+.why h3 { margin: 0 0 12px; font-size: clamp(24px, 2.6vw, 32px); letter-spacing: -0.025em; line-height: 1.12; font-weight: 800; }
+.why p { font-family: var(--prose); font-size: 18.5px; line-height: 1.65; margin: 0 0 14px; max-width: 34em; }
+.outs { margin: 4px 0 0; padding-left: 1.1em; font-family: var(--prose); font-size: 18.5px; line-height: 1.6; }
+.outs li { margin-bottom: 6px; }
+.est { border: 2px solid var(--ink); border-radius: 8px; padding: 20px 22px; align-self: start; }
+.est h4 { margin: 0 0 4px; font-size: 18px; font-weight: 800; }
+.est .note { margin: 0 0 14px; color: var(--muted); font-size: 14.5px; line-height: 1.45; font-family: var(--display); }
+.est table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.est th, .est td { text-align: left; padding: 9px 12px 9px 0; border-bottom: 1px dashed var(--line); font-size: 15px; vertical-align: top; font-weight: 400; }
+.est thead th { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+.est td:last-child, .est th:last-child { padding-right: 0; }
+.est tbody th { font-weight: 800; }
+.est .total { font-size: 19px; font-weight: 800; }
+.est .fine { margin: 12px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; font-family: var(--display); }
+
+/* cut + still broken, and manager connect rules */
+.two { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); }
+.two > div { padding: 24px 32px 8px 0; }
+.two > div + div { padding-left: 32px; padding-right: 0; border-left: 1px solid var(--line); }
+.two h3 { margin: 0 0 10px; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+.two p, .two li { font-family: var(--prose); font-size: 18px; line-height: 1.6; }
+.two ul { padding-left: 1.1em; margin: 10px 0; }
+.big { font-size: clamp(34px, 4vw, 52px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin: 0 0 6px; display: block; }
+
+@media (max-width: 1100px) {
+  .loop { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .loop li:nth-child(3) { border-right: 0; }
+  .loop li:nth-child(n+4) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 900px) {
+  .p-body, .two, .why { grid-template-columns: 1fr; }
+  .two > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); margin-top: 16px; padding-top: 24px; }
+}
+@media (max-width: 600px) {
+  .loop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .loop li { border-right: 0 !important; border-top: 1px solid var(--line); }
+  .loop li:nth-child(-n+2) { border-top: 0; }
+  .problems summary { grid-template-columns: minmax(0, 1fr) 28px; }
+  .problems summary .key { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .chev::after { transition: none; } }
