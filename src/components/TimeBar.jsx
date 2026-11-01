@@ -51,15 +51,24 @@ export default function TimeBar() {
     if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { go(Math.min(last, phase + 1), 'key'); e.preventDefault() }
   }
 
-  // Fade with the scroll: opacity, a little drift, a little blur. Gone after about one screen.
+  // Fade with the scroll: opacity, a little drift, a little blur. Stays until the before-and-after panel ends, then fades.
   useEffect(() => {
     const el = dock.current
     let raf = 0
     let wasOff = false
     const run = () => {
       raf = 0
-      const span = Math.max(300, Math.min(620, window.innerHeight * 0.6))
-      const t = Math.max(0, Math.min(1, (window.scrollY - 30) / span))
+      // Stay fully visible while the before-and-after panel is on screen. Start fading when its bottom edge
+      // rises into the lower part of the screen, and be gone shortly after it has passed.
+      const vh = window.innerHeight
+      const panel = document.querySelector('.panel')
+      let t
+      if (panel) {
+        const bottom = panel.getBoundingClientRect().bottom
+        t = Math.max(0, Math.min(1, (vh * 0.78 - bottom) / (vh * 0.45)))
+      } else {
+        t = Math.max(0, Math.min(1, (window.scrollY - 30) / Math.max(300, Math.min(620, vh * 0.6))))
+      }
       const e = t * t * (3 - 2 * t)
       el.style.setProperty('--do', (1 - e).toFixed(3))
       if (!reduce) {
