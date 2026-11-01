@@ -113,7 +113,7 @@ export default function TimeBar() {
           <path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" /><path d="M12 8v4l3 2" />
         </svg>
       </button>
-      {!used && <span className="px-cap" aria-hidden="true">Tap a date, or drag, to see TeachOS then</span>}
+      {!used && <span className="px-cap" aria-hidden="true">Tap to rewind TeachOS</span>}
       <div className="px-track-wrap">
         <div className="px-track" ref={trackEl} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
           <div className={dragPos === null ? 'px-fill snap' : 'px-fill'} style={{ width: `${pos * 100}%` }} />

@@ -115,7 +115,7 @@
   .rail .tabbar { background: rgba(246,247,251,.88); -webkit-backdrop-filter: blur(20px) saturate(1.5); backdrop-filter: blur(20px) saturate(1.5); border-top: 1px solid var(--hair); }
   .rail .tabbar a { border-top-width: 2px; font-weight: 600; }
 }
-@media (prefers-reduced-motion: reduce) { .btn, .px-chip, .px-mode button, .rail nav a, .px-readbtn { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .px-cap { animation: none; } .btn, .px-chip, .px-mode button, .rail nav a, .px-readbtn { transition: none; } }
 
 /* Credentials row */
 .hero .hero-meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
@@ -142,7 +142,9 @@
 .px-stop-l.on { color: #fff; }
 .px-thumb { top: 0; width: 22px; height: 22px; margin-left: -11px; background: #fff; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,.4), 0 0 0 5px rgba(255,107,107,.35); }
 .px-thumb:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
-.px-cap { display: block; position: absolute; top: auto; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); white-space: nowrap; padding: 7px 14px; border-radius: 999px; background: #fff; color: var(--navy); font: 600 12.5px var(--display); box-shadow: 0 8px 24px -8px rgba(0,0,0,.5); }
+@keyframes px-bounce { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-7px); } 60% { transform: translateY(-2px); } 75% { transform: translateY(-5px); } }
+.px-cap { display: block; position: absolute; top: auto; left: 10px; right: auto; bottom: calc(100% + 12px); transform: none; white-space: nowrap; padding: 7px 13px; border-radius: 999px; background: var(--pen); color: #fff; font: 700 12.5px var(--display); box-shadow: 0 8px 22px -6px rgba(217,58,64,.6); animation: px-bounce 1.6s ease-in-out infinite; pointer-events: none; }
+.px-cap::after { content: ""; position: absolute; left: 20px; top: 100%; width: 10px; height: 10px; margin-top: -5px; background: var(--pen); transform: rotate(45deg); border-radius: 2px; }
 @media (max-width: 900px) {
   .px-dock { left: 50%; width: calc(100% - 24px); max-width: 440px; }
 }
@@ -152,5 +154,6 @@
   .px-rew svg { width: 16px; height: 16px; }
   .px-track-wrap { padding: 0 26px 20px 36px; }
   .px-stop-l { font-size: 11.5px; }
-  .px-cap { font-size: 12px; padding: 6px 12px; }
+  .px-cap { font-size: 12px; padding: 6px 12px; left: 6px; }
+  .px-cap::after { left: 18px; }
 }
