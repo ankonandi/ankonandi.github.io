@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { phases } from '../content/metrics.js'
 import { useMetricRows } from '../lib/useMetricRows.js'
 import { track } from '../lib/track.js'
@@ -12,32 +12,48 @@ export default function MetricsPanel() {
   const [phase, setPhase] = useState(reduce ? last : 0)
   const [touched, setTouched] = useState(false)
 
-  // Plays start, then the Oct to Nov 2025 changes, then today, once. Stops as soon as the visitor picks a phase.
+  const [seen, setSeen] = useState(false)
+  const [auto, setAuto] = useState(false)
+  const root = useRef(null)
+
+  // Wait until the panel is on screen, so the walk through the periods is actually seen.
   useEffect(() => {
-    if (reduce || touched) return undefined
-    const a = setTimeout(() => setPhase(1), 1100)
-    const b = setTimeout(() => setPhase(last), 2400)
-    return () => { clearTimeout(a); clearTimeout(b) }
-  }, [reduce, touched, last])
+    if (reduce || seen) return undefined
+    const el = root.current
+    if (!el || !('IntersectionObserver' in window)) { setSeen(true); return undefined }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect() } }, { threshold: 0.5 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [reduce, seen])
+
+  // Walks start, then Oct to Nov 2025, then today, once, slowly enough to read. Stops as soon as the visitor picks a period.
+  useEffect(() => {
+    if (reduce || touched || !seen) return undefined
+    setAuto(true)
+    const a = setTimeout(() => setPhase(1), 2200)
+    const b = setTimeout(() => setPhase(last), 5200)
+    const c = setTimeout(() => setAuto(false), 6800)
+    return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c) }
+  }, [reduce, touched, seen, last])
 
   const target = useMemo(
     () => metricRows.map((r) => (typeof r.vals[phase] === 'number' ? r.vals[phase] : null)),
     [phase, metricRows],
   )
-  const nums = useTween(target, reduce)
-  const pick = (i) => { setTouched(true); setPhase(i); track('phase', phases[i].id) }
+  const nums = useTween(target, reduce, 1400)
+  const pick = (i) => { setTouched(true); setAuto(false); setPhase(i); track('phase', phases[i].id) }
 
   return (
-    <div className="panel" aria-labelledby="panel-h">
+    <div className="panel" aria-labelledby="panel-h" ref={root}>
       <div className="panel-head">
         <h2 id="panel-h">TeachOS, before and after</h2>
-        <div className="seg" role="group" aria-label="Compare phases">
+        <div className={auto ? 'seg auto' : 'seg'} role="group" aria-label="Compare phases">
           {phases.map((p, i) => (
-            <button key={p.id} type="button" aria-pressed={phase === i} onClick={() => pick(i)}>{p.label}</button>
+            <button key={p.id} type="button" aria-pressed={phase === i} className={!touched && phase !== i ? 'cue' : undefined} onClick={() => pick(i)}>{p.label}</button>
           ))}
         </div>
       </div>
-      <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}</p>
+      <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}{!touched && !auto && seen ? <span className="phase-hint"> · Tap a period to compare</span> : null}</p>
       <ul className="metric-list">
         {metricRows.map((r, i) => {
           const raw = r.vals[phase]
