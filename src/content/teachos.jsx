@@ -67,7 +67,7 @@ export const problems = [
     key: '1:1s a month 56 to 985',
     problem: '17 managers coach 500+ instructors, with informal 1:1s and no shared history.',
     did: [
-      'Designed and built Manager Connect myself in Replit, end to end. It is a separate product that I still own, code, database and maintenance, and it appears inside TeachOS as an embedded page.',
+      'Designed and built Manager Connect myself in Replit, end to end. It is a separate product that I still own, code, database and maintenance, and it appears inside TeachOS as an embedded page by design, so teachers get it without any engineering effort.',
       "Shaped Team Performance and manager scorecards around it. Managers are judged on how they coach, and their outcomes are tied to their instructors' outcomes, because their reportees are instructors.",
     ],
     result: (

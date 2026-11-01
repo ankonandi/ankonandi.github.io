@@ -1,12 +1,13 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { firebase, authKit, OWNER } from '../lib/firebase.js'
-import { MetricsEditor, ResumeAdmin, AccessAdmin, PasswordAdmin } from '../admin/tabs.jsx'
+import { MetricsEditor, ResumeAdmin, AccessAdmin, PasswordAdmin, LinkBuilder } from '../admin/tabs.jsx'
 import '../styles/admin.css'
 
 const Dashboard = lazy(() => import('../admin/Dashboard.jsx'))
 
 const NAV = [
   ['analytics', 'Analytics', 'M4 19V9m6 10V5m6 14v-7m4 7H2'],
+  ['links', 'Campaign links', 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1'],
   ['metrics', 'Hero metrics', 'M4 6h16M4 12h10M4 18h6'],
   ['resume', 'Resume', 'M7 3h7l5 5v13H7zM14 3v5h5'],
   ['access', 'Access', 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z'],
@@ -131,6 +132,7 @@ export default function Admin() {
             <Suspense fallback={<div className="skeleton"><i /><i /><i /><i /></div>}><Dashboard /></Suspense>
           </>
         )}
+        {tab === 'links' && <LinkBuilder />}
         {tab === 'metrics' && <MetricsEditor />}
         {tab === 'resume' && <ResumeAdmin />}
         {tab === 'access' && <AccessAdmin me={user.email} />}

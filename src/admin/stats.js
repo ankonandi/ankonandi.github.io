@@ -111,6 +111,10 @@ export function analyze(list) {
     const group = list.filter((s) => (s.ref || 'direct') === name)
     return { name, visits, engaged: group.filter(engaged).length, acted: group.filter(acted).length }
   })
+  const group = (key) => tally(list, (s) => s[key]).map(([name, visits]) => {
+    const g = list.filter((s) => s[key] === name)
+    return { name, visits, engaged: g.filter(engaged).length, acted: g.filter(acted).length }
+  })
   const act = [
     ['Under 10 s', (s) => (s.act || 0) < 10],
     ['10 to 30 s', (s) => (s.act || 0) >= 10 && (s.act || 0) < 30],
@@ -121,6 +125,10 @@ export function analyze(list) {
   return {
     n,
     sources,
+    campaigns: group('cmp'),
+    mediums: group('med'),
+    contents: group('cnt'),
+    tagged: list.filter((s) => s.cmp || s.med || s.cnt).length,
     entry: tally(list, (s) => s.entry),
     pages: tally(list.flatMap((s) => (s.paths || []).map((p) => ({ p }))), (x) => x.p),
     devices: tally(list, (s) => s.dev),

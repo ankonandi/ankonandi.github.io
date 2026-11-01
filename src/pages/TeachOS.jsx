@@ -15,7 +15,7 @@ export default function TeachOS() {
         <Problems />
       </Section>
 
-      <Section id="manager-connect" title="Manager Connect up close" sub="A separate product I built and own. It runs the weekly 1:1 between a Capability Manager and each instructor, from booking to action items, and opens from inside TeachOS with no separate login. It has two personas, instructors and managers, and managers are measured too.">
+      <Section id="manager-connect" title="Manager Connect up close" sub="A separate product I built and own. It runs the weekly 1:1 between a Capability Manager and each instructor, from booking to action items, and is embedded in TeachOS as a page by design, so teachers open it with no separate login and no engineering effort. It has two personas, instructors and managers, and managers are measured too.">
         <Steps label="The weekly 1:1 flow" steps={mcFlow} />
         <div className="two">
           <div>
@@ -49,7 +49,7 @@ export default function TeachOS() {
           <div>
             <span className="big">6.4 / 10</span>
             <h3>average lecture QA, flat while adoption rose</h3>
-            <p>I surfaced this in my own platform audit. Phase one made TeachOS universal; phase two is making it change teaching. The roadmap is now six data-backed problem statements, each with a baseline. The rubric scale moved in March 2026, so I don't compare QA further back.</p>
+            <p>I surfaced this in a platform audit. Phase one made TeachOS universal; phase two is making it change teaching. The roadmap is now six data-backed problem statements, each with a baseline. The rubric scale moved in March 2026, so I don't compare QA further back.</p>
           </div>
         </div>
       </Section>

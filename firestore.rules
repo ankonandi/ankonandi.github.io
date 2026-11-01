@@ -26,7 +26,7 @@ service cloud.firestore {
     // shape below and nothing else, and every update must keep the visit's start time and visitor id.
     function visitOk(d) {
       return d.keys().hasOnly(['vid', 'start', 'last', 'entry', 'ref', 'dev', 'br', 'os', 'lang', 'tz', 'w', 'h', 'nw',
-                               'paths', 'sections', 'clicks', 'phases', 'sd', 'act', 'pv', 'lcp', 'ld', 'cls', 'err'])
+                               'paths', 'sections', 'clicks', 'phases', 'sd', 'act', 'pv', 'lcp', 'ld', 'cls', 'err', 'med', 'cmp', 'cnt'])
         && d.vid is string && d.vid.size() <= 40
         && d.entry is string && d.entry.size() <= 80
         && d.last == request.time
@@ -36,6 +36,9 @@ service cloud.firestore {
         && (!('os' in d) || (d.os is string && d.os.size() <= 24))
         && (!('lang' in d) || (d.lang is string && d.lang.size() <= 16))
         && (!('tz' in d) || (d.tz is string && d.tz.size() <= 40))
+        && (!('med' in d) || (d.med is string && d.med.size() <= 40))
+        && (!('cmp' in d) || (d.cmp is string && d.cmp.size() <= 40))
+        && (!('cnt' in d) || (d.cnt is string && d.cnt.size() <= 40))
         && (!('w' in d) || d.w is number)
         && (!('h' in d) || d.h is number)
         && (!('nw' in d) || d.nw is bool)

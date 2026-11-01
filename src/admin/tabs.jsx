@@ -248,3 +248,69 @@ export function PasswordAdmin({ kit }) {
     </div>
   )
 }
+
+const MEDIUMS = [
+  ['message', 'Direct message (LinkedIn, WhatsApp)'],
+  ['email', 'Email'],
+  ['social', 'Social post'],
+  ['resume', 'Resume or PDF'],
+  ['referral', 'Referral from a person'],
+  ['qr', 'QR code or print'],
+]
+const slug = (v) => v.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40)
+
+export function LinkBuilder() {
+  const [f, setF] = useState({ src: '', med: 'message', cmp: '', cnt: '', page: '/' })
+  const [copied, setCopied] = useState('')
+  const set = (k) => (e) => setF((v) => ({ ...v, [k]: e.target.value }))
+  const ok = slug(f.src).length > 0
+  const url = (() => {
+    const u = new URL(f.page || '/', 'https://ankonandi.github.io')
+    if (ok) u.searchParams.set('utm_source', slug(f.src))
+    if (ok && f.med) u.searchParams.set('utm_medium', f.med)
+    if (ok && slug(f.cmp)) u.searchParams.set('utm_campaign', slug(f.cmp))
+    if (ok && slug(f.cnt)) u.searchParams.set('utm_content', slug(f.cnt))
+    return u.toString()
+  })()
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(url); setCopied('Copied. Paste it into your message.') } catch { setCopied('Select the link and copy it by hand.') }
+  }
+  return (
+    <div className="page">
+      <header className="page-head">
+        <h2>Campaign links</h2>
+        <p>Build a tagged link for each message you send. When someone opens it, Analytics shows exactly where they came from, with no cookies. These are standard UTM tags, so they work the same way as on any other site.</p>
+      </header>
+      <div className="lb">
+        <label>Who or where is it going to
+          <input className="input" value={f.src} onChange={set('src')} placeholder="For example linkedin, or priya-acme" />
+          <small>{ok ? `Saved as: ${slug(f.src)}` : 'Required. Use a name you will recognize later.'}</small>
+        </label>
+        <label>Type of message
+          <select className="input" value={f.med} onChange={set('med')}>{MEDIUMS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>
+        </label>
+        <label>Campaign
+          <input className="input" value={f.cmp} onChange={set('cmp')} placeholder="For example product-roles-nov" />
+          <small>Optional. Groups several links into one effort, such as a month of applications.</small>
+        </label>
+        <label>Version
+          <input className="input" value={f.cnt} onChange={set('cnt')} placeholder="For example short-intro" />
+          <small>Optional. Use it to compare two wordings of the same message.</small>
+        </label>
+        <label>Land them on
+          <select className="input" value={f.page} onChange={set('page')}>
+            <option value="/">Home page</option>
+            <option value="/teachos">TeachOS case study</option>
+          </select>
+        </label>
+      </div>
+      <div className="lb-out">
+        <p className="lb-label">Your link</p>
+        <code className="lb-url" aria-live="polite">{ok ? url : 'Fill in who or where it is going to'}</code>
+        <div className="actions"><button type="button" className="btn" onClick={copy} disabled={!ok}>Copy link</button>{ok && <a className="btn ghost" href={url} target="_blank" rel="noopener noreferrer">Test it</a>}</div>
+        {copied && <p className="status ok" role="status">{copied}</p>}
+        <p className="muted">Testing it from this browser will not count, because opening admin switches tracking off here. Open it on your phone to see it appear.</p>
+      </div>
+    </div>
+  )
+}

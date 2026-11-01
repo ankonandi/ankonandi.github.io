@@ -72,13 +72,29 @@ function source() {
   try {
     const q = new URLSearchParams(location.search)
     const tagged = q.get('src') || q.get('utm_source')
-    if (tagged) return tagged.slice(0, 40)
+    if (tagged) return tagged.trim().toLowerCase().slice(0, 40)
     if (document.referrer) {
       const host = new URL(document.referrer).hostname.replace(/^www\./, '')
       if (host && host !== location.hostname) return host.slice(0, 60)
     }
   } catch { /* ignore */ }
   return 'direct'
+}
+
+// utm_medium, utm_campaign and utm_content ride along with the source. All are trimmed and lowercased.
+function campaign() {
+  const out = {}
+  try {
+    const q = new URLSearchParams(location.search)
+    const put = (k, ...names) => {
+      const v = names.map((n) => q.get(n)).find(Boolean)
+      if (v) out[k] = v.trim().toLowerCase().slice(0, 40)
+    }
+    put('med', 'utm_medium', 'med')
+    put('cmp', 'utm_campaign', 'cmp')
+    put('cnt', 'utm_content', 'cnt')
+  } catch { /* ignore */ }
+  return out
 }
 
 function browser() {
@@ -151,7 +167,7 @@ async function flush() {
       Object.assign(patch, {
         vid, start: fs.serverTimestamp(), entry: S.entry, ref: source(), dev: device(), br: browser(), os: os(),
         lang: (navigator.language || '').slice(0, 16), tz: (Intl.DateTimeFormat().resolvedOptions().timeZone || '').slice(0, 40),
-        w: window.innerWidth, h: window.innerHeight, nw,
+        w: window.innerWidth, h: window.innerHeight, nw, ...campaign(),
       })
     }
     if (pv) patch.pv = fs.increment(pv)

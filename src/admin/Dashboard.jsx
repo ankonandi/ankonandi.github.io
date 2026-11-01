@@ -40,6 +40,18 @@ function Kpi({ label, value, hint, cur, prev, spark }) {
   )
 }
 
+function SourceTable({ rows, first }) {
+  if (!rows.length) return <p className="empty">Nothing tagged in this range yet</p>
+  return (
+    <table className="tbl">
+      <thead><tr><th>{first}</th><th className="n">Visits</th><th className="n">Engaged</th><th className="n">Reached out</th></tr></thead>
+      <tbody>{rows.map((r) => (
+        <tr key={r.name}><td>{r.name}</td><td className="n">{int(r.visits)}</td><td className="n">{pct(r.engaged, r.visits)}</td><td className="n">{pct(r.acted, r.visits)}</td></tr>
+      ))}</tbody>
+    </table>
+  )
+}
+
 function RangeBar({ range, setRange, onRefresh, busy, updated, back, onBack }) {
   const [from, setFrom] = useState(toInput(range.from))
   const [to, setTo] = useState(toInput(range.to))
@@ -192,16 +204,12 @@ export default function Dashboard() {
           {view === 'acquisition' && (
             <div className="cols">
               <Panel title="Where visitors came from" wide note="Engaged means 10 seconds active, 2 pages or a click. Reached out means call, email or resume.">
-                {a.sources.length === 0 ? <p className="empty">Nothing yet in this range</p> : (
-                  <table className="tbl">
-                    <thead><tr><th>Source</th><th className="n">Visits</th><th className="n">Engaged</th><th className="n">Reached out</th></tr></thead>
-                    <tbody>{a.sources.map((s) => (
-                      <tr key={s.name}><td>{s.name}</td><td className="n">{int(s.visits)}</td><td className="n">{pct(s.engaged, s.visits)}</td><td className="n">{pct(s.acted, s.visits)}</td></tr>
-                    ))}</tbody>
-                  </table>
-                )}
-                <p className="tip">Tag every link you send. Add <code>?src=linkedin</code> or <code>?src=recruiter-name</code> to the address and it shows up here by name.</p>
+                {a.sources.length === 0 ? <p className="empty">Nothing yet in this range</p> : <SourceTable rows={a.sources} first="Source" />}
+                <p className="tip">Tag every link you send. Open Campaign links in the sidebar to build one in a few clicks. Visits without a tag show as the site they came from, or as direct.</p>
               </Panel>
+              <Panel title="Campaigns" note={`${int(a.tagged)} of ${int(a.n)} visits came through a tagged link.`}><SourceTable rows={a.campaigns} first="Campaign" /></Panel>
+              <Panel title="Medium" note="The kind of channel: message, email, social, resume."><SourceTable rows={a.mediums} first="Medium" /></Panel>
+              <Panel title="Which version of the link" note="Use this to compare two versions of one message."><SourceTable rows={a.contents} first="Content tag" /></Panel>
               <Panel title="First page seen"><Bars rows={a.entry.slice(0, 8)} total={a.n} /></Panel>
             </div>
           )}
