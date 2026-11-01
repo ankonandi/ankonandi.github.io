@@ -16,15 +16,13 @@ export const background = [
   ['NMIMS (MPSTME)', ['B.Tech'], ['3.25 / 4.0']],
 ]
 
-// The same history for the Background section. Months are 1 to 12. A missing "to" means present.
-// "row" and "span" place each entry on the shared rows (newest at the top), so education sits beside the work done during it.
-// The order here is also the reading order on a phone.
+// The same history for the Background section, as milestones on one line, oldest first.
+// Months are 1 to 12. A missing "to" means present. The first entry starts the line, the last one is now.
 export const timeline = [
-  { kind: 'work', org: 'NxtWave', role: 'Associate Product Manager', from: [2026, 6], text: 'Jun 2026 to present', row: 1, span: 1 },
-  { kind: 'work', org: 'NxtWave', role: 'Associate Product Manager Intern', from: [2025, 5], to: [2026, 6], text: 'May 2025 to Jun 2026', row: 2, span: 1 },
-  { kind: 'edu', org: 'IIIT Hyderabad (IIIT-H)', role: 'M.Tech', grade: '8.04 / 10', from: [2024, 7], to: [2026, 7], text: 'Jul 2024 to Jul 2026', row: 1, span: 2 },
-  { kind: 'work', org: 'Diebold Nixdorf', role: 'Development Intern', from: [2024, 1], to: [2024, 7], text: 'Jan to Jul 2024', row: 3, span: 1 },
-  { kind: 'work', org: 'Mahindra First Choice Wheels', role: 'SDC Intern', from: [2023, 5], to: [2023, 7], text: 'May to Jul 2023', row: 4, span: 1 },
-  { kind: 'edu', org: 'NMIMS (MPSTME)', role: 'B.Tech', grade: '3.25 / 4.0', from: [2020, 8], to: [2024, 6], text: 'Aug 2020 to Jun 2024', row: 3, span: 2 },
+  { kind: 'edu', org: 'NMIMS (MPSTME)', role: 'B.Tech, 3.25 / 4.0', from: [2020, 8], to: [2024, 6], text: 'Aug 2020 to Jun 2024' },
+  { kind: 'work', org: 'Mahindra First Choice Wheels', role: 'SDC Intern', from: [2023, 5], to: [2023, 7], text: 'May to Jul 2023' },
+  { kind: 'work', org: 'Diebold Nixdorf', role: 'Development Intern', from: [2024, 1], to: [2024, 7], text: 'Jan to Jul 2024' },
+  { kind: 'edu', org: 'IIIT Hyderabad (IIIT-H)', role: 'M.Tech, 8.04 / 10', from: [2024, 7], to: [2026, 7], text: 'Jul 2024 to Jul 2026' },
+  { kind: 'work', org: 'NxtWave', role: 'Associate Product Manager Intern', from: [2025, 5], to: [2026, 6], text: 'May 2025 to Jun 2026' },
+  { kind: 'work', org: 'NxtWave', role: 'Associate Product Manager', from: [2026, 6], text: 'Jun 2026 to present' },
 ]
-export const timelineYears = ['2026', '2025', '2024', '2023']
