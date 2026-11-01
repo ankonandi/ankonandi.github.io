@@ -1,0 +1,59 @@
+section.block { padding: clamp(48px, 7vw, 96px) 0 0; }
+.block h2.title { font-size: clamp(30px, 3.6vw, 46px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800; margin: 0 0 14px; max-width: 18em; }
+.block .sub { font-family: var(--prose); color: var(--muted); font-size: 19px; line-height: 1.6; max-width: 36em; margin: 0 0 36px; }
+.mark { text-decoration: underline; text-decoration-color: var(--pen); text-decoration-thickness: 3px; text-underline-offset: 4px; font-weight: 800; }
+
+/* plain facts, no cards */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); margin-top: clamp(40px, 6vw, 72px); }
+.fact { padding: 18px 18px 0 0; }
+.fact + .fact { padding-left: 18px; border-left: 1px solid var(--line); }
+.fact b { display: block; font-size: clamp(30px, 3.4vw, 46px); line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
+.fact span { display: block; margin-top: 8px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+
+/* ruled rows */
+.work { border-top: 2px solid var(--ink); }
+.work-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) 210px; gap: 8px 32px; padding: 26px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.work-row h3 { margin: 0; font-size: 24px; letter-spacing: -0.02em; font-weight: 800; line-height: 1.15; }
+.work-row h3 small { display: block; font-size: 15px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 4px; }
+.work-row p { margin: 0; font-family: var(--prose); font-size: 17.5px; color: var(--ink-soft); max-width: 38em; }
+.work-row .out { font-size: 15px; font-weight: 600; text-align: right; max-width: 15em; justify-self: end; }
+.work-row .out a { display: inline-block; margin-top: 6px; }
+.req { font-size: 15px; font-weight: 600; margin-top: 8px; display: inline-block; }
+
+/* how I work */
+.principles { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.principles li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px 40px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.principles b { font-size: 21px; letter-spacing: -0.015em; line-height: 1.25; }
+.principles span { font-family: var(--prose); font-size: 17.5px; color: var(--ink-soft); max-width: 36em; }
+.tools { margin: 28px 0 0; font-size: 16px; color: var(--muted); max-width: 44em; }
+.tools b { color: var(--ink); }
+
+/* background */
+.bg { width: 100%; border-collapse: collapse; border-top: 2px solid var(--ink); }
+.bg th, .bg td { text-align: left; padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); vertical-align: top; font-weight: 400; }
+.bg th { font-weight: 800; font-size: 18px; width: 34%; }
+.bg td:last-child { color: var(--muted); white-space: nowrap; padding-right: 0; text-align: right; }
+
+/* contact */
+.contact { background: var(--navy); color: var(--chalk); margin-top: clamp(56px, 8vw, 110px); padding: clamp(40px, 6vw, 80px) 0; }
+.contact h2 { font-size: clamp(32px, 4.4vw, 60px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 16px; max-width: 14em; }
+.contact p { font-family: var(--prose); font-size: 19px; color: var(--chalk-dim); max-width: 34em; margin: 0 0 28px; }
+.foot { padding: 22px 0 36px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 1100px) {
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fact:nth-child(3) { border-left: 0; padding-left: 0; }
+  .fact:nth-child(n+3) { margin-top: 22px; }
+}
+@media (max-width: 900px) {
+  .work-row { grid-template-columns: 1fr; }
+  .work-row .out { text-align: left; max-width: none; justify-self: start; }
+  .principles li { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .bg th { width: auto; display: block; border-bottom: 0; padding-bottom: 2px; }
+  .bg td { display: block; padding: 0 0 14px; text-align: left; white-space: normal; border-bottom: 1px solid var(--line); }
+  .bg td:last-child { padding-bottom: 14px; }
+  .bg tr { display: block; }
+}

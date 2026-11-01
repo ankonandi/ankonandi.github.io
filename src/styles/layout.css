@@ -30,11 +30,6 @@ main { min-width: 0; }
 .btn.ghost-dark { background: transparent; border-color: var(--chalk-dim); color: var(--chalk); }
 .btn.ghost-dark:hover { background: rgba(255,255,255,.08); }
 
-.hero { background: var(--navy); color: var(--chalk); padding: clamp(40px, 7vw, 88px) 0; }
-.hero h1 { font-size: clamp(40px, 5.4vw, 76px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 24px; max-width: 12em; }
-.hero p { font-family: var(--prose); font-size: 20px; color: var(--chalk-dim); max-width: 34em; margin: 0 0 28px; }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; }
-
 @media (max-width: 900px) {
   .shell { grid-template-columns: 1fr; }
   .rail { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 18px 24px; border-right: 0; border-bottom: 1px solid var(--line); }
