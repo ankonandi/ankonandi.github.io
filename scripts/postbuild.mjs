@@ -8,7 +8,7 @@ copyFileSync('dist/index.html', 'dist/404.html')
 
 const title = 'TeachOS case study | Ankon Nandi, Associate Product Manager'
 const desc = 'How TeachOS grew from a 6-instructor pilot to about 26,000 AI evaluations a month: six problems, the decisions behind them and the metrics. By Ankon Nandi.'
-const url = 'https://ankonandi.github.io/teachos'
+const url = 'https://ankonandi.github.io/teachos/'
 const shell = `<!--seo:shell-->
       <main id="seo-shell">
         <h1>TeachOS case study: an AI product from pilot to daily habit</h1>

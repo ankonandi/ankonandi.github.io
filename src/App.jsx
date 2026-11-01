@@ -26,7 +26,7 @@ function ScrollToHash() {
 // Keeps the tab title and canonical address right when someone moves between pages without a reload.
 const pageMeta = {
   '/': ['Ankon Nandi | Associate Product Manager, AI | IIIT Hyderabad', 'https://ankonandi.github.io/'],
-  '/teachos': ['TeachOS case study | Ankon Nandi, Associate Product Manager', 'https://ankonandi.github.io/teachos'],
+  '/teachos': ['TeachOS case study | Ankon Nandi, Associate Product Manager', 'https://ankonandi.github.io/teachos/'],
 }
 
 function PageMeta() {
