@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { profile } from '../content/profile.js'
 import { useScrollSpy } from '../hooks/useScrollSpy.js'
+import ResumeLink from '../components/ResumeLink.jsx'
 
 const sections = [
   ['/#top', 'top', 'Overview'],
@@ -49,7 +50,7 @@ export default function Rail() {
         ))}
       </nav>
       <div className="rail-foot">
-        <a className="btn" href={profile.resumeUrl} download={profile.resumeFileName}>Download resume</a>
+        <ResumeLink className="btn">Download resume</ResumeLink>
         <a className="btn ghost" href={`tel:${profile.phoneTel}`}>Call me</a>
       </div>
       <nav className="tabbar" aria-label="Main">

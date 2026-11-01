@@ -1,4 +1,5 @@
 import { profile } from '../content/profile.js'
+import ResumeLink from './ResumeLink.jsx'
 
 export default function Contact() {
   return (
@@ -10,14 +11,14 @@ export default function Contact() {
           <div className="cta">
             <a className="btn on-dark" href={`tel:${profile.phoneTel}`}>Call {profile.phoneDisplay}</a>
             <a className="btn ghost-dark" href={`mailto:${profile.email}`}>Email me</a>
-            <a className="btn ghost-dark" href={profile.resumeUrl} download={profile.resumeFileName}>Download resume</a>
+            <ResumeLink className="btn ghost-dark">Download resume</ResumeLink>
             <a className="btn ghost-dark" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a className="btn ghost-dark" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
       </section>
       <div className="wrap">
-        <footer className="foot">Ankon Nandi, Hyderabad, India. Figures are from internal product analytics as of 1 Nov 2026.</footer>
+        <footer className="foot">Ankon Nandi, Hyderabad, India. Figures are from internal product analytics as of 1 Nov 2026. Visits are counted anonymously, with no cookies.</footer>
       </div>
     </>
   )

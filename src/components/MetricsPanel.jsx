@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { metricRows, phases } from '../content/metrics.js'
+import { phases } from '../content/metrics.js'
+import { useMetricRows } from '../lib/useMetricRows.js'
+import { track } from '../lib/track.js'
 import { useTween, usePrefersReducedMotion } from '../hooks/useTween.js'
 
 function format(row, v) {
@@ -10,6 +12,7 @@ function format(row, v) {
 
 export default function MetricsPanel() {
   const reduce = usePrefersReducedMotion()
+  const metricRows = useMetricRows()
   const last = phases.length - 1
   const [phase, setPhase] = useState(reduce ? last : 0)
   const [touched, setTouched] = useState(false)
@@ -24,10 +27,10 @@ export default function MetricsPanel() {
 
   const target = useMemo(
     () => metricRows.map((r) => (typeof r.vals[phase] === 'number' ? r.vals[phase] : null)),
-    [phase],
+    [phase, metricRows],
   )
   const nums = useTween(target, reduce)
-  const pick = (i) => { setTouched(true); setPhase(i) }
+  const pick = (i) => { setTouched(true); setPhase(i); track('phase', phases[i].id) }
 
   return (
     <div className="panel" aria-labelledby="panel-h">
