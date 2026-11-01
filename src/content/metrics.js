@@ -10,8 +10,8 @@ export const metricRows = [
   { label: 'Instructors evaluated a month', note: 'The start was a 6-instructor pilot', fmt: 'int', max: 584, vals: [6, 314, 584] },
   { label: 'AI evaluations a month', note: 'Oct 2025 and Oct 2026', fmt: 'int', max: 26121, vals: ['Pilot only', 13441, 26121] },
   { label: 'Lectures with a pre-lecture demo', note: 'Demos launched in Oct 2025', fmt: 'pct', max: 100, vals: ['Did not exist', 1.5, 40.1] },
-  { label: 'Lecture report open rate', note: 'Word files, then the Session Snapshot. Today at over twice the volume', fmt: 'pct', max: 100, vals: [60.6, 84.8, 78.7] },
-  { label: 'Manager 1:1s a month', note: 'Manager Connect: first month, then today', fmt: 'int', max: 985, vals: ['Did not exist', 56, 985] },
+  { label: 'Lecture reports opened a month', note: 'Word files, then the Session Snapshot', fmt: 'int', max: 21224, vals: ['Word files', 9707, 21224] },
+  { label: 'Manager 1:1s a month', note: 'Manager Connect did not exist in Oct–Nov 2025', fmt: 'int', max: 985, vals: ['Did not exist', 'Did not exist', 985] },
   { label: 'Sessions flagged critically low quality', note: 'Nov 2025 to today. Lower is better', fmt: 'pct', max: 100, vals: ['Not measured', 17.1, 3.0] },
 ]
 
