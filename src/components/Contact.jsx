@@ -11,8 +11,8 @@ export default function Contact() {
             <a className="btn on-dark" href={`tel:${profile.phoneTel}`}>Call {profile.phoneDisplay}</a>
             <a className="btn ghost-dark" href={`mailto:${profile.email}`}>Email me</a>
             <a className="btn ghost-dark" href={profile.resumeUrl} download={profile.resumeFileName}>Download resume</a>
-            <a className="btn ghost-dark" href={profile.linkedin}>LinkedIn</a>
-            <a className="btn ghost-dark" href={profile.github}>GitHub</a>
+            <a className="btn ghost-dark" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a className="btn ghost-dark" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
       </section>

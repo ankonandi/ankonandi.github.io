@@ -29,8 +29,8 @@ export const work = [
     body: "An AI toolkit for India's micro-creators who sell physical products online. It writes product listings and platform-specific captions, puts every sales channel behind one tracked product link, and generates campaigns. It began with five research ideas scored out of 30, then customer validation, personas, a PRD and MVP testing.",
     out: (
       <>
-        <a href="https://ai-adcraft3.lovable.app/">Live MVP</a><br />
-        <a href="https://github.com/ankonandi/AdCraft_AI">GitHub</a>
+        <a href="https://ai-adcraft3.lovable.app/" target="_blank" rel="noopener noreferrer">Live MVP</a><br />
+        <a href="https://github.com/ankonandi/AdCraft_AI" target="_blank" rel="noopener noreferrer">GitHub</a>
       </>
     ),
   },
