@@ -236,7 +236,7 @@
   .main { padding: 26px 28px 70px; }
 }
 @media (max-width: 860px) {
-  .a-shell { grid-template-columns: minmax(0, 1fr); }
+  .a-shell { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
   .side { position: sticky; top: 0; z-index: 20; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 10px 14px 0; gap: 4px 12px; }
   .brand small, .who small, .who span { display: none; }
   .brand { padding: 0; }
@@ -249,8 +249,9 @@
   .page-head h1 { font-size: 28px; }
   .rangebar { position: static; backdrop-filter: none; }
   .rb-custom .a-seg { margin-left: 0; }
-  .rb-custom label { flex: 1 1 140px; }
-  .rb-custom input { width: 100%; }
+  .rb-custom label { flex: 1 1 100%; min-width: 0; }
+  .rb-custom input { width: 100%; min-width: 0; }
+  .rb-custom .btn { flex: 1 1 100%; }
   .kpi dd { font-size: 30px; }
   .chart-plot { height: 190px; }
   .chart-tip .chart-hint { margin-left: 0; flex-basis: 100%; }

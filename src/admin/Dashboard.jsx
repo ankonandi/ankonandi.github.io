@@ -251,7 +251,7 @@ export default function Dashboard() {
               <dl className="kpis three">
                 <Kpi label="Median load" value={a.perf.load ? `${(a.perf.load / 1000).toFixed(1)} s` : 'n/a'} hint="Time to finish loading" />
                 <Kpi label="Median largest paint" value={a.perf.lcp ? `${(a.perf.lcp / 1000).toFixed(1)} s` : 'n/a'} hint={a.perf.lcp && a.perf.lcp <= 2500 ? 'Good, under 2.5 s' : a.perf.lcp ? 'Over the 2.5 s target' : 'No data yet'} />
-                <Kpi label="Layout shift" value={a.perf.measured ? a.perf.cls.toFixed(2) : 'n/a'} hint={a.perf.cls <= 0.1 ? 'Good, under 0.1' : 'Over the 0.1 target'} />
+                <Kpi label="Layout shift" value={a.perf.measured ? a.perf.cls.toFixed(2) : 'n/a'} hint={!a.perf.measured ? 'No data yet' : a.perf.cls <= 0.1 ? 'Good, under 0.1' : 'Over the 0.1 target'} />
               </dl>
               <Panel title="Errors">
                 <p className="big-line"><b>{int(a.perf.errors)}</b> of {int(a.n)} visits hit a script error ({pct(a.perf.errors, a.n)}).</p>
