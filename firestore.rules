@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['ankon.iiit.exps@gmail.com', 'ankonandi5002@gmail.com'];
+    }
+
+    // Anonymous visit events. Anyone can add one with this exact shape, only the admins can read them.
+    match /events/{id} {
+      allow create: if request.resource.data.keys().hasAll(['sid', 'type', 'path', 'ts'])
+        && request.resource.data.keys().hasOnly(['sid', 'type', 'path', 'label', 'ref', 'dev', 'w', 'ts'])
+        && request.resource.data.sid is string && request.resource.data.sid.size() <= 40
+        && request.resource.data.type is string && request.resource.data.type.size() <= 24
+        && request.resource.data.path is string && request.resource.data.path.size() <= 80
+        && (!('label' in request.resource.data) || (request.resource.data.label is string && request.resource.data.label.size() <= 60))
+        && (!('ref' in request.resource.data) || (request.resource.data.ref is string && request.resource.data.ref.size() <= 80))
+        && (!('dev' in request.resource.data) || (request.resource.data.dev is string && request.resource.data.dev.size() <= 12))
+        && (!('w' in request.resource.data) || (request.resource.data.w is number))
+        && request.resource.data.ts == request.time;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Hero numbers. Public read so the site can show them, only admins can change them.
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // The resume PDF stored as text (about 100 KB). Public read, admin write, 900 KB cap.
+    match /files/{doc} {
+      allow read: if true;
+      allow create, update: if isAdmin() && request.resource.data.b64 is string && request.resource.data.b64.size() < 900000;
+      allow delete: if isAdmin();
+    }
+  }
+}
