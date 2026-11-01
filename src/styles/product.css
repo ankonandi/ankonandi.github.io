@@ -156,3 +156,5 @@ body.skim .px-fold { grid-template-rows: 0fr; opacity: 0; }
   .px-top { position: static; }
 }
 @media (prefers-reduced-motion: reduce) { .px-fold, .px-dock, .px-thumb, .px-fill, .px-toast { transition: none; } .px-rew.hint, .px-thumb.hint, .px-chip.hint .px-dot { animation: none; } }
+.hero .hero-meta { display: inline-block; margin: 6px 0 0; padding: 6px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 8px; font: 700 14px var(--display); color: var(--chalk); }
+@media (min-width: 1101px) { .px-dock { left: auto; right: clamp(16px, 2vw, 28px); transform: translateY(var(--dy, 0px)) scale(var(--ds, 1)); transform-origin: right bottom; width: min(600px, calc(100% - var(--rail) - 32px)); } }
