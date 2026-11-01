@@ -1,0 +1,156 @@
+/* Refinement layer. Same colors, fonts and content; calmer surfaces, softer edges, one accent used sparingly.
+   Loaded last, so it can be removed to go back to the previous look. */
+
+:root {
+  --r-card: 22px;
+  --r-ctl: 12px;
+  --hair: rgba(15, 27, 61, .1);
+  --hair-dark: rgba(246, 247, 251, .1);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+/* focus: always visible, never heavy */
+:focus-visible { outline: 2px solid var(--pen-bright); outline-offset: 3px; border-radius: 8px; }
+
+/* buttons: one shape everywhere */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 22px; border-radius: 999px; border-width: 1.5px; font-weight: 600; font-size: 15.5px; letter-spacing: -.005em; transition: background-color .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease); }
+.btn:active { transform: scale(.98); }
+.work-row .out a.btn { min-height: 40px; padding: 0 18px; font-size: 14.5px; }
+
+/* hero: no margin line, softer headline, quieter tag */
+@media (min-width: 901px) { .hero { padding-top: 84px; } }
+.hero::before { display: none; }
+.hero h1 { font-weight: 700; letter-spacing: -.035em; }
+.hero .lede { line-height: 1.6; }
+.hero .hero-meta { padding: 6px 14px; border: 1px solid var(--hair-dark); background: rgba(255,255,255,.06); border-radius: 999px; font: 600 13.5px var(--display); color: var(--chalk); }
+
+/* before and after panel */
+.panel { border-radius: var(--r-card); border: 1px solid var(--hair-dark); background: linear-gradient(180deg, #1B2C62 0%, var(--navy-2) 100%); box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 40px 70px -40px rgba(0,0,0,.6); padding: clamp(22px, 2.4vw, 30px); }
+.panel .panel-head h2 { font-weight: 600; font-size: 15px; letter-spacing: 0; }
+.px-when { padding: 4px 10px; border-radius: 999px; background: rgba(255,107,107,.14); color: var(--pen-bright); font-size: 12.5px; font-weight: 600; }
+.px-big { font-weight: 700; letter-spacing: -.035em; }
+.px-big-cap { font-weight: 500; }
+.panel .metric { border-top: 1px solid var(--hair-dark); padding: 11px 0 12px; }
+.panel .metric:first-child { border-top: 1px solid var(--hair-dark); }
+.panel .m-label { font-weight: 600; }
+.panel .m-val { font-weight: 700; }
+.panel .m-bar { height: 4px; border-radius: 2px; background: rgba(255,255,255,.1); margin-top: 10px; }
+.panel .m-bar i { border-radius: 2px; }
+.panel-note { color: rgba(170,180,212,.8); }
+
+/* top bar: one quiet glass pill */
+.px-top-in { top: 14px; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(15,27,61,.55); -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4); border: 1px solid var(--hair-dark); box-shadow: 0 10px 30px -12px rgba(0,0,0,.5); }
+.px-chip { border: 0; background: transparent; border-radius: 999px; padding: 0 14px; min-height: 34px; font: 600 13px var(--display); color: var(--chalk); transition: background-color .2s var(--ease); }
+.px-chip:hover, .px-chip.px-open:hover { background: rgba(255,255,255,.1); }
+.px-chip.px-open { color: var(--chalk-dim); }
+.px-mode { padding: 2px; border-radius: 999px; background: rgba(255,255,255,.08); margin: 0 4px; }
+.px-mode button { border-radius: 999px; padding: 0 13px; min-height: 30px; font: 600 13px var(--display); transition: background-color .2s var(--ease), color .2s var(--ease); }
+.px-mode button[aria-pressed="true"] { background: var(--paper); color: var(--navy); box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+.px-news { border-radius: 18px; padding: 20px 22px; }
+
+/* the TeachOS time bar: a compact glass capsule, centered */
+
+/* toast */
+.px-toast { bottom: 110px; border: 1px solid var(--hair-dark); border-radius: 999px; background: rgba(15,27,61,.8); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font: 600 13.5px var(--display); padding: 9px 16px; }
+
+/* windows */
+.px-pal { background: rgba(15,27,61,.5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.px-box { border-radius: 24px; box-shadow: 0 40px 100px -24px rgba(0,0,0,.6); }
+.px-who h2 { font-weight: 700; }
+.px-who button { border-radius: 14px; border-color: var(--hair); transition: background-color .2s var(--ease), border-color .2s var(--ease); }
+.px-who button:hover, .px-who button.cur { background: #F2F4FA; border-color: rgba(15,27,61,.28); }
+.px-list button { border-radius: 10px; }
+
+/* rail (desktop): quiet list, soft active pill, calmer cards */
+@media (min-width: 901px) {
+  .rail { padding: 36px 22px; border-right: 1px solid var(--hair); }
+  .rail .name { font-weight: 700; padding-left: 12px; }
+  .rail .role { padding-left: 12px; }
+  .rail nav { gap: 2px; }
+  .rail nav a { padding: 9px 12px; border-left: 0; border-radius: var(--r-ctl); font-weight: 500; font-size: 15px; transition: background-color .2s var(--ease), color .2s var(--ease); }
+  .rail nav a:hover { background: rgba(15,27,61,.05); }
+  .rail nav a[aria-current="true"] { background: rgba(15,27,61,.08); color: var(--ink); font-weight: 600; }
+}
+.px-viewing { border: 0; background: rgba(15,27,61,.045); border-radius: 16px; padding: 14px 16px; }
+.px-readbtn { border: 0; background: rgba(15,27,61,.045); border-radius: 16px; padding: 12px 16px; transition: background-color .2s var(--ease); }
+.px-readbtn:hover { background: rgba(15,27,61,.08); }
+.px-change { font-weight: 600; }
+.px-reading a { font-weight: 600; padding-left: 16px; }
+.rail .rail-foot .btn { min-height: 46px; }
+
+/* sections: hairlines instead of heavy rules, more air */
+.block h2.title { font-weight: 700; letter-spacing: -.035em; }
+.facts, .work, .principles, .tl { border-top: 1px solid var(--hair); }
+.fact b, .work-row h3, .principles b { font-weight: 700; }
+.fact + .fact { border-left: 1px solid var(--hair); }
+.work-row { padding: 32px 0; border-bottom: 1px solid var(--hair); }
+.principles li { border-bottom: 1px solid var(--hair); padding: 24px 0; }
+.mark { font-weight: 700; text-decoration-thickness: 2px; }
+
+/* one-page spec: a clean sheet */
+.px-sheet { border: 1px solid var(--hair); border-radius: var(--r-card); box-shadow: 0 30px 60px -44px rgba(15,27,61,.35); background: #fff; }
+.px-sheet::before { display: none; }
+.px-sheet-head, .px-cols, .px-log-h, .px-log { padding-left: 0; margin-left: 0; }
+.px-sheet-head h3 { font-weight: 700; }
+.px-cols h4 { font-weight: 700; }
+.px-log { border-top: 1px solid var(--hair); }
+.px-log div { border-bottom: 1px solid var(--hair); }
+.px-log b { font-weight: 600; }
+
+/* timeline keys */
+.tl-key button { transition: background-color .2s var(--ease), border-color .2s var(--ease); }
+
+/* phone */
+@media (max-width: 900px) {
+  .px-top-in { border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 8px 12px; gap: 6px; }
+  .px-chip { border: 1px solid var(--hair-dark); background: rgba(255,255,255,.06); padding: 0 11px; min-height: 32px; font-size: 13px; }
+  .px-mode { margin: 0; }
+  .work-row { padding: 26px 0; }
+}
+@media (max-width: 720px) {
+  .hero .lede { font-size: 16px; line-height: 1.5; margin-bottom: 10px; }
+  .hero .lede + .lede { font-size: 15px; }
+  .hero .cta { margin-top: 20px; }
+  .px-toast { bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 130px); }
+  .rail .tabbar { background: rgba(246,247,251,.88); -webkit-backdrop-filter: blur(20px) saturate(1.5); backdrop-filter: blur(20px) saturate(1.5); border-top: 1px solid var(--hair); }
+  .rail .tabbar a { border-top-width: 2px; font-weight: 600; }
+}
+@media (prefers-reduced-motion: reduce) { .btn, .px-chip, .px-mode button, .rail nav a, .px-readbtn { transition: none; } }
+
+/* Credentials row */
+.hero .hero-meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+.hero .hero-meta-row .hero-meta { margin: 0; }
+
+/* Phone: the same floating time bar, with a smaller button */
+@media (max-width: 720px) {
+}
+
+
+/* Time bar: a glass capsule with a round rewind button and a slider with three dates */
+.px-dock { position: fixed; left: calc(var(--rail) + (100% - var(--rail)) / 2); right: auto; bottom: max(24px, env(safe-area-inset-bottom, 0px)); width: min(500px, calc(100% - var(--rail) - 32px)); max-width: none; padding: 12px 18px 12px 12px; display: flex; align-items: center; gap: 14px; border-radius: 28px; background: rgba(18,30,66,.9); -webkit-backdrop-filter: blur(28px) saturate(1.6); backdrop-filter: blur(28px) saturate(1.6); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 20px 48px -18px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.08); }
+.px-rew { flex: none; width: 40px; height: 40px; padding: 0; gap: 0; justify-content: center; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; }
+.px-rew:hover { background: rgba(255,255,255,.22); }
+.px-rew.hint { background: var(--pen); }
+.px-rew svg { width: 18px; height: 18px; }
+.px-rew span { display: none; }
+.px-track-wrap { flex: 1; min-width: 0; position: static; padding: 0 30px 22px 40px; }
+.px-track { position: relative; width: auto; height: 22px; touch-action: none; cursor: pointer; }
+.px-track::before { top: 9.5px; height: 3px; background: rgba(255,255,255,.2); }
+.px-fill { top: 9.5px; height: 3px; background: var(--pen-bright); }
+.px-stop { top: 5px; width: 12px; height: 12px; margin-left: -6px; background: #1a2a5c; border: 2px solid rgba(255,255,255,.45); }
+.px-stop-l { top: 28px; padding: 0; font: 600 12px var(--display); color: rgba(255,255,255,.6); }
+.px-stop-l.on { color: #fff; }
+.px-thumb { top: 0; width: 22px; height: 22px; margin-left: -11px; background: #fff; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,.4), 0 0 0 5px rgba(255,107,107,.35); }
+.px-thumb:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.px-cap { display: block; position: absolute; top: auto; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); white-space: nowrap; padding: 7px 14px; border-radius: 999px; background: #fff; color: var(--navy); font: 600 12.5px var(--display); box-shadow: 0 8px 24px -8px rgba(0,0,0,.5); }
+@media (max-width: 900px) {
+  .px-dock { left: 50%; width: calc(100% - 24px); max-width: 440px; }
+}
+@media (max-width: 720px) {
+  .px-dock { bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 12px); padding: 10px 14px 10px 10px; gap: 12px; border-radius: 24px; }
+  .px-rew { width: 36px; height: 36px; }
+  .px-rew svg { width: 16px; height: 16px; }
+  .px-track-wrap { padding: 0 26px 20px 36px; }
+  .px-stop-l { font-size: 11.5px; }
+  .px-cap { font-size: 12px; padding: 6px 12px; }
+}

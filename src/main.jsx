@@ -9,6 +9,7 @@ import './styles/hero.css'
 import './styles/sections.css'
 import './styles/case-study.css'
 import './styles/product.css'
+import './styles/refine.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

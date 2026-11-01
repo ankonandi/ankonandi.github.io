@@ -105,16 +105,16 @@ export default function TimeBar() {
       <button
         type="button"
         className={used ? 'px-rew' : 'px-rew hint'}
-        aria-label={used ? label : 'Click here to rewind TeachOS'}
+        aria-label={used ? label : 'Rewind TeachOS'}
+        title={label}
         onClick={() => go(phase === 0 ? last : phase - 1, 'button')}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" /><path d="M12 8v4l3 2" />
         </svg>
-        <span>{label}</span>
       </button>
+      {!used && <span className="px-cap" aria-hidden="true">Tap a date, or drag, to see TeachOS then</span>}
       <div className="px-track-wrap">
-        <span className="px-cap">Rewind TeachOS, or drag the dot</span>
         <div className="px-track" ref={trackEl} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
           <div className={dragPos === null ? 'px-fill snap' : 'px-fill'} style={{ width: `${pos * 100}%` }} />
           {phases.map((p, i) => <span key={p.id} className="px-stop" style={{ left: `${(i / last) * 100}%` }} />)}
