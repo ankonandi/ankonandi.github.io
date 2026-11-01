@@ -37,7 +37,7 @@ export const work = [
   {
     title: 'Prototyping lab',
     sub: 'Lovable, Replit, Claude',
-    body: 'A level-1 class video analysis proof of concept that engineering later took through testing, about 20 Lovable prototypes with 10 to 15 of them deployed (including a full TeachOS clone used to test flows before any production code), and, more recently, about 10 interactive HTML prototypes.',
+    body: 'About 20 Lovable prototypes, about 15 Replit prototypes with 10 to 15 of them deployed, and, more recently, about 10 interactive HTML prototypes. Proofs of concept include Training and Teaching Mode, Manager Connect and a level-1 class video analysis that engineering later took through testing.',
     out: <>Proven before engineering invested</>,
   },
 ]
