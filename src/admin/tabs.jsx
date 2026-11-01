@@ -261,15 +261,39 @@ const slug = (v) => v.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/
 
 const SITE = 'https://ankonandi.github.io'
 
+const SOURCES = [
+  ['linkedin', 'LinkedIn', 'message'],
+  ['whatsapp', 'WhatsApp', 'message'],
+  ['email', 'Email', 'email'],
+  ['naukri', 'Naukri', 'message'],
+  ['instagram', 'Instagram', 'social'],
+  ['x', 'X (Twitter)', 'social'],
+  ['resume', 'Resume or PDF', 'resume'],
+  ['referral', 'A referral', 'referral'],
+  ['qr', 'QR code or print', 'qr'],
+  ['__other', 'Something else', 'message'],
+]
+const NEW = '__new'
+
 export function LinkBuilder() {
-  const [f, setF] = useState({ src: '', med: 'message', cmp: '', cnt: '' })
+  const [f, setF] = useState({ src: 'linkedin', who: '', med: 'message', cmp: '', cmpNew: '', cnt: '', cntNew: '', page: 'r' })
   const [items, setItems] = useState({})
   const [busy, setBusy] = useState(false)
   const [status, setStatus] = useState({ kind: '', text: '' })
   const [last, setLast] = useState('')
   const [copied, setCopied] = useState('')
   const set = (k) => (e) => setF((v) => ({ ...v, [k]: e.target.value }))
-  const ok = slug(f.src).length > 0
+  const pickSource = (e) => {
+    const v = e.target.value
+    const med = SOURCES.find(([id]) => id === v)?.[2]
+    setF((x) => ({ ...x, src: v, med: med || x.med }))
+  }
+  const src = slug(f.src === '__other' ? f.who : f.who ? `${f.src}-${f.who}` : f.src)
+  const ok = src.length > 0
+  const campaigns = [...new Set(Object.values(items).map((t) => t.cmp).filter(Boolean))].sort()
+  const versions = [...new Set(Object.values(items).map((t) => t.cnt).filter(Boolean))].sort()
+  const cmp = f.cmp === NEW ? slug(f.cmpNew) : f.cmp
+  const cnt = f.cnt === NEW ? slug(f.cntNew) : f.cnt
 
   useEffect(() => {
     ;(async () => {
@@ -281,6 +305,10 @@ export function LinkBuilder() {
     })()
   }, [])
 
+  const urlFor = (c, page = f.page) => `${SITE}/${page}/${c}`
+  const copy = async (text) => {
+    try { await navigator.clipboard.writeText(text); setCopied(text); return true } catch { setCopied(''); return false }
+  }
   const create = async () => {
     setBusy(true); setStatus({ kind: '', text: '' }); setCopied('')
     try {
@@ -288,7 +316,7 @@ export function LinkBuilder() {
       const ref = fs.doc(db, 'config', 'links')
       const snap = await fs.getDoc(ref)
       const cur = snap.exists() ? snap.data().items || {} : {}
-      const tags = { src: slug(f.src), med: f.med || '', cmp: slug(f.cmp), cnt: slug(f.cnt) }
+      const tags = { src, med: f.med || '', cmp, cnt }
       let code = Object.keys(cur).find((k) => ['src', 'med', 'cmp', 'cnt'].every((t) => (cur[k][t] || '') === tags[t]))
       if (!code) {
         code = String(Object.keys(cur).reduce((m, k) => Math.max(m, parseInt(k, 10) || 0), 0) + 1)
@@ -296,70 +324,78 @@ export function LinkBuilder() {
         setItems({ ...cur, [code]: tags })
       } else setItems(cur)
       setLast(code)
+      // Copy straight away so the link can be pasted without another click.
+      await copy(urlFor(code))
     } catch (e) { setStatus({ kind: 'err', text: e?.code === 'permission-denied' ? 'Not allowed. Sign in as an admin.' : 'Could not save the link. Check your connection and try again.' }) }
     setBusy(false)
   }
-  const copy = async (text) => {
-    try { await navigator.clipboard.writeText(text); setCopied(text) } catch { setCopied('') }
-  }
-  const home = (c) => `${SITE}/r/${c}`
-  const study = (c) => `${SITE}/t/${c}`
   const codes = Object.keys(items).sort((a, b) => Number(b) - Number(a))
+  const label = (t) => [t.src, t.med, t.cmp, t.cnt].filter(Boolean).join(' · ')
 
   return (
     <div className="page">
       <header className="page-head">
         <h2>Campaign links</h2>
-        <p>Each message gets a short numbered link, such as ankonandi.github.io/r/12. It looks clean in a LinkedIn message, and Analytics still shows exactly where each visitor came from, with no cookies. Every number works for the home page (/r/) and the TeachOS case study (/t/).</p>
+        <p>Pick where the link is going, press Create, and the short link is copied for you. Analytics then shows where every visitor came from, with no cookies.</p>
       </header>
       <div className="lb">
-        <label>Who or where is it going to
-          <input className="input" value={f.src} onChange={set('src')} placeholder="For example linkedin, or priya-acme" />
-          <small>{ok ? `Saved as: ${slug(f.src)}` : 'Required. Use a name you will recognize later.'}</small>
+        <label>Where will you send it
+          <select className="input" value={f.src} onChange={pickSource}>{SOURCES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>
+        </label>
+        <label>{f.src === '__other' ? 'Name it' : 'Person or company (optional)'}
+          <input className="input" value={f.who} onChange={set('who')} placeholder="For example priya-acme" />
+          <small>{ok ? `Shows in Analytics as: ${src}` : 'Required. Use a name you will recognize later.'}</small>
         </label>
         <label>Type of message
           <select className="input" value={f.med} onChange={set('med')}>{MEDIUMS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>
         </label>
         <label>Campaign
-          <input className="input" value={f.cmp} onChange={set('cmp')} placeholder="For example product-roles-nov" />
-          <small>Optional. Groups several links into one effort, such as a month of applications.</small>
+          <select className="input" value={f.cmp} onChange={set('cmp')}>
+            <option value="">None</option>
+            {campaigns.map((c) => <option key={c} value={c}>{c}</option>)}
+            <option value={NEW}>New campaign...</option>
+          </select>
+          {f.cmp === NEW && <input className="input" value={f.cmpNew} onChange={set('cmpNew')} placeholder="For example product-roles-nov" autoFocus />}
+          <small>Groups several links into one effort, such as a month of applications.</small>
         </label>
         <label>Version
-          <input className="input" value={f.cnt} onChange={set('cnt')} placeholder="For example short-intro" />
-          <small>Optional. Use it to compare two wordings of the same message.</small>
+          <select className="input" value={f.cnt} onChange={set('cnt')}>
+            <option value="">None</option>
+            {versions.map((c) => <option key={c} value={c}>{c}</option>)}
+            <option value={NEW}>New version...</option>
+          </select>
+          {f.cnt === NEW && <input className="input" value={f.cntNew} onChange={set('cntNew')} placeholder="For example short-intro" autoFocus />}
+          <small>Use it to compare two wordings of the same message.</small>
         </label>
-        <div className="actions"><button type="button" className="btn" onClick={create} disabled={!ok || busy}>{busy ? 'Creating' : 'Create short link'}</button></div>
+        <label>Land them on
+          <select className="input" value={f.page} onChange={set('page')}>
+            <option value="r">Home page</option>
+            <option value="t">TeachOS case study</option>
+          </select>
+        </label>
+        <div className="actions"><button type="button" className="btn" onClick={create} disabled={!ok || busy}>{busy ? 'Creating' : 'Create and copy link'}</button></div>
         {status.text && <p className={`status ${status.kind}`} role="status">{status.text}</p>}
       </div>
       {last && (
         <div className="lb-out">
-          <p className="lb-label">Link {last} is ready. Use the one for the page you are sharing.</p>
-          {[['Home page', home(last)], ['TeachOS case study', study(last)]].map(([label, url]) => (
-            <div key={label} className="lb-row">
-              <span className="lb-name">{label}</span>
-              <code className="lb-url">{url}</code>
-              <div className="actions"><button type="button" className="btn small" onClick={() => copy(url)}>Copy link</button><a className="btn small ghost" href={url} target="_blank" rel="noopener noreferrer">Test it</a></div>
-              {copied === url && <p className="status ok" role="status">Copied. Paste it into your message.</p>}
-            </div>
-          ))}
+          <p className="lb-label">{copied === urlFor(last) ? 'Copied. Paste it into your message.' : `Link ${last} is ready.`}</p>
+          <code className="lb-url">{urlFor(last)}</code>
+          <div className="actions"><button type="button" className="btn small" onClick={() => copy(urlFor(last))}>Copy link</button><a className="btn small ghost" href={urlFor(last)} target="_blank" rel="noopener noreferrer">Test it</a></div>
           <p className="muted">Testing it from this browser will not count, because opening admin switches tracking off here. Open it on your phone to see it appear.</p>
         </div>
       )}
       {codes.length > 0 && (
         <div className="lb-out">
-          <p className="lb-label">Your links</p>
+          <p className="lb-label">Your links. Each number works for both pages.</p>
           <ul className="lb-list">
-            {codes.map((c) => {
-              const t = items[c]
-              return (
-                <li key={c}>
-                  <b>{c}</b>
-                  <span>{[t.src, t.med, t.cmp, t.cnt].filter(Boolean).join(' · ')}</span>
-                  <button type="button" className="btn small ghost" onClick={() => copy(home(c))}>{copied === home(c) ? 'Copied' : 'Home'}</button>
-                  <button type="button" className="btn small ghost" onClick={() => copy(study(c))}>{copied === study(c) ? 'Copied' : 'Case study'}</button>
-                </li>
-              )
-            })}
+            {codes.map((c) => (
+              <li key={c}>
+                <b>{c}</b>
+                <span>{label(items[c])}</span>
+                <button type="button" className="btn small ghost" onClick={() => copy(urlFor(c, 'r'))}>{copied === urlFor(c, 'r') ? 'Copied' : 'Home'}</button>
+                <button type="button" className="btn small ghost" onClick={() => copy(urlFor(c, 't'))}>{copied === urlFor(c, 't') ? 'Copied' : 'Case study'}</button>
+              </li>
+            ))}
           </ul>
         </div>
       )}
