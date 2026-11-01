@@ -30,9 +30,9 @@ export default function MetricsPanel() {
   useEffect(() => {
     if (reduce || touched || !seen) return undefined
     setAuto(true)
-    const a = setTimeout(() => setPhase(1), 2200)
-    const b = setTimeout(() => setPhase(last), 5200)
-    const c = setTimeout(() => setAuto(false), 6800)
+    const a = setTimeout(() => setPhase(1), 1500)
+    const b = setTimeout(() => setPhase(last), 3300)
+    const c = setTimeout(() => setAuto(false), 4400)
     return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c) }
   }, [reduce, touched, seen, last])
 
@@ -40,7 +40,7 @@ export default function MetricsPanel() {
     () => metricRows.map((r) => (typeof r.vals[phase] === 'number' ? r.vals[phase] : null)),
     [phase, metricRows],
   )
-  const nums = useTween(target, reduce, 1400)
+  const nums = useTween(target, reduce, 900)
   const pick = (i) => { setTouched(true); setAuto(false); setPhase(i); track('phase', phases[i].id) }
 
   return (
@@ -49,11 +49,11 @@ export default function MetricsPanel() {
         <h2 id="panel-h">TeachOS, before and after</h2>
         <div className={auto ? 'seg auto' : 'seg'} role="group" aria-label="Compare phases">
           {phases.map((p, i) => (
-            <button key={p.id} type="button" aria-pressed={phase === i} className={!touched && phase !== i ? 'cue' : undefined} onClick={() => pick(i)}>{p.label}</button>
+            <button key={p.id} type="button" aria-pressed={phase === i} onClick={() => pick(i)}>{p.label}</button>
           ))}
         </div>
       </div>
-      <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}{!touched && !auto && seen ? <span className="phase-hint"> · Tap a period to compare</span> : null}</p>
+      <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}</p>
       <ul className="metric-list">
         {metricRows.map((r, i) => {
           const raw = r.vals[phase]

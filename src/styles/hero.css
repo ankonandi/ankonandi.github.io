@@ -36,12 +36,6 @@
   .panel-note { font-size: 12.5px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 }
 
-/* period switcher: make the change feel like a click */
-.seg button { transition: background .35s ease, color .35s ease, transform .2s ease; }
-.seg button[aria-pressed="true"] { animation: seg-press .45s ease; }
-@keyframes seg-press { 0% { transform: scale(.9); } 55% { transform: scale(1.06); } 100% { transform: scale(1); } }
-.seg button.cue:not(:hover) { box-shadow: inset 0 0 0 1px rgba(246,247,251,.22); }
-.seg button.cue:hover { color: var(--chalk); background: rgba(246,247,251,.12); }
-.m-bar i { transition: width .2s linear; }
-.phase-hint { color: var(--pen-bright); }
-@media (prefers-reduced-motion: reduce) { .seg button[aria-pressed="true"] { animation: none; } }
+/* period switcher: soft color change when the period moves */
+.seg button { transition: background .3s ease, color .3s ease; }
+.seg button:not([aria-pressed="true"]):hover { color: var(--chalk); }
