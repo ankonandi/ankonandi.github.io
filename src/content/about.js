@@ -15,3 +15,13 @@ export const background = [
   ['IIIT Hyderabad (IIIT-H)', ['M.Tech'], ['8.04 / 10']],
   ['NMIMS (MPSTME)', ['B.Tech'], ['3.25 / 4.0']],
 ]
+
+// The same history as a timeline. Months are 1 to 12. A missing "to" means present.
+export const timeline = [
+  { group: 'Work', org: 'NxtWave', role: 'Associate Product Manager', from: [2026, 6], text: 'Jun 2026 to present', now: true },
+  { group: 'Work', org: 'NxtWave', role: 'Associate Product Manager Intern', from: [2025, 5], to: [2026, 6], text: 'May 2025 to Jun 2026' },
+  { group: 'Work', org: 'Diebold Nixdorf', role: 'Development Intern', from: [2024, 1], to: [2024, 7], text: 'Jan to Jul 2024' },
+  { group: 'Work', org: 'Mahindra First Choice Wheels', role: 'SDC Intern', from: [2023, 5], to: [2023, 7], text: 'May to Jul 2023' },
+  { group: 'Education', org: 'IIIT Hyderabad (IIIT-H)', role: 'M.Tech, 8.04 / 10', from: [2024, 7], to: [2026, 7], text: 'Jul 2024 to Jul 2026' },
+  { group: 'Education', org: 'NMIMS (MPSTME)', role: 'B.Tech, 3.25 / 4.0', from: [2020, 8], to: [2024, 6], text: 'Aug 2020 to Jun 2024' },
+]

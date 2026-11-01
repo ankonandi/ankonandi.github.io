@@ -3,7 +3,8 @@ import Facts from '../components/Facts.jsx'
 import Section from '../components/Section.jsx'
 import WorkList from '../components/WorkList.jsx'
 import { work } from '../content/work.jsx'
-import { principles, tools, background } from '../content/about.js'
+import Timeline from '../components/Timeline.jsx'
+import { principles, tools } from '../content/about.js'
 
 export default function Home() {
   return (
@@ -26,21 +27,7 @@ export default function Home() {
         </Section>
 
         <Section id="background" title="Background">
-          <table className="bg">
-            <caption className="sr-only">Experience and education</caption>
-            <tbody>
-              {background.map(([org, roles, dates]) => (
-                <tr key={org}>
-                  <th scope="row">{org}</th>
-                  <td colSpan={2}>
-                    <ul className="bg-roles">
-                      {roles.map((r, i) => <li key={r}><span>{r}</span><span className="bg-date">{dates[i]}</span></li>)}
-                    </ul>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Timeline />
         </Section>
       </div>
     </>
