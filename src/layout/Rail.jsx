@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { profile } from '../content/profile.js'
+import { profile, siteInfo } from '../content/profile.js'
+import { phases } from '../content/metrics.js'
+import { useReader } from '../lib/reader.jsx'
+import { useTime } from '../lib/time.jsx'
 import { useScrollSpy } from '../hooks/useScrollSpy.js'
 import ResumeLink from '../components/ResumeLink.jsx'
 
@@ -10,6 +13,7 @@ const sections = [
   ['/teachos', 'teachos', 'TeachOS case study'],
   ['/#how', 'how', 'How I work'],
   ['/#background', 'background', 'Background'],
+  ['/#site', 'site', 'How I built this site'],
   ['/#contact', 'contact', 'Contact'],
 ]
 
@@ -25,7 +29,7 @@ const tabs = [
   ['/#top', 'top', 'Home', ['top']],
   ['/#work', 'work', 'Work', ['work']],
   ['/teachos', 'teachos', 'TeachOS', ['teachos']],
-  ['/#how', 'how', 'About', ['how', 'background']],
+  ['/#how', 'how', 'About', ['how', 'background', 'site']],
   ['/#contact', 'contact', 'Contact', ['contact']],
 ]
 
@@ -34,8 +38,11 @@ const caseStudy = ['teachos', 'manager-connect', 'docs', 'cut']
 
 export default function Rail() {
   const { pathname } = useLocation()
+  const { who, reader, ask } = useReader()
+  const { phase } = useTime()
+  const onHome = pathname === '/'
   const onCase = pathname.startsWith('/teachos')
-  const ids = onCase ? [...caseStudy, 'contact'] : ['top', 'work', 'how', 'background', 'contact']
+  const ids = onCase ? [...caseStudy, 'contact'] : ['top', 'work', 'how', 'background', 'site', 'contact']
   const spy = useScrollSpy(ids, [pathname])
   // Highlight a clicked item immediately and keep it while the smooth scroll runs, so the highlight
   // does not flicker through the sections in between.
@@ -55,6 +62,20 @@ export default function Rail() {
           <Link key={to} to={to} onClick={() => pick(id)} aria-current={id === current ? 'true' : undefined}>{label}</Link>
         ))}
       </nav>
+      {onHome && (
+        <div className="px-rail-extra">
+          <div className="px-viewing" aria-live="polite">Viewing TeachOS as of<b>{phases[phase].when}</b><span>{phases[phase].blurb}</span></div>
+          {who && (
+            <div className="px-reading">
+              <button type="button" className="px-readbtn" onClick={() => ask(false)} aria-label={`Reading as ${reader.chip}. Change`}>
+                <span>Reading as <b>{reader.chip}</b></span><span className="px-change">Change</span>
+              </button>
+              <Link to={`/#${reader.start[0]}`}>Start here: {reader.start[1]}</Link>
+            </div>
+          )}
+          <p className="px-ver">Portfolio v{siteInfo.version}. Updated {siteInfo.updated}.</p>
+        </div>
+      )}
       <div className="rail-foot">
         <ResumeLink className="btn"><span className="long">Download resume</span><span className="short">Resume</span></ResumeLink>
         <a className="btn ghost" href={`tel:${profile.phoneTel}`}><span className="long">Call me</span><span className="short">Call</span></a>

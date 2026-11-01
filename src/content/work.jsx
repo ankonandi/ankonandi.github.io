@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { profile } from './profile.js'
+import LiveEvals from '../components/LiveEvals.jsx'
 
 export const work = [
   {
@@ -8,7 +9,7 @@ export const work = [
     body: 'The instructor operating system for NIAT: prepare, teach, get AI feedback, practice, get coached, raise issues. I own strategy, the roadmap, delivery and the metrics.',
     out: (
       <>
-        <span className="mark">26K+</span> evaluations a month<br />
+        <LiveEvals /><br />
         <Link className="btn small" to="/teachos">Read the case study</Link>
       </>
     ),

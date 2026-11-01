@@ -1,7 +1,15 @@
 import { profile } from '../content/profile.js'
 import ResumeLink from './ResumeLink.jsx'
+import { copyText } from '../lib/copy.js'
+import { track } from '../lib/track.js'
+import { useReader } from '../lib/reader.jsx'
 
 export default function Contact() {
+  const { toast } = useReader()
+  const copy = async () => {
+    track('click', 'copy-email')
+    toast((await copyText(profile.email)) ? 'Email copied' : profile.email)
+  }
   return (
     <>
       <section className="contact" id="contact" aria-labelledby="contact-h">
@@ -15,6 +23,7 @@ export default function Contact() {
             <a className="btn ghost-dark" href={profile.linkedin} target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
             <a className="btn ghost-dark" href={profile.github} target="_blank" rel="noopener noreferrer">View my code</a>
           </div>
+          <p className="px-copyline">{profile.email}<button type="button" onClick={copy}>Copy email</button></p>
         </div>
       </section>
       <div className="wrap">

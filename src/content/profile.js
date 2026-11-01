@@ -11,3 +11,6 @@ export const profile = {
   resumeUrl: '/Ankon_Nandi_Resume.pdf',
   resumeFileName: 'Ankon_Nandi_Resume.pdf',
 }
+
+// Shown in the rail and in the one-page spec. Change both when the site changes in a way worth noting.
+export const siteInfo = { version: '2.0', updated: '1 Nov 2026' }

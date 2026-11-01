@@ -1,9 +1,9 @@
 // Three phases per row: at the start, when the changes shipped (Oct to Nov 2025), and today.
 // A string value means there was no number to show for that phase.
 export const phases = [
-  { id: 'start', label: 'At the start', blurb: 'Before these features existed' },
-  { id: 'launch', label: 'Oct–Nov 2025', blurb: 'The month each change shipped' },
-  { id: 'now', label: 'Today', blurb: 'October 2026' },
+  { id: 'start', label: 'At the start', when: 'the start', blurb: 'Before these features existed' },
+  { id: 'launch', label: 'Oct–Nov 2025', when: 'Oct–Nov 2025', blurb: 'The month each change shipped' },
+  { id: 'now', label: 'Today', when: 'Oct 2026', blurb: 'Latest figures, pulled 1 Nov 2026' },
 ]
 
 export const metricRows = [

@@ -10,12 +10,8 @@
 .panel { background: var(--navy-2); border: 1px solid rgba(246,247,251,.16); border-radius: 10px; padding: clamp(18px, 2.4vw, 28px); }
 .panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 8px; }
 .panel-head h2 { margin: 0; font-size: 18px; font-weight: 600; color: var(--chalk); }
-.seg { display: inline-flex; background: rgba(0,0,0,.28); border-radius: 8px; padding: 3px; }
-.seg { flex-wrap: wrap; }
-.seg button { font: inherit; font-weight: 600; font-size: 14px; border: 0; background: transparent; color: var(--chalk-dim); padding: 8px 12px; border-radius: 6px; cursor: pointer; }
 .phase-blurb { margin: 0 0 4px; color: var(--chalk-dim); font-size: 14px; }
 .m-val.text { font-size: 16px; font-weight: 600; color: var(--chalk-dim); letter-spacing: 0; white-space: normal; text-align: right; }
-.seg button[aria-pressed="true"] { background: var(--chalk); color: var(--ink); }
 .metric-list { list-style: none; margin: 0; padding: 0; }
 .metric { padding: 14px 0 12px; border-bottom: 1px dashed rgba(246,247,251,.22); }
 .metric:last-child { border-bottom: 0; padding-bottom: 2px; }
@@ -35,15 +31,3 @@
   .m-val.text { font-size: 14px; max-width: 8.5em; line-height: 1.25; }
   .panel-note { font-size: 12.5px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 }
-
-/* period switcher: soft color change when the period moves */
-.seg button { transition: background .3s ease, color .3s ease; }
-.seg button:not([aria-pressed="true"]):hover { color: var(--chalk); }
-
-/* small "Tap to compare" tag above the period buttons, gone after the first click */
-.panel-head { padding-top: 0; gap: 36px 14px; }
-.seg { position: relative; }
-.seg-tag { position: absolute; left: 60px; top: -25px; transform: translateX(-50%); padding: 2px 9px 3px; border-radius: 999px; background: var(--pen-bright); color: var(--ink); font-size: 11.5px; font-weight: 700; line-height: 1.3; white-space: nowrap; pointer-events: none; transition: left .6s cubic-bezier(.4,0,.2,1); animation: tag-bob 1.8s ease-in-out infinite; }
-.seg-tag::after { content: ""; position: absolute; left: 50%; margin-left: -4px; bottom: -4px; width: 8px; height: 8px; background: var(--pen-bright); transform: rotate(45deg); border-radius: 1px; }
-@keyframes tag-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
-@media (prefers-reduced-motion: reduce) { .seg-tag { animation: none; } }

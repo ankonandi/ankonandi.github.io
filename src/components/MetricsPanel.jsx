@@ -1,81 +1,47 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { phases } from '../content/metrics.js'
 import { useMetricRows } from '../lib/useMetricRows.js'
-import { track } from '../lib/track.js'
 import { formatMetric as format } from '../lib/formatMetric.js'
+import { useTime } from '../lib/time.jsx'
 import { useTween, usePrefersReducedMotion } from '../hooks/useTween.js'
 
+// TeachOS before and after. Which period it shows comes from the time bar, so the panel has no tabs of its own.
 export default function MetricsPanel() {
   const reduce = usePrefersReducedMotion()
   const metricRows = useMetricRows()
-  const last = phases.length - 1
-  const [phase, setPhase] = useState(reduce ? last : 0)
-  const [touched, setTouched] = useState(false)
+  const { phase } = useTime()
 
-  const [seen, setSeen] = useState(false)
-  const [auto, setAuto] = useState(false)
-  const root = useRef(null)
-  const btns = useRef([])
-  const [hint, setHint] = useState(0)
-  const [tagX, setTagX] = useState(null)
-
-  // The tag points at a tab other than the one that is open, and hops to another tab every few seconds.
+  // On first paint every number starts at zero and counts up to today's value.
+  const [armed, setArmed] = useState(reduce)
   useEffect(() => {
-    if (reduce || touched || !seen) return undefined
-    const t = setInterval(() => {
-      if (document.visibilityState !== 'visible') return
-      setHint((h) => h + 1)
-    }, 6000)
-    return () => clearInterval(t)
-  }, [reduce, touched, seen])
-  const others = phases.map((_, i) => i).filter((i) => i !== phase)
-  const target = others[hint % others.length]
-  useLayoutEffect(() => {
-    const place = () => { const b = btns.current[target]; if (b) setTagX(b.offsetLeft + b.offsetWidth / 2) }
-    place()
-    window.addEventListener('resize', place)
-    return () => window.removeEventListener('resize', place)
-  }, [target, touched, seen])
-
-  // Wait until the panel is on screen, so the walk through the periods is actually seen.
-  useEffect(() => {
-    if (reduce || seen) return undefined
-    const el = root.current
-    if (!el || !('IntersectionObserver' in window)) { setSeen(true); return undefined }
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect() } }, { threshold: 0.5 })
-    io.observe(el)
-    return () => io.disconnect()
-  }, [reduce, seen])
-
-  // Walks start, then Oct to Nov 2025, then today, slowly enough to read, once. Stops as soon as the visitor picks a period.
-  useEffect(() => {
-    if (reduce || touched || !seen) return undefined
-    setAuto(true)
-    const a = setTimeout(() => setPhase(1), 1500)
-    const b = setTimeout(() => setPhase(last), 3300)
-    const c = setTimeout(() => setAuto(false), 4400)
-    return () => { clearTimeout(a); clearTimeout(b); clearTimeout(c) }
-  }, [reduce, touched, seen, last])
+    if (armed) return undefined
+    const t = setTimeout(() => setArmed(true), 200)
+    return () => clearTimeout(t)
+  }, [armed])
 
   const numTarget = useMemo(
-    () => metricRows.map((r) => (typeof r.vals[phase] === 'number' ? r.vals[phase] : null)),
-    [phase, metricRows],
+    () => metricRows.map((r) => {
+      const v = r.vals[phase]
+      if (typeof v !== 'number') return null
+      return armed ? v : 0
+    }),
+    [phase, metricRows, armed],
   )
   const nums = useTween(numTarget, reduce, 900)
-  const pick = (i) => { setTouched(true); setAuto(false); setPhase(i); track('phase', phases[i].id) }
+
+  const bigIdx = Math.max(0, metricRows.findIndex((r) => r.label === 'AI evaluations a month'))
+  const big = metricRows[bigIdx]
+  const bigRaw = big.vals[phase]
+  const bigIsText = typeof bigRaw !== 'number'
 
   return (
-    <div className="panel" aria-labelledby="panel-h" ref={root}>
+    <div className="panel" aria-labelledby="panel-h">
       <div className="panel-head">
         <h2 id="panel-h">TeachOS, before and after</h2>
-        <div className={auto ? 'seg auto' : 'seg'} role="group" aria-label="Compare phases">
-          {phases.map((p, i) => (
-            <button key={p.id} ref={(el) => { btns.current[i] = el }} type="button" aria-pressed={phase === i} onClick={() => pick(i)}>{p.label}</button>
-          ))}
-          {!touched && (seen || reduce) ? <span className="seg-tag" aria-hidden="true" style={tagX == null ? undefined : { left: tagX }}>Tap to compare</span> : null}
-        </div>
+        <span className="px-when" aria-live="polite">{phases[phase].label}</span>
       </div>
-      <p className="phase-blurb" aria-live="polite">{phases[phase].blurb}</p>
+      <div className={bigIsText ? 'px-big text' : 'px-big'} aria-live="polite">{bigIsText ? bigRaw : format(big, nums[bigIdx] ?? bigRaw)}</div>
+      <p className="px-big-cap">{big.label}</p>
       <ul className="metric-list">
         {metricRows.map((r, i) => {
           const raw = r.vals[phase]
