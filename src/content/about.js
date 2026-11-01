@@ -6,7 +6,7 @@ export const principles = [
   ['Decide once, write it down', 'Scope, formats and policies are decided, documented and not re-litigated. Every task carries points, status and a written description, and every release goes into release notes.'],
 ]
 
-export const tools = 'Claude, Lovable, Replit, Groq API, Metabase and BigQuery, Figma, ClickUp, Jira, Zoho.'
+export const tools = 'Claude, ChatGPT, Lovable, Replit, Supabase, Vercel, Groq API, Metabase and BigQuery, Figma, ClickUp, Jira, Zoho.'
 
 export const background = [
   ['NxtWave', ['Associate Product Manager', 'Associate Product Manager Intern'], ['Jun 2026 to present', 'May 2025 to Jun 2026']],
