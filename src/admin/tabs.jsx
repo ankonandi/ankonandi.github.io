@@ -259,35 +259,58 @@ const MEDIUMS = [
 ]
 const slug = (v) => v.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40)
 
+const SITE = 'https://ankonandi.github.io'
+
 export function LinkBuilder() {
-  const [f, setF] = useState({ src: '', med: 'message', cmp: '', cnt: '', page: '/' })
+  const [f, setF] = useState({ src: '', med: 'message', cmp: '', cnt: '' })
+  const [items, setItems] = useState({})
+  const [busy, setBusy] = useState(false)
+  const [status, setStatus] = useState({ kind: '', text: '' })
+  const [last, setLast] = useState('')
   const [copied, setCopied] = useState('')
   const set = (k) => (e) => setF((v) => ({ ...v, [k]: e.target.value }))
   const ok = slug(f.src).length > 0
-  const longUrl = (() => {
-    const u = new URL(f.page || '/', 'https://ankonandi.github.io')
-    if (ok) u.searchParams.set('utm_source', slug(f.src))
-    if (ok && f.med) u.searchParams.set('utm_medium', f.med)
-    if (ok && slug(f.cmp)) u.searchParams.set('utm_campaign', slug(f.cmp))
-    if (ok && slug(f.cnt)) u.searchParams.set('utm_content', slug(f.cnt))
-    return u.toString()
-  })()
-  // Clean link: /r/who/type/campaign/version. Trailing empty parts are dropped, middle ones become "-".
-  const shortUrl = (() => {
-    const parts = [slug(f.src), f.med || '-', slug(f.cmp) || '-', slug(f.cnt) || '-']
-    while (parts.length > 1 && parts[parts.length - 1] === '-') parts.pop()
-    return `https://ankonandi.github.io/r/${parts.join('/')}`
-  })()
-  const clean = f.page === '/'
-  const url = clean ? shortUrl : longUrl
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(url); setCopied('Copied. Paste it into your message.') } catch { setCopied('Select the link and copy it by hand.') }
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const { db, fs } = await firebase()
+        const snap = await fs.getDoc(fs.doc(db, 'config', 'links'))
+        if (snap.exists()) setItems(snap.data().items || {})
+      } catch { /* shown when saving */ }
+    })()
+  }, [])
+
+  const create = async () => {
+    setBusy(true); setStatus({ kind: '', text: '' }); setCopied('')
+    try {
+      const { db, fs } = await firebase()
+      const ref = fs.doc(db, 'config', 'links')
+      const snap = await fs.getDoc(ref)
+      const cur = snap.exists() ? snap.data().items || {} : {}
+      const tags = { src: slug(f.src), med: f.med || '', cmp: slug(f.cmp), cnt: slug(f.cnt) }
+      let code = Object.keys(cur).find((k) => ['src', 'med', 'cmp', 'cnt'].every((t) => (cur[k][t] || '') === tags[t]))
+      if (!code) {
+        code = String(Object.keys(cur).reduce((m, k) => Math.max(m, parseInt(k, 10) || 0), 0) + 1)
+        await fs.setDoc(ref, { items: { ...cur, [code]: tags } })
+        setItems({ ...cur, [code]: tags })
+      } else setItems(cur)
+      setLast(code)
+    } catch (e) { setStatus({ kind: 'err', text: e?.code === 'permission-denied' ? 'Not allowed. Sign in as an admin.' : 'Could not save the link. Check your connection and try again.' }) }
+    setBusy(false)
   }
+  const copy = async (text) => {
+    try { await navigator.clipboard.writeText(text); setCopied(text) } catch { setCopied('') }
+  }
+  const home = (c) => `${SITE}/r/${c}`
+  const study = (c) => `${SITE}/t/${c}`
+  const codes = Object.keys(items).sort((a, b) => Number(b) - Number(a))
+
   return (
     <div className="page">
       <header className="page-head">
         <h2>Campaign links</h2>
-        <p>Build a link for each message you send. When someone opens it, Analytics shows exactly where they came from, with no cookies. The clean link looks like ankonandi.github.io/r/priya-acme/email and sends the visitor to the home page with nothing tracking-related in the address.</p>
+        <p>Each message gets a short numbered link, such as ankonandi.github.io/r/12. It looks clean in a LinkedIn message, and Analytics still shows exactly where each visitor came from, with no cookies. Every number works for the home page (/r/) and the TeachOS case study (/t/).</p>
       </header>
       <div className="lb">
         <label>Who or where is it going to
@@ -305,21 +328,41 @@ export function LinkBuilder() {
           <input className="input" value={f.cnt} onChange={set('cnt')} placeholder="For example short-intro" />
           <small>Optional. Use it to compare two wordings of the same message.</small>
         </label>
-        <label>Land them on
-          <select className="input" value={f.page} onChange={set('page')}>
-            <option value="/">Home page (clean link)</option>
-            <option value="/teachos">TeachOS case study</option>
-          </select>
-          <small>{clean ? 'Clean links open the home page.' : 'The case study link carries visible tags, which disappear from the address bar a moment after the page opens.'}</small>
-        </label>
+        <div className="actions"><button type="button" className="btn" onClick={create} disabled={!ok || busy}>{busy ? 'Creating' : 'Create short link'}</button></div>
+        {status.text && <p className={`status ${status.kind}`} role="status">{status.text}</p>}
       </div>
-      <div className="lb-out">
-        <p className="lb-label">{clean ? 'Your clean link. Visitors never see any tracking text.' : 'Your link'}</p>
-        <code className="lb-url" aria-live="polite">{ok ? url : 'Fill in who or where it is going to'}</code>
-        <div className="actions"><button type="button" className="btn" onClick={copy} disabled={!ok}>Copy link</button>{ok && <a className="btn ghost" href={url} target="_blank" rel="noopener noreferrer">Test it</a>}</div>
-        {copied && <p className="status ok" role="status">{copied}</p>}
-        <p className="muted">Testing it from this browser will not count, because opening admin switches tracking off here. Open it on your phone to see it appear.</p>
-      </div>
+      {last && (
+        <div className="lb-out">
+          <p className="lb-label">Link {last} is ready. Use the one for the page you are sharing.</p>
+          {[['Home page', home(last)], ['TeachOS case study', study(last)]].map(([label, url]) => (
+            <div key={label} className="lb-row">
+              <span className="lb-name">{label}</span>
+              <code className="lb-url">{url}</code>
+              <div className="actions"><button type="button" className="btn small" onClick={() => copy(url)}>Copy link</button><a className="btn small ghost" href={url} target="_blank" rel="noopener noreferrer">Test it</a></div>
+              {copied === url && <p className="status ok" role="status">Copied. Paste it into your message.</p>}
+            </div>
+          ))}
+          <p className="muted">Testing it from this browser will not count, because opening admin switches tracking off here. Open it on your phone to see it appear.</p>
+        </div>
+      )}
+      {codes.length > 0 && (
+        <div className="lb-out">
+          <p className="lb-label">Your links</p>
+          <ul className="lb-list">
+            {codes.map((c) => {
+              const t = items[c]
+              return (
+                <li key={c}>
+                  <b>{c}</b>
+                  <span>{[t.src, t.med, t.cmp, t.cnt].filter(Boolean).join(' · ')}</span>
+                  <button type="button" className="btn small ghost" onClick={() => copy(home(c))}>{copied === home(c) ? 'Copied' : 'Home'}</button>
+                  <button type="button" className="btn small ghost" onClick={() => copy(study(c))}>{copied === study(c) ? 'Copied' : 'Case study'}</button>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

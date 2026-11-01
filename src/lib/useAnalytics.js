@@ -21,7 +21,7 @@ export function useAnalytics() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    if (pathname.startsWith('/admin') || pathname.startsWith('/r/')) return
+    if (pathname.startsWith('/admin') || pathname.startsWith('/r/') || pathname.startsWith('/t/')) return
     captureCampaign()
     if (/[?&]trackcheck=1/.test(location.search)) showTrackCheck()
     track('pageview')

@@ -30,6 +30,7 @@ export default function App() {
       <ScrollToHash />
       <Routes>
         <Route path="r/*" element={<ShortLink />} />
+        <Route path="t/*" element={<ShortLink to="/teachos" />} />
         <Route path="admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
         <Route element={<Layout />}>
           <Route index element={<Home />} />
