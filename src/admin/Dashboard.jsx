@@ -141,6 +141,16 @@ export default function Dashboard() {
   }, [prevFrom, range.to])
   useEffect(() => { load() }, [load, nonce])
 
+  // A quick range such as "Last 7 days" ends at the moment it was picked. Move that end to now on
+  // Refresh and every minute, so visits that arrive after the page opened are counted.
+  const rolling = range.id !== 'custom'
+  useEffect(() => {
+    if (!rolling) return undefined
+    const t = setInterval(() => { if (document.visibilityState === 'visible') setRangeRaw(presetRange(range.id)) }, 60000)
+    return () => clearInterval(t)
+  }, [rolling, range.id])
+  const refresh = () => { if (rolling) setRangeRaw(presetRange(range.id)); else setNonce((n) => n + 1) }
+
   const cur = useMemo(() => (rows ? rows.filter((s) => s.start >= range.from && s.start <= range.to) : null), [rows, range])
   const prev = useMemo(() => (rows ? rows.filter((s) => s.start < range.from) : null), [rows, range])
   const k = useMemo(() => (cur ? kpis(cur) : null), [cur])
@@ -152,7 +162,7 @@ export default function Dashboard() {
 
   return (
     <div className="dash">
-      <RangeBar range={range} setRange={setRange} onRefresh={() => setNonce((n) => n + 1)} busy={busy} updated={updated}
+      <RangeBar range={range} setRange={setRange} onRefresh={refresh} busy={busy} updated={updated}
         back={back ? (back.id === 'custom' ? fmtRange(back.from, back.to) : PRESETS.find((p) => p[0] === back.id)?.[1] || 'previous range') : ''} onBack={goBack} />
 
       <nav className="subnav" aria-label="Analytics sections">
@@ -171,7 +181,7 @@ export default function Dashboard() {
           {cur.length === 0 && (
             <p className="empty-state">
               <b>No visits in this range.</b>
-              Try a wider range. Visits from your own browser are never counted, because opening /admin switches tracking off there.
+              Try a wider range. Visits are not counted from a browser where you have opened /admin, and that includes a private window you used for both the site and /admin. To test, browse the site in a different browser or on your phone.
             </p>
           )}
 
