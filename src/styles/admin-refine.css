@@ -1,0 +1,83 @@
+/* Admin refinement layer: calmer, rounder, softer. Same colors and fonts. Remove this file to go back. */
+.a-shell, .gate { --a-paper: #F3F5FA; --a-line: #E1E5F0; --a-soft: #EDF0F8; --r: 16px; --shadow: 0 1px 2px rgba(15,27,61,.06), 0 8px 24px -12px rgba(15,27,61,.14); }
+.a-shell .btn, .gate .btn { border-width: 0; border-radius: 999px; min-height: 42px; font-weight: 650; }
+.a-shell .btn.ghost, .gate .btn.ghost { border: 1px solid var(--a-line); background: var(--a-white); }
+.input { border: 1px solid var(--a-line); border-radius: 12px; min-height: 46px; }
+.input:focus-visible { border-color: var(--a-s1); box-shadow: 0 0 0 4px rgba(63,90,158,.15); outline: none; }
+.a-shell :focus-visible, .gate :focus-visible { outline: 2px solid var(--a-s1); outline-offset: 2px; }
+.gate-card { border: 0; border-radius: 24px; box-shadow: var(--shadow); }
+
+/* Sidebar */
+.side { padding: 20px 12px; }
+.side nav button { border-radius: 12px; min-height: 42px; font-weight: 600; }
+.side nav button[aria-current="page"] { background: rgba(255,255,255,.14); color: #fff; box-shadow: none; }
+.side nav button:hover { background: rgba(255,255,255,.08); }
+
+/* Layout */
+.main { padding: 28px 40px 80px; max-width: 1280px; }
+.page-head h1 { font-size: 32px; font-weight: 750; }
+.rangebar { background: rgba(243,245,250,.82); -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid var(--a-line); }
+.a-seg { border-radius: 12px; background: rgba(15,27,61,.06); padding: 3px; }
+.a-seg button { border-radius: 9px; font-weight: 600; }
+.a-seg button[aria-pressed="true"] { box-shadow: 0 1px 3px rgba(15,27,61,.16); }
+.icon-btn { border: 1px solid var(--a-line); border-radius: 10px; }
+.subnav { gap: 6px; border-bottom: 0; margin-bottom: 18px; padding: 2px 0; }
+.subnav button { border: 0; border-radius: 999px; padding: 0 16px; min-height: 38px; margin: 0; font-weight: 600; background: transparent; }
+.subnav button:hover { background: rgba(15,27,61,.06); }
+.subnav button[aria-pressed="true"] { background: var(--a-ink); color: #fff; }
+
+/* KPI tiles */
+.kpis { border-top: 0; gap: 14px; margin-bottom: 14px; }
+.kpi { margin: 0; padding: 18px 20px 14px; background: var(--a-white); border: 0; border-radius: var(--r); box-shadow: var(--shadow); }
+.kpi dd { font-size: 34px; font-weight: 750; }
+
+/* Panels become cards */
+.cols { border-top: 0; gap: 16px; margin-top: 4px; }
+.a-panel { background: var(--a-white); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px 22px 18px; margin-top: 14px; }
+.cols > .a-panel { margin-top: 0; }
+.a-panel h3 { font-size: 17px; font-weight: 700; }
+.chart-grid span { background: var(--a-white); }
+.tip, .empty-state { border-radius: 12px; }
+.empty-state { background: var(--a-white); border: 1px dashed var(--a-line); }
+.funnel li { border-radius: 12px; border-color: var(--a-line); }
+.hb-track, .hb-track i, .stack, .stack i { border-radius: 999px; }
+.hbars li { border-bottom: 1px solid #EEF0F7; }
+.tbl th { border-bottom: 1px solid var(--a-line); font-weight: 650; }
+.tbl td { border-bottom: 1px solid #EEF0F7; }
+.tbl tbody tr:hover td { background: #F8F9FD; }
+.tag { border-radius: 999px; }
+.notice { border-radius: 12px; border-left-width: 0; background: var(--a-soft); }
+.lb-url, .pdf-frame { border-radius: 14px; border-color: var(--a-line); }
+.mtable { border-top: 0; }
+.mcell input { border: 1px solid var(--a-line); border-radius: 10px; }
+.people { border-top: 0; }
+
+/* Link drill-down */
+.ld-open { display: inline-flex; align-items: center; gap: 8px; border: 0; background: var(--a-soft); border-radius: 999px; padding: 4px 10px 4px 14px; min-height: 34px; cursor: pointer; color: var(--a-ink); font: inherit; }
+.ld-open b { font-size: 15px; }
+.ld-open span { color: var(--a-mute); font-size: 18px; line-height: 1; }
+.ld-open:hover { background: var(--a-s3); }
+.ld-back { border: 0; background: none; padding: 6px 4px; margin: 0 0 6px; color: var(--a-s1); font-weight: 650; font-size: 15px; cursor: pointer; }
+.ld-back:hover { text-decoration: underline; }
+.ld-head { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.ld-head h2 { font-size: 30px; font-weight: 750; }
+.ld-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 5px 12px; border-radius: 999px; background: var(--a-white); box-shadow: var(--shadow); font-weight: 650; font-size: 14px; }
+.chip small { color: var(--a-mute); font-weight: 500; font-size: 12px; }
+.ld-when { margin: 0; color: var(--a-mute); font-size: 14px; text-align: right; }
+.ld .tbl.visits td { white-space: nowrap; }
+.ld .tbl.visits td:nth-child(3) { white-space: normal; min-width: 150px; }
+@media (max-width: 860px) {
+  .kpis, .kpis.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi dd { font-size: 26px; }
+  .chart-x li:nth-child(even) { visibility: hidden; }
+  .main { padding: 18px 14px 64px; }
+  .a-panel { padding: 16px 16px 14px; }
+  .kpi { padding: 14px 16px 12px; }
+  .ld-when { text-align: left; }
+  .ld-head h2 { font-size: 26px; }
+  .side { padding: 10px 12px 0; }
+  .side nav button[aria-current="page"] { background: transparent; box-shadow: inset 0 -3px 0 var(--a-pen); }
+}
+
+@media (max-width: 440px) { .kpis, .kpis.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi { margin-right: 0; } }

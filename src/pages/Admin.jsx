@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import { firebase, authKit, OWNER } from '../lib/firebase.js'
 import { MetricsEditor, ResumeAdmin, AccessAdmin, PasswordAdmin, LinkBuilder } from '../admin/tabs.jsx'
 import '../styles/admin.css'
+import '../styles/admin-refine.css'
 
 const Dashboard = lazy(() => import('../admin/Dashboard.jsx'))
 

@@ -236,7 +236,7 @@ export default function Dashboard() {
             </div>
           )}
 
-          {view === 'campaigns' && <CampaignsView sessions={cur} items={links} />}
+          {view === 'campaigns' && <CampaignsView sessions={cur} items={links} range={range} />}
 
           {view === 'audience' && (
             <div className="cols">

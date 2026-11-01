@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import LinkDetail from './LinkDetail.jsx'
 import { acted, engaged } from './stats.js'
 import { int, pct } from './charts.jsx'
 import { dur, rel } from './range.js'
@@ -23,7 +24,8 @@ function stats(list) {
 
 const same = (s, t) => (s.ref || '') === (t.src || '') && (s.med || '') === (t.med || '') && (s.cmp || '') === (t.cmp || '') && (s.cnt || '') === (t.cnt || '')
 
-export default function CampaignsView({ sessions, items }) {
+export default function CampaignsView({ sessions, items, range }) {
+  const [open, setOpen] = useState(null)
   const codes = useMemo(() => Object.keys(items || {}).sort((a, b) => Number(b) - Number(a)), [items])
   const tagged = useMemo(() => sessions.filter((s) => s.cmp || s.med || s.cnt || codes.some((c) => same(s, items[c]))), [sessions, codes, items])
 
@@ -43,6 +45,11 @@ export default function CampaignsView({ sessions, items }) {
 
   const all = stats(tagged)
   const opened = links.filter((l) => l.visits > 0).length
+
+  if (open && items && items[open]) {
+    const t = items[open]
+    return <LinkDetail link={{ code: open, ...t }} sessions={sessions.filter((s) => same(s, t))} all={sessions} range={range} onBack={() => setOpen(null)} />
+  }
 
   return (
     <>
@@ -73,14 +80,14 @@ export default function CampaignsView({ sessions, items }) {
 
       <section className="a-panel wide">
         <h3>Every link you sent</h3>
-        <p className="a-panel-note">One row per link number. A link with no visits has not been opened in this range.</p>
+        <p className="a-panel-note">One row per link number. Select a link number to see its full analysis. A link with no visits has not been opened in this range.</p>
         {links.length === 0 ? <p className="empty">You have not created a link yet.</p> : (
           <div className="tbl-wrap">
             <table className="tbl">
               <thead><tr><th>Link</th><th>Sent to</th><th>Campaign</th><th>Version</th><th className="n">Visits</th><th className="n">Case study</th><th className="n">Engaged</th><th className="n">Reached out</th><th className="n">Avg time</th><th>Last opened</th></tr></thead>
               <tbody>{links.map((l) => (
                 <tr key={l.code} className={l.visits ? '' : 'dim-row'}>
-                  <td><b>{l.code}</b></td>
+                  <td><button type="button" className="ld-open" onClick={() => setOpen(l.code)} aria-label={`Open details for link ${l.code}`}><b>{l.code}</b><span aria-hidden="true">›</span></button></td>
                   <td>{[l.src, l.med].filter(Boolean).join(' · ')}</td>
                   <td>{l.cmp || ''}</td><td>{l.cnt || ''}</td>
                   <td className="n">{int(l.visits)}</td>
