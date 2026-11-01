@@ -6,7 +6,7 @@ import {
 import { toSession, kpis, analyze, buckets, heatmap, acted, engaged } from './stats.js'
 import { TimeChart, Heatmap, Funnel, Bars, Stacked, Sparkline, Delta, int, pct } from './charts.jsx'
 
-const LIMIT = 20000
+const LIMIT = 10000
 const VIEWS = [
   ['overview', 'Overview'],
   ['acquisition', 'Acquisition'],
