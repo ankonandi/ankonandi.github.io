@@ -264,7 +264,7 @@ export function LinkBuilder() {
   const [copied, setCopied] = useState('')
   const set = (k) => (e) => setF((v) => ({ ...v, [k]: e.target.value }))
   const ok = slug(f.src).length > 0
-  const url = (() => {
+  const longUrl = (() => {
     const u = new URL(f.page || '/', 'https://ankonandi.github.io')
     if (ok) u.searchParams.set('utm_source', slug(f.src))
     if (ok && f.med) u.searchParams.set('utm_medium', f.med)
@@ -272,6 +272,14 @@ export function LinkBuilder() {
     if (ok && slug(f.cnt)) u.searchParams.set('utm_content', slug(f.cnt))
     return u.toString()
   })()
+  // Clean link: /r/who/type/campaign/version. Trailing empty parts are dropped, middle ones become "-".
+  const shortUrl = (() => {
+    const parts = [slug(f.src), f.med || '-', slug(f.cmp) || '-', slug(f.cnt) || '-']
+    while (parts.length > 1 && parts[parts.length - 1] === '-') parts.pop()
+    return `https://ankonandi.github.io/r/${parts.join('/')}`
+  })()
+  const clean = f.page === '/'
+  const url = clean ? shortUrl : longUrl
   const copy = async () => {
     try { await navigator.clipboard.writeText(url); setCopied('Copied. Paste it into your message.') } catch { setCopied('Select the link and copy it by hand.') }
   }
@@ -279,7 +287,7 @@ export function LinkBuilder() {
     <div className="page">
       <header className="page-head">
         <h2>Campaign links</h2>
-        <p>Build a tagged link for each message you send. When someone opens it, Analytics shows exactly where they came from, with no cookies. These are standard UTM tags, so they work the same way as on any other site.</p>
+        <p>Build a link for each message you send. When someone opens it, Analytics shows exactly where they came from, with no cookies. The clean link looks like ankonandi.github.io/r/priya-acme/email and sends the visitor to the home page with nothing tracking-related in the address.</p>
       </header>
       <div className="lb">
         <label>Who or where is it going to
@@ -299,13 +307,14 @@ export function LinkBuilder() {
         </label>
         <label>Land them on
           <select className="input" value={f.page} onChange={set('page')}>
-            <option value="/">Home page</option>
+            <option value="/">Home page (clean link)</option>
             <option value="/teachos">TeachOS case study</option>
           </select>
+          <small>{clean ? 'Clean links open the home page.' : 'The case study link carries visible tags, which disappear from the address bar a moment after the page opens.'}</small>
         </label>
       </div>
       <div className="lb-out">
-        <p className="lb-label">Your link</p>
+        <p className="lb-label">{clean ? 'Your clean link. Visitors never see any tracking text.' : 'Your link'}</p>
         <code className="lb-url" aria-live="polite">{ok ? url : 'Fill in who or where it is going to'}</code>
         <div className="actions"><button type="button" className="btn" onClick={copy} disabled={!ok}>Copy link</button>{ok && <a className="btn ghost" href={url} target="_blank" rel="noopener noreferrer">Test it</a>}</div>
         {copied && <p className="status ok" role="status">{copied}</p>}

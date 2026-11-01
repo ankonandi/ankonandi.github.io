@@ -4,6 +4,7 @@ import Layout from './layout/Layout.jsx'
 import Home from './pages/Home.jsx'
 import TeachOS from './pages/TeachOS.jsx'
 import NotFound from './pages/NotFound.jsx'
+import ShortLink from './pages/ShortLink.jsx'
 import { useAnalytics } from './lib/useAnalytics.js'
 
 const Admin = lazy(() => import('./pages/Admin.jsx'))
@@ -28,6 +29,7 @@ export default function App() {
     <>
       <ScrollToHash />
       <Routes>
+        <Route path="r/*" element={<ShortLink />} />
         <Route path="admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
         <Route element={<Layout />}>
           <Route index element={<Home />} />

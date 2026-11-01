@@ -33,6 +33,7 @@ const S = {
   lastInteract: Date.now(),
   raf: 0,
   err: '',
+  camp: null,
 }
 
 // Why tracking is off, in words. Used by the ?trackcheck=1 panel.
@@ -98,11 +99,40 @@ function ids() {
   return { sid, vid, nw }
 }
 
+// Where the visit came from. Read once, early, from either a tagged address (?utm_source=...) or a
+// short link (/r/name/medium/campaign/version, which stores the tags in sessionStorage and redirects).
+// The tags are then removed from the address bar, so visitors never see them.
+const TAGS = ['utm_source', 'src', 'utm_medium', 'med', 'utm_campaign', 'cmp', 'utm_content', 'cnt']
+const clean = (v) => String(v || '').trim().toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40)
+
+export function captureCampaign() {
+  try {
+    if (S.camp) return
+    const q = new URLSearchParams(location.search)
+    const fromUrl = {
+      src: clean(q.get('utm_source') || q.get('src')),
+      med: clean(q.get('utm_medium') || q.get('med')),
+      cmp: clean(q.get('utm_campaign') || q.get('cmp')),
+      cnt: clean(q.get('utm_content') || q.get('cnt')),
+    }
+    let saved = {}
+    try { saved = JSON.parse(sessionStorage.getItem('camp') || '{}') } catch { /* ignore */ }
+    const camp = fromUrl.src || fromUrl.med || fromUrl.cmp || fromUrl.cnt ? fromUrl : saved
+    S.camp = camp
+    if (camp.src || camp.med || camp.cmp || camp.cnt) {
+      try { sessionStorage.setItem('camp', JSON.stringify(camp)) } catch { /* ignore */ }
+    }
+    if (TAGS.some((k) => q.has(k))) {
+      TAGS.forEach((k) => q.delete(k))
+      const rest = q.toString()
+      history.replaceState(history.state, '', location.pathname + (rest ? `?${rest}` : '') + location.hash)
+    }
+  } catch { /* ignore */ }
+}
+
 function source() {
   try {
-    const q = new URLSearchParams(location.search)
-    const tagged = q.get('src') || q.get('utm_source')
-    if (tagged) return tagged.trim().toLowerCase().slice(0, 40)
+    if (S.camp && S.camp.src) return S.camp.src
     if (document.referrer) {
       const host = new URL(document.referrer).hostname.replace(/^www\./, '')
       if (host && host !== location.hostname) return host.slice(0, 60)
@@ -111,19 +141,13 @@ function source() {
   return 'direct'
 }
 
-// utm_medium, utm_campaign and utm_content ride along with the source. All are trimmed and lowercased.
+// utm_medium, utm_campaign and utm_content ride along with the source.
 function campaign() {
   const out = {}
-  try {
-    const q = new URLSearchParams(location.search)
-    const put = (k, ...names) => {
-      const v = names.map((n) => q.get(n)).find(Boolean)
-      if (v) out[k] = v.trim().toLowerCase().slice(0, 40)
-    }
-    put('med', 'utm_medium', 'med')
-    put('cmp', 'utm_campaign', 'cmp')
-    put('cnt', 'utm_content', 'cnt')
-  } catch { /* ignore */ }
+  const c = S.camp || {}
+  if (c.med) out.med = c.med
+  if (c.cmp) out.cmp = c.cmp
+  if (c.cnt) out.cnt = c.cnt
   return out
 }
 

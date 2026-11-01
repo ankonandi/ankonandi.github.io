@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { track, showTrackCheck } from './track.js'
+import { track, showTrackCheck, captureCampaign } from './track.js'
 
 const SECTIONS = ['work', 'how', 'background', 'contact', 'teachos', 'manager-connect', 'docs', 'cut']
 
@@ -21,7 +21,8 @@ export function useAnalytics() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    if (pathname.startsWith('/admin')) return
+    if (pathname.startsWith('/admin') || pathname.startsWith('/r/')) return
+    captureCampaign()
     if (/[?&]trackcheck=1/.test(location.search)) showTrackCheck()
     track('pageview')
   }, [pathname])
