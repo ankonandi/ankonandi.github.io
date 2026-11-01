@@ -41,7 +41,7 @@
 .seg button:not([aria-pressed="true"]):hover { color: var(--chalk); }
 
 /* small "Tap to compare" tag above the period buttons, gone after the first click */
-.panel-head { padding-top: 14px; }
+.panel-head { padding-top: 0; gap: 36px 14px; }
 .seg { position: relative; }
 .seg-tag { position: absolute; left: 60px; top: -25px; transform: translateX(-50%); padding: 2px 9px 3px; border-radius: 999px; background: var(--pen-bright); color: var(--ink); font-size: 11.5px; font-weight: 700; line-height: 1.3; white-space: nowrap; pointer-events: none; transition: left .6s cubic-bezier(.4,0,.2,1); animation: tag-bob 1.8s ease-in-out infinite; }
 .seg-tag::after { content: ""; position: absolute; left: 50%; margin-left: -4px; bottom: -4px; width: 8px; height: 8px; background: var(--pen-bright); transform: rotate(45deg); border-radius: 1px; }
