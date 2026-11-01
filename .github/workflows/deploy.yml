@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -33,18 +33,38 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.retry.outputs.page_url || steps.first.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      # GitHub sometimes leaves the previous Pages deployment "in progress" and refuses the next one.
-      # Cancelling the recent ones first makes a push always deploy. Errors are ignored on purpose.
-      - name: Cancel any stuck Pages deployment
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # A cancelled or interrupted Pages deployment can stay "in progress" and block the next one.
+      # Cancel the recent ones, print what happened, and never fail the job on this step.
+      - name: Clear any stuck Pages deployment
         run: |
           for sha in $(gh api "repos/${{ github.repository }}/deployments?environment=github-pages&per_page=5" --jq '.[].sha'); do
-            gh api -X POST "repos/${{ github.repository }}/pages/deployments/$sha/cancel" >/dev/null 2>&1 || true
+            echo "cancel $sha"
+            gh api -X POST "repos/${{ github.repository }}/pages/deployments/$sha/cancel" || true
           done
-      - id: deployment
+      - name: Deploy to Pages
+        id: first
+        continue-on-error: true
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 120000
+      - name: Clear and retry once if the first deploy hung
+        if: steps.first.outcome == 'failure'
+        run: |
+          for sha in $(gh api "repos/${{ github.repository }}/deployments?environment=github-pages&per_page=5" --jq '.[].sha'); do
+            echo "cancel $sha"
+            gh api -X POST "repos/${{ github.repository }}/pages/deployments/$sha/cancel" || true
+          done
+          sleep 20
+      - name: Deploy to Pages (retry)
+        id: retry
+        if: steps.first.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 300000
