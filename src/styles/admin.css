@@ -1,9 +1,0 @@
-.admin { padding-top: 56px; padding-bottom: 56px; max-width: 640px; }
-.admin h1 { font-size: 40px; letter-spacing: -0.03em; margin: 0 0 20px; }
-.admin-card { border: 2px solid var(--ink); border-radius: 8px; padding: 22px; display: grid; gap: 16px; }
-.admin-card label { display: grid; gap: 6px; font-weight: 600; }
-.admin-card input { font: inherit; padding: 10px 12px; border: 2px solid var(--line); border-radius: 6px; background: #fff; }
-.admin-card form { display: grid; gap: 16px; }
-.admin-card p { margin: 0; }
-.admin-error { color: var(--pen); font-weight: 600; }
-.btn:disabled { opacity: .6; cursor: not-allowed; }
