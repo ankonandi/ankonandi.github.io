@@ -11,6 +11,22 @@ const sections = [
   ['/#contact', 'contact', 'Contact'],
 ]
 
+// Phone tab bar: five tabs. How I work and Background share the About tab.
+const icons = {
+  top: 'M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10',
+  work: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+  teachos: 'M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11M9 8h6',
+  how: 'M12 3a4.5 4.5 0 0 1 2.5 8.2V14h-5v-2.8A4.5 4.5 0 0 1 12 3zM9.5 17h5M10.5 20h3',
+  contact: 'M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A15.5 15.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2z',
+}
+const tabs = [
+  ['/#top', 'top', 'Home', ['top']],
+  ['/#work', 'work', 'Work', ['work']],
+  ['/teachos', 'teachos', 'TeachOS', ['teachos']],
+  ['/#how', 'how', 'About', ['how', 'background']],
+  ['/#contact', 'contact', 'Contact', ['contact']],
+]
+
 // On the case-study page the TeachOS sub-sections all count as "TeachOS case study".
 const caseStudy = ['teachos', 'manager-connect', 'docs', 'cut']
 
@@ -36,6 +52,14 @@ export default function Rail() {
         <a className="btn" href={profile.resumeUrl} download={profile.resumeFileName}>Download resume</a>
         <a className="btn ghost" href={`tel:${profile.phoneTel}`}>Call me</a>
       </div>
+      <nav className="tabbar" aria-label="Main">
+        {tabs.map(([to, id, label, match]) => (
+          <Link key={to} to={to} aria-current={match.includes(current) ? 'true' : undefined}>
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={icons[id]} /></svg>
+            <span>{label}</span>
+          </Link>
+        ))}
+      </nav>
     </aside>
   )
 }
