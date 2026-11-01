@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { profile } from '../content/profile.js'
 import MetricsPanel from './MetricsPanel.jsx'
 
 export default function Hero() {
@@ -12,8 +11,6 @@ export default function Hero() {
           <p className="lede">M.Tech, IIIT Hyderabad. I find the problem in research and data, prototype it myself, and measure whether people actually change what they do.</p>
           <div className="cta">
             <Link className="btn on-dark" to="/teachos">Read the TeachOS case study</Link>
-            <a className="btn ghost-dark" href={profile.resumeUrl} download={profile.resumeFileName}>Download resume</a>
-            <a className="btn ghost-dark" href={`tel:${profile.phoneTel}`}>Call me</a>
           </div>
         </div>
         <MetricsPanel />
