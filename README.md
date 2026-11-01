@@ -1,8 +1,30 @@
-# React + Vite
+# ankonandi.github.io
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal product-management portfolio. Vite, React, React Router and plain CSS.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build     # writes dist/ and a 404.html fallback for client-side routes
+npm run preview
+```
+
+## Deploy
+
+Pushing to `main` runs `.github/workflows/deploy.yml` and publishes `dist/` to GitHub Pages.
+In the repo settings, set Pages, Build and deployment, Source to **GitHub Actions**.
+
+## Structure
+
+- `src/content/` copy, metrics and links
+- `src/pages/` routes
+- `src/layout/` page shell
+- `src/styles/` design tokens and layout CSS
+- `design/` design mockups
