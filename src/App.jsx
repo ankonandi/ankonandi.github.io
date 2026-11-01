@@ -9,14 +9,16 @@ import { useAnalytics } from './lib/useAnalytics.js'
 const Admin = lazy(() => import('./pages/Admin.jsx'))
 
 function ScrollToHash() {
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
+  // key changes on every navigation, including a click on a link to the address you are already at,
+  // so Contact scrolls again after you have scrolled away from it.
   useEffect(() => {
     if (hash) {
       document.getElementById(hash.slice(1))?.scrollIntoView()
     } else {
       window.scrollTo(0, 0)
     }
-  }, [pathname, hash])
+  }, [pathname, hash, key])
   return null
 }
 

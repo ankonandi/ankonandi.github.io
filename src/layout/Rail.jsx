@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { profile } from '../content/profile.js'
 import { useScrollSpy } from '../hooks/useScrollSpy.js'
@@ -36,7 +37,12 @@ export default function Rail() {
   const onCase = pathname.startsWith('/teachos')
   const ids = onCase ? [...caseStudy, 'contact'] : ['top', 'work', 'how', 'background', 'contact']
   const spy = useScrollSpy(ids, [pathname])
-  const current = onCase && caseStudy.includes(spy) ? 'teachos' : spy
+  // Highlight a clicked item immediately and keep it while the smooth scroll runs, so the highlight
+  // does not flicker through the sections in between.
+  const [picked, setPicked] = useState(null)
+  const pick = (id) => { setPicked(id); setTimeout(() => setPicked(null), 1200) }
+  const live = onCase && caseStudy.includes(spy) ? 'teachos' : spy
+  const current = picked || live
 
   return (
     <aside className="rail">
@@ -46,7 +52,7 @@ export default function Rail() {
       </div>
       <nav aria-label="Sections">
         {sections.map(([to, id, label]) => (
-          <Link key={to} to={to} aria-current={id === current ? 'true' : undefined}>{label}</Link>
+          <Link key={to} to={to} onClick={() => pick(id)} aria-current={id === current ? 'true' : undefined}>{label}</Link>
         ))}
       </nav>
       <div className="rail-foot">
@@ -55,7 +61,7 @@ export default function Rail() {
       </div>
       <nav className="tabbar" aria-label="Main">
         {tabs.map(([to, id, label, match]) => (
-          <Link key={to} to={to} aria-current={match.includes(current) ? 'true' : undefined}>
+          <Link key={to} to={to} onClick={() => pick(id)} aria-current={match.includes(current) ? 'true' : undefined}>
             <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={icons[id]} /></svg>
             <span>{label}</span>
           </Link>
