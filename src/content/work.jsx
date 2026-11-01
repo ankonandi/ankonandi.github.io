@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 export const work = [
   {
     title: 'TeachOS',
-    sub: 'NxtWave. Associate Product Manager, owner of the product outputs',
-    body: 'The instructor operating system for NIAT: prepare, teach, get AI feedback, practice, get coached, raise issues. I own the product outputs: the problem statements, specs, prototypes and the metrics.',
+    sub: 'NxtWave. Associate Product Manager',
+    body: 'The instructor operating system for NIAT: prepare, teach, get AI feedback, practice, get coached, raise issues. I own strategy, the roadmap, delivery and the metrics.',
     out: (
       <>
         <span className="mark">26K+</span> evaluations a month<br />
