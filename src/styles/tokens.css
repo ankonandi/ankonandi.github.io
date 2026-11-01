@@ -1,0 +1,16 @@
+:root {
+  --navy: #0F1B3D;
+  --navy-2: #18285A;
+  --paper: #F6F7FB;
+  --ink: #0F1B3D;
+  --muted: #4A5578;
+  --line: #D5DAE8;
+  --chalk: #F6F7FB;
+  --chalk-dim: #AAB4D4;
+  --pen: #D93A40;
+  --pen-bright: #FF6B6B;
+
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --prose: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --rail: 248px;
+}

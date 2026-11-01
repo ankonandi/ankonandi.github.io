@@ -1,0 +1,14 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--display); font-size: 17px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--pen); outline-offset: 3px; border-radius: 2px; }
+.on-dark :focus-visible, .hero :focus-visible, .contact :focus-visible { outline-color: var(--pen-bright); }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--navy); color: var(--chalk); padding: 8px 14px; z-index: 10; }
+.skip:focus { left: 8px; }
+.wrap { padding: 0 clamp(24px, 5vw, 72px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
