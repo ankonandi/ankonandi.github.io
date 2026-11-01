@@ -1,11 +1,18 @@
-// Each row carries its own baseline month, because the baselines differ.
+// Three phases per row: at the start, when the changes shipped (Oct to Nov 2025), and today.
+// A string value means there was no number to show for that phase.
+export const phases = [
+  { id: 'start', label: 'At the start', blurb: 'Before these features existed' },
+  { id: 'launch', label: 'Oct–Nov 2025', blurb: 'The month each change shipped' },
+  { id: 'now', label: 'Today', blurb: 'October 2026' },
+]
+
 export const metricRows = [
-  { label: 'AI evaluations a month', note: 'baseline Oct 2025', then: 13441, now: 26121, fmt: 'int', max: 26121 },
-  { label: 'Instructors evaluated a month', note: 'baseline Oct 2025', then: 314, now: 584, fmt: 'int', max: 584 },
-  { label: 'Lecture reports opened a month', note: 'baseline Nov 2025', then: 9707, now: 21224, fmt: 'int', max: 21224 },
-  { label: 'Lectures with a pre-lecture demo', note: 'baseline Oct 2025, the month demos launched', then: 1.5, now: 40.1, fmt: 'pct', max: 100 },
-  { label: 'Sessions on an external mic', note: 'baseline Nov 2025', then: 8, now: 31.7, fmt: 'pct', max: 100 },
-  { label: 'Sessions flagged critically low quality', note: 'baseline Nov 2025. Lower is better', then: 17.1, now: 3.0, fmt: 'pct', max: 100 },
+  { label: 'Instructors evaluated a month', note: 'The start was a 6-instructor pilot', fmt: 'int', max: 584, vals: [6, 314, 584] },
+  { label: 'AI evaluations a month', note: 'Oct 2025 and Oct 2026', fmt: 'int', max: 26121, vals: ['Pilot only', 13441, 26121] },
+  { label: 'Lectures with a pre-lecture demo', note: 'Demos launched in Oct 2025', fmt: 'pct', max: 100, vals: ['Did not exist', 1.5, 40.1] },
+  { label: 'Lecture report open rate', note: 'Word files, then the Session Snapshot. Today at over twice the volume', fmt: 'pct', max: 100, vals: [60.6, 84.8, 78.7] },
+  { label: 'Manager 1:1s a month', note: 'Manager Connect: first month, then today', fmt: 'int', max: 985, vals: ['Did not exist', 56, 985] },
+  { label: 'Sessions flagged critically low quality', note: 'Nov 2025 to today. Lower is better', fmt: 'pct', max: 100, vals: ['Not measured', 17.1, 3.0] },
 ]
 
 export const facts = [
